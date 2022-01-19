@@ -280,6 +280,28 @@ class UI:
         self.ui.stackedWidgetMain.setCurrentWidget(self.ui.VehicleEntry)
         self.getLableNameFromDB()
         self.setParameters()
+        self.addValuesInCodeComboBox()
+        self.ui.pb_VehicleEntry_save.setEnabled(False)
+        self.ui.pb_VehicleEntry_cancel.setEnabled(False)
+        self.disableAllLe()
+
+    def disableAllLe(self):
+        self.ui.le_VehicleEntry_serialNumber.setEnabled(False)
+        self.ui.le_VehicleEntry_grossWeight.setEnabled(False)
+        self.ui.le_VehicleEntry_tareWeight.setEnabled(False)
+        self.ui.le_VehicleEntry_netWeight.setEnabled(False)
+        self.ui.le_VehicleEntry_vehicle.setEnabled(False)
+        self.ui.le_VehicleEntry_header2_supervisorName.setEnabled(False)
+        self.ui.le_VehicleEntry_header3_count.setEnabled(False)
+        self.ui.le_VehicleEntry_header4_msezDeliverNo.setEnabled(False)
+        self.ui.le_VehicleEntry_header5_supplierChalanNo.setEnabled(False)
+        self.ui.le_VehicleEntry_code1.setEnabled(False)
+        self.ui.le_VehicleEntry_code2.setEnabled(False)
+        self.ui.le_VehicleEntry_name_6.setEnabled(False)
+        self.ui.le_VehicleEntry_amount.setEnabled(False)
+
+
+
 
     def setParameters(self):
         self.conn = sqlite3.connect('WeighBridge.db')
@@ -293,51 +315,109 @@ class UI:
             elif i ==1 :
                 if en:
                     self.ui.lb_VehicleEntry_code2_agentName.setHidden(False)
-                    self.ui.combo_VehicleEntry_agentName.setHidden(False)
+                    self.ui.combo_VehicleEntry_code2_agentName.setHidden(False)
                 else:
                     self.ui.lb_VehicleEntry_code2_agentName.setHidden(True)
-                    self.ui.combo_VehicleEntry_agentName.setHidden(True)
+                    self.ui.combo_VehicleEntry_code2_agentName.setHidden(True)
                 if ex:
                     self.ui.lb_VehicleReEntry_code2_agentName_3.setHidden(False)
+                    self.ui.combo_VehicleReEntry_code2_agentName_3.setHidden(False)
                 else:
                     self.ui.lb_VehicleReEntry_code2_agentName_3.setHidden(True)
+                    self.ui.combo_VehicleReEntry_code2_agentName_3.setHidden(True)
             elif i ==2 :
-                if en:self.ui.lb_VehicleEntry_code3_placeOfLoading.setHidden(False)
-                else:self.ui.lb_VehicleEntry_code3_placeOfLoading.setHidden(True)
-                if ex:self.ui.lb_VehicleReEntry_code3_placeOfLoading_3.setHidden(False)
-                else:self.ui.lb_VehicleReEntry_code3_placeOfLoading_3.setHidden(True)
+                if en:
+                    self.ui.lb_VehicleEntry_code3_placeOfLoading.setHidden(False)
+                    self.ui.combo_VehicleEntry_code3_placeOfLoading.setHidden(False)
+                else:
+                    self.ui.lb_VehicleEntry_code3_placeOfLoading.setHidden(True)
+                    self.ui.combo_VehicleEntry_code3_placeOfLoading.setHidden(True)
+                if ex:
+                    self.ui.lb_VehicleReEntry_code3_placeOfLoading_3.setHidden(False)
+                    self.ui.combo_VehicleReEntry_code3_placeOfLoading_3.setHidden(False)
+                else:
+                    self.ui.lb_VehicleReEntry_code3_placeOfLoading_3.setHidden(True)
+                    self.ui.combo_VehicleReEntry_code3_placeOfLoading_3.setHidden(True)
             elif i ==3 :
-                if en:self.ui.lb_VehicleEntry_code4_moistureValue.setHidden(False)
-                else:self.ui.lb_VehicleEntry_code4_moistureValue.setHidden(True)
-                if ex:self.ui.lb_VehicleReEntry_code4_moistureValue.setHidden(False)
-                else:self.ui.lb_VehicleReEntry_code4_moistureValue.setHidden(True)
+                if en:
+                    self.ui.lb_VehicleEntry_code4_moistureValue.setHidden(False)
+                    self.ui.combo_VehicleEntry_code4_moisturevalue.setHidden(False)
+                else:
+                    self.ui.lb_VehicleEntry_code4_moistureValue.setHidden(True)
+                    self.ui.combo_VehicleEntry_code4_moisturevalue.setHidden(True)
+                if ex:
+                    self.ui.lb_VehicleReEntry_code4_moistureValue.setHidden(False)
+                    self.ui.combo_VehicleReEntry_code4_moistureValue.setHidden(False)
+                else:
+                    self.ui.lb_VehicleReEntry_code4_moistureValue.setHidden(True)
+                    self.ui.combo_VehicleReEntry_code4_moistureValue.setHidden(True)
             elif i ==4 :
-                if en:self.ui.lb_VehicleEntry_code5_size.setHidden(False)
-                else:self.ui.lb_VehicleEntry_code5_size.setHidden(True)
-                if ex:self.ui.lb_VehicleReEntry_code5_size.setHidden(False)
-                else:self.ui.lb_VehicleReEntry_code5_size.setHidden(True)
+                if en:
+                    self.ui.lb_VehicleEntry_code5_size.setHidden(False)
+                    self.ui.combo_VehicleEntry_code5_size.setHidden(False)
+                else:
+                    self.ui.lb_VehicleEntry_code5_size.setHidden(True)
+                    self.ui.combo_VehicleEntry_code5_size.setHidden(True)
+                if ex:
+                    self.ui.lb_VehicleReEntry_code5_size.setHidden(False)
+                    self.ui.combo_VehicleReEntry_code5_size.setHidden(False)
+                else:
+                    self.ui.lb_VehicleReEntry_code5_size.setHidden(True)
+                    self.ui.combo_VehicleReEntry_code5_size.setHidden(True)
             elif i ==5 :
                 continue
             elif i ==6 :
-                if en:self.ui.lb_VehicleEntry_header2_supervisorName.setHidden(False)
-                else:self.ui.lb_VehicleEntry_header2_supervisorName.setHidden(True)
-                if ex:self.ui.lb_VehicleReEntry_header2_supervisorName_3.setHidden(False)
-                else:self.ui.lb_VehicleReEntry_header2_supervisorName_3.setHidden(True)
+                if en:
+                    self.ui.lb_VehicleEntry_header2_supervisorName.setHidden(False)
+                    self.ui.le_VehicleEntry_header2_supervisorName.setHidden(False)
+                else:
+                    self.ui.lb_VehicleEntry_header2_supervisorName.setHidden(True)
+                    self.ui.le_VehicleEntry_header2_supervisorName.setHidden(True)
+                if ex:
+                    self.ui.lb_VehicleReEntry_header2_supervisorName_3.setHidden(False)
+                    self.ui.le_VehicleReEntry_header2_supervisorName_3.setHidden(False)
+                else:
+                    self.ui.lb_VehicleReEntry_header2_supervisorName_3.setHidden(True)
+                    self.ui.le_VehicleReEntry_header2_supervisorName_3.setHidden(True)
             elif i ==7 :
-                if en:self.ui.lb_VehicleEntry_header3_count.setHidden(False)
-                else:self.ui.lb_VehicleEntry_header3_count.setHidden(True)
-                if ex:self.ui.lb_VehicleReEntry_header3_count_3.setHidden(False)
-                else:self.ui.lb_VehicleReEntry_header3_count_3.setHidden(True)
+                if en:
+                    self.ui.lb_VehicleEntry_header3_count.setHidden(False)
+                    self.ui.le_VehicleEntry_header3_count.setHidden(False)
+                else:
+                    self.ui.lb_VehicleEntry_header3_count.setHidden(True)
+                    self.ui.le_VehicleEntry_header3_count.setHidden(True)
+                if ex:
+                    self.ui.lb_VehicleReEntry_header3_count_3.setHidden(False)
+                    self.ui.le_VehicleReEntry_header3_count_3.setHidden(False)
+                else:
+                    self.ui.lb_VehicleReEntry_header3_count_3.setHidden(True)
+                    self.ui.le_VehicleReEntry_header3_count_3.setHidden(True)
             elif i ==8 :
-                if en:self.ui.lb_VehicleEntry_header4_msezDeliverNo.setHidden(False)
-                else:self.ui.lb_VehicleEntry_header4_msezDeliverNo.setHidden(True)
-                if ex:self.ui.lb_VehicleReEntry_header4_msezDeliverNo_3.setHidden(False)
-                else:self.ui.lb_VehicleReEntry_header4_msezDeliverNo_3.setHidden(True)
+                if en:
+                    self.ui.lb_VehicleEntry_header4_msezDeliverNo.setHidden(False)
+                    self.ui.le_VehicleEntry_header4_msezDeliverNo.setHidden(False)
+                else:
+                    self.ui.lb_VehicleEntry_header4_msezDeliverNo.setHidden(True)
+                    self.ui.le_VehicleEntry_header4_msezDeliverNo.setHidden(True)
+                if ex:
+                    self.ui.lb_VehicleReEntry_header4_msezDeliverNo_3.setHidden(False)
+                    self.ui.le_VehicleReEntry_header4_msezDeliverNo_3.setHidden(False)
+                else:
+                    self.ui.lb_VehicleReEntry_header4_msezDeliverNo_3.setHidden(True)
+                    self.ui.le_VehicleReEntry_header4_msezDeliverNo_3.setHidden(True)
             elif i ==9 :
-                if en:self.ui.lb_VehicleEntry_header5_supplierChalanNo.setHidden(False)
-                else:self.ui.lb_VehicleEntry_header5_supplierChalanNo.setHidden(True)
-                if ex:self.ui.lb_VehicleReEntry_header5_supplierChalanNo_3.setHidden(False)
-                else:self.ui.lb_VehicleReEntry_header5_supplierChalanNo_3.setHidden(True)
+                if en:
+                    self.ui.lb_VehicleEntry_header5_supplierChalanNo.setHidden(False)
+                    self.ui.le_VehicleEntry_header5_supplierChalanNo.setHidden(False)
+                else:
+                    self.ui.lb_VehicleEntry_header5_supplierChalanNo.setHidden(True)
+                    self.ui.le_VehicleEntry_header5_supplierChalanNo.setHidden(True)
+                if ex:
+                    self.ui.lb_VehicleReEntry_header5_supplierChalanNo_3.setHidden(False)
+                    self.ui.le_VehicleReEntry_header5_supplierChalanNo_3.setHidden(False)
+                else:
+                    self.ui.lb_VehicleReEntry_header5_supplierChalanNo_3.setHidden(True)
+                    self.ui.le_VehicleReEntry_header5_supplierChalanNo_3.setHidden(True)
 
 
 
@@ -381,6 +461,38 @@ class UI:
 
         self.c.close()
         self.conn.close()
+    def addValuesInCodeComboBox(self):
+        self.conn = sqlite3.connect('WeighBridge.db')
+        self.c = self.conn.cursor()
+        result1 = self.c.execute("SELECT Code FROM T_Code1")
+        code1 = []
+        code2 = []
+        code3 = []
+        code4 = []
+        code5 = []
+        for c1 in result1:
+            code1.append(c1[0])
+        result2 = self.c.execute("SELECT Code FROM T_Code2")
+        for c2 in result2:
+            code2.append(c2[0])
+        result3 = self.c.execute("SELECT Code FROM T_Code3")
+        for c3 in result3:
+            code3.append(c3[0])
+        result4 = self.c.execute("SELECT Code FROM T_Code4")
+        for c4 in result4:
+            code4.append(c4[0])
+        result5 = self.c.execute("SELECT Code FROM T_Code5")
+        for c5 in result5:
+            code5.append(c5[0])
+        self.ui.combo_VehicleEntry_code1_materia.addItems(code1)
+        self.ui.combo_VehicleEntry_code2_agentName.addItems(code2)
+        self.ui.combo_VehicleEntry_code3_placeOfLoading.addItems(code3)
+        self.ui.combo_VehicleEntry_code4_moisturevalue.addItems(code4)
+        self.ui.combo_VehicleEntry_code5_size.addItems(code5)
+
+        self.c.close()
+        self.conn.close()
+
     # Functions used in Vehicle ReEntry page
     def showVehicleReEntry(self):
         self.ui.stackedWidgetMain.setCurrentWidget(self.ui.VehicleExit)
@@ -664,7 +776,7 @@ class UI:
         for i in range(1,6):
             cd = f"code{i}"
             if len(codes[cd])!= 0:
-                print(codes[cd])
+                # print(codes[cd])
                 self.c.execute("UPDATE T_CodeAndHeader SET Name=?, EN_ED=?, EX_ED=? WHERE Type=?",(codes[cd].upper(),self.en_ed[cd],self.ex_ed[cd],str(cd)))
                 self.conn.commit()
             else:
@@ -717,8 +829,8 @@ class UI:
         }
 
 
-        print(self.en_ed)
-        print(self.ex_ed)
+        # print(self.en_ed)
+        # print(self.ex_ed)
 
 
         ### Code 1 Page
@@ -762,8 +874,8 @@ class UI:
         firstColumnInRow = self.ui.tableWidget_1.item(row, 0)  # returns QTableWidgetItem
         SecondColumnInRow = self.ui.tableWidget_1.item(row, 1)
         self.Code1code = firstColumnInRow.text()
-        print("here ",self.Code1code)
-        print("row ",row)
+        # print("here ",self.Code1code)
+        # print("row ",row)
         Code1name = SecondColumnInRow.text()
         self.ui.le_parameter_code_1.setText(self.Code1code)
         self.ui.le_parameter_name_1.setText(Code1name)
@@ -1371,7 +1483,7 @@ class UI:
         cmd = "SELECT ID,User,Password,Active,Admin FROM T_UserAccountSettings"
         result = self.c.execute(cmd)
 
-        print("yes")
+
         for id,user,password,active,admin in result:
             self.idList.append(id)
             self.userList.append(user)
@@ -1379,7 +1491,7 @@ class UI:
             self.activeList.append(active)
             self.adminList.append(admin)
         self.setButtonName()
-        print(self.userList[0])
+        # print(self.userList[0])
         self.c.close()
         self.conn.close()
 

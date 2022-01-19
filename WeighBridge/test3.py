@@ -36,18 +36,24 @@ c = conn.cursor()
 # "header4" : "MSEZ DELIVERY NO",
 # "header5" : "SUPPLIER CHALLAN NO"
 # }
-codes = {"lcs": "lcs control",
-         "HP":"Hindustan Plate",
-         "Sntl":"Sintal",
-         "Hcl": "Hindustan Corp"}
-for i in codes:
+# codes = {"lcs": "lcs control",
+#          "HP":"Hindustan Plate",
+#          "Sntl":"Sintal",
+#          "Hcl": "Hindustan Corp"}
+# for i in codes:
+#
+#
+#     # c.execute("INSERT INTO T_Code5 (Code,Name) VALUES (?,?) ",(i,codes[i]))
+#     pass
+# conn.commit()
+result = c.execute("SELECT Code FROM T_Code1")
 
 
-    # c.execute("INSERT INTO T_Code5 (Code,Name) VALUES (?,?) ",(i,codes[i]))
-    pass
-conn.commit()
-# result = c.execute("SELECT EN_ED, EX_ED FROM T_CodeAndHeader")
-# for i,en in enumerate(result):
-#     print(i,en[1],sep = " ")
+# result3 = c.execute("SELECT Code FROM T_Code3")
+for c1 in result:
+    print(c1)
+result2 = c.execute("SELECT Code FROM T_Code2")
+for c11 in result2:
+    print(c11)
 c.close()
 conn.close()
