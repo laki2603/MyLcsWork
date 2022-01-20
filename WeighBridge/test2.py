@@ -110,6 +110,11 @@ class UI:
 
         ## Setting up Vehicle Entry Page
         self.ui.pb_VehicleEntry_close.clicked.connect(self.showHome)
+        self.ui.pb_VehicleEntry_entry.clicked.connect(self.Entry)
+        self.ui.pb_VehicleEntry_cancel.clicked.connect(self.VehicleEntryCancel)
+        self.ui.pb_VehicleEntry_save.clicked.connect(self.VehicleEntrySave)
+        self.ui.pb_VehicleEntry_G_weight.clicked.connect(self.getGrossWeight)
+        self.ui.pb_VehicleEntry_T_Weight.clicked.connect(self.getTareWeight)
 
         ## Setting up Vehicle ReEntry Page
         self.ui.pb_VehicleReEntry_close_3.clicked.connect(self.showHome)
@@ -193,6 +198,10 @@ class UI:
         self.ui.pb_UserAccountSettings.setHidden(True)
         self.ui.pb_HeaderSettings.setHidden(True)
 
+                ###Comm Port Settings
+        self.defaultComboBoxValues()
+        self.ui.pb_settings_Comm_save.clicked.connect(self.CommSettingsSave)
+
                  ### User Account Settings
         self.ActiveGrp = QtWidgets.QButtonGroup()
         self.AdminGrp = QtWidgets.QButtonGroup()
@@ -274,6 +283,7 @@ class UI:
             self.ui.lb_TimeDisplay.setText(str(time_))
     def WeightDisplay(self, w):
         self.ui.lb_home_WeightDisplay.setText(w)
+        self.weight = w
 
     # Functions used in Vehicle Entry page
     def showVehicleEntry(self):
@@ -281,26 +291,92 @@ class UI:
         self.getLableNameFromDB()
         self.setParameters()
         self.addValuesInCodeComboBox()
-        self.ui.pb_VehicleEntry_save.setEnabled(False)
-        self.ui.pb_VehicleEntry_cancel.setEnabled(False)
-        self.disableAllLe()
+        self.ui.pb_VehicleEntry_entry.setEnabled(True)
+        self.disableCancelSaveAllLe()
+        self.settingReadOnly()
+        self.setInitialValues()
 
-    def disableAllLe(self):
+    def setInitialValues(self):
+        self.conn = sqlite3.connect('WeighBridge.db')
+        self.c = self.conn.cursor()
+        r1 = self.c.execute("SELECT SerialNo FROM T_Entry")
+        for data in r1:
+            prevSerialNum = data[0]
+
+        currSerialNo = int(prevSerialNum) + 1
+        self.ui.le_VehicleEntry_serialNumber.setText(str(currSerialNo))
+        self.c.close()
+        self.conn.close()
+        self.ui.le_VehicleEntry_grossWeight.clear()
+        self.ui.le_VehicleEntry_netWeight.clear()
+        self.ui.le_VehicleEntry_tareWeight.clear()
+        self.ui.le_VehicleEntry_grossDate.clear()
+        self.ui.le_VehicleEntry_grossTime.clear()
+        self.ui.le_VehicleEntry_tareDate.clear()
+        self.ui.le_VehicleEntry_tareTime.clear()
+        self.ui.le_VehicleEntry_header5_supplierChalanNo.clear()
+        self.ui.le_VehicleEntry_header4_msezDeliverNo.clear()
+        self.ui.le_VehicleEntry_header3_count.clear()
+        self.ui.le_VehicleEntry_header2_supervisorName.clear()
+        self.ui.le_VehicleEntry_header1_vehicle.clear()
+
+
+    def settingReadOnly(self):
+        self.ui.le_VehicleEntry_grossDate.setReadOnly(True)
+        self.ui.le_VehicleEntry_grossTime.setReadOnly(True)
+        self.ui.le_VehicleEntry_tareDate.setReadOnly(True)
+        self.ui.le_VehicleEntry_tareTime.setReadOnly(True)
+        self.ui.le_VehicleEntry_serialNumber.setReadOnly(True)
+        # self.ui.le_VehicleEntry_grossWeight.setReadOnly(True)
+        # self.ui.le_VehicleEntry_tareWeight.setReadOnly(True)
+        self.ui.le_VehicleEntry_netWeight.setReadOnly(True)
+
+    def disableCancelSaveAllLe(self):
         self.ui.le_VehicleEntry_serialNumber.setEnabled(False)
         self.ui.le_VehicleEntry_grossWeight.setEnabled(False)
         self.ui.le_VehicleEntry_tareWeight.setEnabled(False)
         self.ui.le_VehicleEntry_netWeight.setEnabled(False)
-        self.ui.le_VehicleEntry_vehicle.setEnabled(False)
+        self.ui.le_VehicleEntry_header1_vehicle.setEnabled(False)
         self.ui.le_VehicleEntry_header2_supervisorName.setEnabled(False)
         self.ui.le_VehicleEntry_header3_count.setEnabled(False)
         self.ui.le_VehicleEntry_header4_msezDeliverNo.setEnabled(False)
         self.ui.le_VehicleEntry_header5_supplierChalanNo.setEnabled(False)
-        self.ui.le_VehicleEntry_code1.setEnabled(False)
-        self.ui.le_VehicleEntry_code2.setEnabled(False)
-        self.ui.le_VehicleEntry_name_6.setEnabled(False)
+        # self.ui.le_VehicleEntry_code1.setEnabled(False)
+        # self.ui.le_VehicleEntry_code2.setEnabled(False)
+        # self.ui.le_VehicleEntry_name_6.setEnabled(False)
         self.ui.le_VehicleEntry_amount.setEnabled(False)
 
+        self.ui.pb_VehicleEntry_save.setEnabled(False)
+        self.ui.pb_VehicleEntry_cancel.setEnabled(False)
+        self.ui.pb_VehicleEntry_G_weight.setEnabled(False)
+        self.ui.pb_VehicleEntry_T_Weight.setEnabled(False)
 
+    def Entry(self):
+        self.ui.pb_VehicleEntry_save.setEnabled(True)
+        self.ui.pb_VehicleEntry_cancel.setEnabled(True)
+        self.ui.pb_VehicleEntry_entry.setEnabled(False)
+
+        self.ui.le_VehicleEntry_serialNumber.setEnabled(True)
+
+
+        self.ui.le_VehicleEntry_grossWeight.setEnabled(True)
+        self.ui.le_VehicleEntry_tareWeight.setEnabled(True)
+        self.ui.le_VehicleEntry_netWeight.setEnabled(True)
+        self.ui.le_VehicleEntry_header1_vehicle.setEnabled(True)
+        self.ui.le_VehicleEntry_header2_supervisorName.setEnabled(True)
+        self.ui.le_VehicleEntry_header3_count.setEnabled(True)
+        self.ui.le_VehicleEntry_header4_msezDeliverNo.setEnabled(True)
+        self.ui.le_VehicleEntry_header5_supplierChalanNo.setEnabled(True)
+        # self.ui.le_VehicleEntry_code1.setEnabled(True)
+        # self.ui.le_VehicleEntry_code2.setEnabled(True)
+        # self.ui.le_VehicleEntry_name_6.setEnabled(True)
+        self.ui.le_VehicleEntry_amount.setEnabled(True)
+        self.ui.pb_VehicleEntry_G_weight.setEnabled(True)
+        self.ui.pb_VehicleEntry_T_Weight.setEnabled(True)
+
+    def VehicleEntryCancel(self):
+        self.ui.pb_VehicleEntry_entry.setEnabled(True)
+        self.disableCancelSaveAllLe()
 
 
     def setParameters(self):
@@ -423,6 +499,90 @@ class UI:
 
         self.c.close()
         self.conn.close()
+
+    def VehicleEntrySave(self):
+
+
+
+        self.conn = sqlite3.connect('WeighBridge.db')
+        self.c = self.conn.cursor()
+        r1 = self.c.execute("SELECT SerialNo FROM T_Entry")
+        for data in r1:
+            prevSerialNum = data[0]
+
+        currSerialNo = int(prevSerialNum) +1
+
+        header1 = self.ui.le_VehicleEntry_header1_vehicle.text()
+        header2 = self.ui.le_VehicleEntry_header2_supervisorName.text()
+        header3 = self.ui.le_VehicleEntry_header3_count.text()
+        header4 = self.ui.le_VehicleEntry_header4_msezDeliverNo.text()
+        header5 = self.ui.le_VehicleEntry_header5_supplierChalanNo.text()
+        code1 = self.ui.combo_VehicleEntry_code1_materia.currentText()
+        code2 = self.ui.combo_VehicleEntry_code2_agentName.currentText()
+        code3 = self.ui.combo_VehicleEntry_code3_placeOfLoading.currentText()
+        code4 = self.ui.combo_VehicleEntry_code4_moisturevalue.currentText()
+        code5 = self.ui.combo_VehicleEntry_code5_size.currentText()
+        grosswt = self.ui.le_VehicleEntry_grossWeight.text()
+        grossunit = self.ui.lb_vehicleEntry_unit_gross.text()
+        grossdate = self.ui.le_VehicleEntry_grossDate.text()
+        grosstime = self.ui.le_VehicleEntry_grossTime.text()
+        tarewt = self.ui.le_VehicleEntry_tareWeight.text()
+        tareunit = self.ui.lb_vehicleEntry_unit_tare.text()
+        taredate = self.ui.le_VehicleEntry_tareDate.text()
+        taretime = self.ui.le_VehicleEntry_tareTime.text()
+        amount = self.ui.le_VehicleEntry_amount.text()
+
+        if grosswt and grossdate and grosstime:
+
+            a = (currSerialNo, header1, header2, header3, header4, header5, code1, code2, code3, code4, code5, grosswt, grossunit, grosstime, grossdate, amount)
+            self.c.execute("INSERT INTO T_Entry (SerialNo,header1,header2,header3,header4,header5,code1_no,code2_no,code3_no,code4_no,code5_no,grossWt,grossUnit,grossTime,grossDate,Amount) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                           a)
+            self.conn.commit()
+
+        elif tarewt:
+
+            a = (currSerialNo, header1, header2, header3, header4, header5, code1, code2, code3, code4, code5, tarewt,
+                 tareunit, taretime, taredate, amount)
+            self.c.execute(
+                "INSERT INTO T_Entry (SerialNo,header1,header2,header3,header4,header5,code1_no,code2_no,code3_no,code4_no,code5_no,tareWt,tareUnit,tareTime,tareDate,Amount) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                a)
+            self.conn.commit()
+        else:
+            self.ui.pb_VehicleEntry_save.setEnabled(True)
+            self.showErrormsg("error","enter the weight")
+
+
+        self.disableCancelSaveAllLe()
+        self.c.close()
+        self.conn.close()
+        self.setInitialValues()
+
+
+
+    def getGrossWeight(self):
+        self.ui.pb_VehicleEntry_G_weight.setEnabled(False)
+        self.ui.pb_VehicleEntry_T_Weight.setEnabled(False)
+        # self.ui.le_VehicleEntry_grossWeight.setText(self.weight)
+        DateTime = datetime.now()
+        date = DateTime.date()
+        time_ = DateTime.strftime("%H:%M:%S")
+
+        self.ui.le_VehicleEntry_grossDate.setText(str(date))
+
+        self.ui.le_VehicleEntry_grossTime.setText(str(time_))
+
+    def getTareWeight(self):
+        self.ui.pb_VehicleEntry_G_weight.setEnabled(False)
+        self.ui.pb_VehicleEntry_T_Weight.setEnabled(False)
+        # self.ui.le_VehicleEntry_tareWeight.setText(self.weight)
+        DateTime = datetime.now()
+        date = DateTime.date()
+        time_ = DateTime.strftime("%H:%M:%S")
+
+        self.ui.le_VehicleEntry_tareDate.setText(str(date))
+
+        self.ui.le_VehicleEntry_tareTime.setText(str(time_))
+
     def getLableNameFromDB(self):
         self.conn = sqlite3.connect('WeighBridge.db')
         self.c = self.conn.cursor()
@@ -1386,9 +1546,12 @@ class UI:
     #### Functions used in Settings page
     def showSettings(self):
         self.ui.stackedWidgetMain.setCurrentWidget(self.ui.Settings)
-
+        self.getValuesFromDB()
+        self.ui.pb_settings_Comm_save.setEnabled(False)
     def showCommPortSettings(self):
         self.ui.stackedWidgetSettings.setCurrentWidget(self.ui.CommPortSettings)
+        self.getValuesFromDB()
+        self.ui.pb_settings_Comm_save.setEnabled(False)
     def showHeaderSettings(self):
         self.ui.stackedWidgetSettings.setCurrentWidget(self.ui.HeaderSettings)
 
@@ -1405,7 +1568,8 @@ class UI:
 
           # CommPort  Settings Page
     def findPorts(self):
-
+        self.ui.pb_settings_Comm_save.setEnabled(True)
+        self.ui.pb_settings_search.setEnabled(False)
         self.pts = serial.tools.list_ports.comports()
         print("ok")
         self.ports = []
@@ -1419,8 +1583,65 @@ class UI:
             p = p.split(" ")
             port = p[0]
             self.ports.append(port)
-        self.ui.combo_settings_CommPortDisplay.addItems(self.ports)
+        self.ui.lb_settings_CommPortDisplay.setText(self.ports[0])
         #self.s = self.ui.combo_settings_CommPortDisplay.setCurrentText()
+    def getValuesFromDB(self):
+        conn = sqlite3.connect("WeighBridge.db")
+        c = conn.cursor()
+        result = c.execute("SELECT * FROM T_CommSettings")
+        for _,data in enumerate(result):
+            comm = data[1]
+            bdrate_ = data[2]
+            controler_ = data[3]
+            pt_ = data[4]
+            pport = data[5]
+            pbdrate_ = data[6]
+        bdrate = ["1200", "2400", "4800", "9600", "19200"]
+        controller = ["WT", "MW5004", "AWEW"]
+        pbdrate = ["1200", "2400", "4800", "9600", "19200"]
+        ptype = ["InkJet", "DotMatrix"]
+        bi = bdrate.index(str(bdrate_))
+        ci = controller.index(str(controler_))
+        pbi = pbdrate.index(str(pbdrate_))
+        pi = ptype.index(str(pt_))
+
+        self.ui.lb_settings_CommPortDisplay.setText(str(comm).upper())
+        self.ui.lb_settings_PrinterCommPortDisplay.setText(str(pport).upper())
+        self.ui.combo_settings_BaudRate.setCurrentIndex(bi)
+        self.ui.combo_settings_Controller.setCurrentIndex(ci)
+        self.ui.combo_settings_PrinterBaudRate.setCurrentIndex(pbi)
+        self.ui.combo_settings_PrinterType.setCurrentIndex(pi)
+        c.close()
+        conn.close()
+
+    def defaultComboBoxValues(self):
+        bdrate = ["1200","2400","4800","9600","19200"]
+        controller = ["WT","MW5004","AWEW"]
+        pbdrate = ["1200","2400","4800","9600","19200"]
+        ptype = ["InkJet","DotMatrix"]
+        self.ui.combo_settings_BaudRate.addItems(bdrate)
+        self.ui.combo_settings_Controller.addItems(controller)
+        self.ui.combo_settings_PrinterBaudRate.addItems(pbdrate)
+        self.ui.combo_settings_PrinterType.addItems(ptype)
+
+    def CommSettingsSave(self):
+        self.ui.pb_settings_Comm_save.setEnabled(False)
+        self.ui.pb_settings_search.setEnabled(True)
+        conn = sqlite3.connect("WeighBridge.db")
+        c = conn.cursor()
+        port = self.ui.lb_settings_CommPortDisplay.text()
+        # port = "Com5"
+        bdrate = self.ui.combo_settings_BaudRate.currentText()
+        controller = self.ui.combo_settings_Controller.currentText()
+        PPort = self.ui.lb_settings_PrinterCommPortDisplay.text()
+        Pbdrate = self.ui.combo_settings_PrinterBaudRate.currentText()
+        ptype = self.ui.combo_settings_PrinterType.currentText()
+        values = (port,bdrate,controller,PPort,Pbdrate,ptype,1)
+        c.execute("UPDATE T_CommSettings SET Comm=?,BaudRate=?,Controller=?,PrinterPort=?,PrinterBaudRate=?,Printer=? WHERE Id=?",values)
+
+        conn.commit()
+        c.close()
+        conn.close()
 
            # UserAccount Settings
     def default(self):
@@ -1732,9 +1953,16 @@ class Serial(QThread):
         return w
 
     def run(self):
-        ip = serial.Serial(port="COM5", baudrate=9600, bytesize=8, parity=serial.PARITY_NONE,
+        conn = sqlite3.connect("WeighBridge.db")
+        c = conn.cursor()
+        result = c.execute("SELECT Comm,BaudRate FROM T_CommSettings")
+        for i,data in enumerate(result):
+            comm = str(data[0]).upper()
+            bdrate = int(data[1])
+        ip = serial.Serial(port=comm, baudrate=bdrate, bytesize=8, parity=serial.PARITY_NONE,
                            stopbits=serial.STOPBITS_ONE)
-
+        c.close()
+        conn.close()
         while True:
             l = str(ip.read(13))
 

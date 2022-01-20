@@ -46,14 +46,25 @@ c = conn.cursor()
 #     # c.execute("INSERT INTO T_Code5 (Code,Name) VALUES (?,?) ",(i,codes[i]))
 #     pass
 # conn.commit()
-result = c.execute("SELECT Code FROM T_Code1")
+# result = c.execute("SELECT Code FROM T_Code1")
+#
+#
+conn = sqlite3.connect("WeighBridge.db")
+c = conn.cursor()
+# c.execute("INSERT INTO T_CommSettings (Id,Comm,BaudRate,Controller) VALUES (?,?,?,?)",(1,"com5",9600,"wt"))
+# conn.commit()
+result = c.execute("SELECT Comm,BaudRate FROM T_CommSettings")
 
-
-# result3 = c.execute("SELECT Code FROM T_Code3")
-for c1 in result:
-    print(c1)
-result2 = c.execute("SELECT Code FROM T_Code2")
-for c11 in result2:
-    print(c11)
+for i,data in enumerate(result):
+    comm = str(data[0]).upper()
+    bdrate = int(data[1])
 c.close()
 conn.close()
+print(comm,bdrate,sep="\n")
+
+# s = ""
+# if s:
+#     print('ok')
+# else:
+#     print('not ok')
+

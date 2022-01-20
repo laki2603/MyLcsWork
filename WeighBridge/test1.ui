@@ -59,7 +59,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>5</number>
+     <number>3</number>
     </property>
     <widget class="QWidget" name="Home">
      <widget class="QLabel" name="lb_HomeBackGround">
@@ -323,7 +323,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="ParameterSettingsMainPage">
        <widget class="QLabel" name="lb_parameter_InnerBackGround">
@@ -3715,7 +3715,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="CommPortSettings">
        <widget class="QLabel" name="lb_InnerBackground">
@@ -3724,7 +3724,7 @@
           <x>10</x>
           <y>10</y>
           <width>951</width>
-          <height>351</height>
+          <height>371</height>
          </rect>
         </property>
         <property name="autoFillBackground">
@@ -3953,14 +3953,14 @@
          <enum>QFrame::Box</enum>
         </property>
         <property name="text">
-         <string>TextLabel</string>
+         <string/>
         </property>
        </widget>
        <widget class="QPushButton" name="pb_settings_search">
         <property name="geometry">
          <rect>
-          <x>240</x>
-          <y>280</y>
+          <x>380</x>
+          <y>340</y>
           <width>93</width>
           <height>28</height>
          </rect>
@@ -3969,14 +3969,38 @@
          <string>Search</string>
         </property>
        </widget>
-       <widget class="QComboBox" name="combo_settings_CommPortDisplay">
+       <widget class="QPushButton" name="pb_settings_Comm_save">
+        <property name="geometry">
+         <rect>
+          <x>480</x>
+          <y>340</y>
+          <width>93</width>
+          <height>28</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Save</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="lb_settings_CommPortDisplay">
         <property name="geometry">
          <rect>
           <x>250</x>
           <y>100</y>
-          <width>131</width>
-          <height>22</height>
+          <width>121</width>
+          <height>31</height>
          </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>12</pointsize>
+         </font>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::Box</enum>
+        </property>
+        <property name="text">
+         <string/>
         </property>
        </widget>
       </widget>
@@ -4812,7 +4836,7 @@
      <widget class="QLabel" name="label_7">
       <property name="geometry">
        <rect>
-        <x>10</x>
+        <x>0</x>
         <y>0</y>
         <width>1022</width>
         <height>600</height>
@@ -4831,7 +4855,7 @@
       <property name="geometry">
        <rect>
         <x>250</x>
-        <y>50</y>
+        <y>120</y>
         <width>181</width>
         <height>22</height>
        </rect>
@@ -4867,7 +4891,7 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>50</y>
+        <y>120</y>
         <width>228</width>
         <height>22</height>
        </rect>
@@ -4885,7 +4909,7 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>170</y>
+        <y>240</y>
         <width>228</width>
         <height>22</height>
        </rect>
@@ -4903,7 +4927,7 @@
       <property name="geometry">
        <rect>
         <x>250</x>
-        <y>170</y>
+        <y>240</y>
         <width>181</width>
         <height>22</height>
        </rect>
@@ -4913,7 +4937,7 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>130</y>
+        <y>200</y>
         <width>228</width>
         <height>22</height>
        </rect>
@@ -4931,7 +4955,7 @@
       <property name="geometry">
        <rect>
         <x>250</x>
-        <y>130</y>
+        <y>200</y>
         <width>181</width>
         <height>22</height>
        </rect>
@@ -4941,7 +4965,7 @@
       <property name="geometry">
        <rect>
         <x>250</x>
-        <y>90</y>
+        <y>160</y>
         <width>181</width>
         <height>22</height>
        </rect>
@@ -4951,7 +4975,7 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>90</y>
+        <y>160</y>
         <width>228</width>
         <height>22</height>
        </rect>
@@ -5007,12 +5031,12 @@
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
-     <widget class="QLineEdit" name="le_VehicleEntry_grossDateTime">
+     <widget class="QLineEdit" name="le_VehicleEntry_grossDate">
       <property name="geometry">
        <rect>
-        <x>680</x>
+        <x>700</x>
         <y>420</y>
-        <width>181</width>
+        <width>91</width>
         <height>22</height>
        </rect>
       </property>
@@ -5020,37 +5044,19 @@
      <widget class="QLineEdit" name="le_VehicleEntry_amount">
       <property name="geometry">
        <rect>
-        <x>680</x>
+        <x>700</x>
         <y>500</y>
         <width>181</width>
         <height>22</height>
        </rect>
       </property>
      </widget>
-     <widget class="QLabel" name="lb_VehicleEntry_code1">
-      <property name="geometry">
-       <rect>
-        <x>549</x>
-        <y>300</y>
-        <width>120</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>13</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>CODE</string>
-      </property>
-     </widget>
      <widget class="QLabel" name="lb_VehicleEntry_grossDateTime">
       <property name="geometry">
        <rect>
-        <x>549</x>
+        <x>488</x>
         <y>420</y>
-        <width>120</width>
+        <width>211</width>
         <height>22</height>
        </rect>
       </property>
@@ -5060,45 +5066,15 @@
        </font>
       </property>
       <property name="text">
-       <string>DATE TIME</string>
+       <string>GROSS DATE TIME</string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="le_VehicleEntry_tareDateTime">
+     <widget class="QLineEdit" name="le_VehicleEntry_tareDate">
       <property name="geometry">
        <rect>
-        <x>680</x>
+        <x>700</x>
         <y>460</y>
-        <width>181</width>
-        <height>22</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QLineEdit" name="le_VehicleEntry_name_6">
-      <property name="geometry">
-       <rect>
-        <x>680</x>
-        <y>380</y>
-        <width>181</width>
-        <height>22</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QLineEdit" name="le_VehicleEntry_code1">
-      <property name="geometry">
-       <rect>
-        <x>680</x>
-        <y>300</y>
-        <width>181</width>
-        <height>22</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QLineEdit" name="le_VehicleEntry_code2">
-      <property name="geometry">
-       <rect>
-        <x>680</x>
-        <y>340</y>
-        <width>181</width>
+        <width>91</width>
         <height>22</height>
        </rect>
       </property>
@@ -5106,9 +5082,9 @@
      <widget class="QLabel" name="lb_VehicleEntry_tareDateTime">
       <property name="geometry">
        <rect>
-        <x>549</x>
+        <x>490</x>
         <y>460</y>
-        <width>120</width>
+        <width>211</width>
         <height>22</height>
        </rect>
       </property>
@@ -5118,49 +5094,13 @@
        </font>
       </property>
       <property name="text">
-       <string>DATE TIME</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lb_VehicleEntry_code2">
-      <property name="geometry">
-       <rect>
-        <x>549</x>
-        <y>340</y>
-        <width>120</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>13</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>CODE</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lb_VehicleEntry_name_6">
-      <property name="geometry">
-       <rect>
-        <x>549</x>
-        <y>380</y>
-        <width>120</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>13</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>NAME</string>
+       <string>TARE DATE TIME</string>
       </property>
      </widget>
      <widget class="QLabel" name="lb_VehicleEntry_amount">
       <property name="geometry">
        <rect>
-        <x>549</x>
+        <x>490</x>
         <y>500</y>
         <width>120</width>
         <height>22</height>
@@ -5178,7 +5118,7 @@
      <widget class="QPushButton" name="pb_VehicleEntry_G_weight">
       <property name="geometry">
        <rect>
-        <x>890</x>
+        <x>910</x>
         <y>420</y>
         <width>93</width>
         <height>28</height>
@@ -5198,7 +5138,7 @@
      <widget class="QPushButton" name="pb_VehicleEntry_T_Weight">
       <property name="geometry">
        <rect>
-        <x>890</x>
+        <x>910</x>
         <y>460</y>
         <width>93</width>
         <height>28</height>
@@ -5335,11 +5275,11 @@
        <string>Kg</string>
       </property>
      </widget>
-     <widget class="QLabel" name="lb_vehicleEntry_kg_4">
+     <widget class="QLabel" name="lb_vehicleEntry_unit_net">
       <property name="geometry">
        <rect>
         <x>440</x>
-        <y>170</y>
+        <y>240</y>
         <width>31</width>
         <height>20</height>
        </rect>
@@ -5358,11 +5298,11 @@
        <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
       </property>
      </widget>
-     <widget class="QLabel" name="lb_vehicleEntry_kg_3">
+     <widget class="QLabel" name="lb_vehicleEntry_unit_tare">
       <property name="geometry">
        <rect>
         <x>440</x>
-        <y>129</y>
+        <y>199</y>
         <width>31</width>
         <height>20</height>
        </rect>
@@ -5381,11 +5321,11 @@
        <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
       </property>
      </widget>
-     <widget class="QLabel" name="lb_vehicleEntry_kg_2">
+     <widget class="QLabel" name="lb_vehicleEntry_unit_gross">
       <property name="geometry">
        <rect>
         <x>440</x>
-        <y>89</y>
+        <y>159</y>
         <width>31</width>
         <height>20</height>
        </rect>
@@ -5408,7 +5348,7 @@
       <property name="geometry">
        <rect>
         <x>490</x>
-        <y>260</y>
+        <y>340</y>
         <width>181</width>
         <height>22</height>
        </rect>
@@ -5426,7 +5366,7 @@
       <property name="geometry">
        <rect>
         <x>490</x>
-        <y>220</y>
+        <y>380</y>
         <width>120</width>
         <height>22</height>
        </rect>
@@ -5443,8 +5383,8 @@
      <widget class="QComboBox" name="combo_VehicleEntry_code5_size">
       <property name="geometry">
        <rect>
-        <x>680</x>
-        <y>220</y>
+        <x>700</x>
+        <y>380</y>
         <width>181</width>
         <height>22</height>
        </rect>
@@ -5453,8 +5393,8 @@
      <widget class="QComboBox" name="combo_VehicleEntry_code4_moisturevalue">
       <property name="geometry">
        <rect>
-        <x>680</x>
-        <y>260</y>
+        <x>700</x>
+        <y>340</y>
         <width>181</width>
         <height>22</height>
        </rect>
@@ -5464,7 +5404,7 @@
       <property name="geometry">
        <rect>
         <x>250</x>
-        <y>250</y>
+        <y>320</y>
         <width>181</width>
         <height>22</height>
        </rect>
@@ -5473,9 +5413,9 @@
      <widget class="QLabel" name="lb_VehicleEntry_code1_materia">
       <property name="geometry">
        <rect>
-        <x>10</x>
-        <y>410</y>
-        <width>228</width>
+        <x>487</x>
+        <y>220</y>
+        <width>181</width>
         <height>22</height>
        </rect>
       </property>
@@ -5492,7 +5432,7 @@
       <property name="geometry">
        <rect>
         <x>250</x>
-        <y>370</y>
+        <y>440</y>
         <width>181</width>
         <height>22</height>
        </rect>
@@ -5502,7 +5442,7 @@
       <property name="geometry">
        <rect>
         <x>250</x>
-        <y>290</y>
+        <y>360</y>
         <width>181</width>
         <height>22</height>
        </rect>
@@ -5511,9 +5451,9 @@
      <widget class="QLabel" name="lb_VehicleEntry_code3_placeOfLoading">
       <property name="geometry">
        <rect>
-        <x>10</x>
-        <y>490</y>
-        <width>228</width>
+        <x>487</x>
+        <y>300</y>
+        <width>201</width>
         <height>22</height>
        </rect>
       </property>
@@ -5530,7 +5470,7 @@
       <property name="geometry">
        <rect>
         <x>250</x>
-        <y>330</y>
+        <y>400</y>
         <width>181</width>
         <height>22</height>
        </rect>
@@ -5540,7 +5480,7 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>290</y>
+        <y>360</y>
         <width>228</width>
         <height>22</height>
        </rect>
@@ -5558,7 +5498,7 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>210</y>
+        <y>280</y>
         <width>228</width>
         <height>22</height>
        </rect>
@@ -5576,7 +5516,7 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>330</y>
+        <y>400</y>
         <width>228</width>
         <height>22</height>
        </rect>
@@ -5593,8 +5533,8 @@
      <widget class="QComboBox" name="combo_VehicleEntry_code3_placeOfLoading">
       <property name="geometry">
        <rect>
-        <x>250</x>
-        <y>490</y>
+        <x>700</x>
+        <y>300</y>
         <width>181</width>
         <height>22</height>
        </rect>
@@ -5604,7 +5544,7 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>250</y>
+        <y>320</y>
         <width>228</width>
         <height>22</height>
        </rect>
@@ -5621,9 +5561,9 @@
      <widget class="QLabel" name="lb_VehicleEntry_code2_agentName">
       <property name="geometry">
        <rect>
-        <x>10</x>
-        <y>450</y>
-        <width>228</width>
+        <x>487</x>
+        <y>260</y>
+        <width>181</width>
         <height>22</height>
        </rect>
       </property>
@@ -5639,8 +5579,8 @@
      <widget class="QComboBox" name="combo_VehicleEntry_code2_agentName">
       <property name="geometry">
        <rect>
-        <x>250</x>
-        <y>450</y>
+        <x>700</x>
+        <y>260</y>
         <width>181</width>
         <height>22</height>
        </rect>
@@ -5649,8 +5589,8 @@
      <widget class="QComboBox" name="combo_VehicleEntry_code1_materia">
       <property name="geometry">
        <rect>
-        <x>250</x>
-        <y>410</y>
+        <x>700</x>
+        <y>220</y>
         <width>181</width>
         <height>22</height>
        </rect>
@@ -5660,7 +5600,7 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>370</y>
+        <y>440</y>
         <width>228</width>
         <height>22</height>
        </rect>
@@ -5674,12 +5614,32 @@
        <string>SUPPLIER CHALAN NO</string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="le_VehicleEntry_vehicle">
+     <widget class="QLineEdit" name="le_VehicleEntry_header1_vehicle">
       <property name="geometry">
        <rect>
         <x>250</x>
-        <y>210</y>
+        <y>280</y>
         <width>181</width>
+        <height>22</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="le_VehicleEntry_grossTime">
+      <property name="geometry">
+       <rect>
+        <x>800</x>
+        <y>420</y>
+        <width>91</width>
+        <height>22</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="le_VehicleEntry_tareTime">
+      <property name="geometry">
+       <rect>
+        <x>800</x>
+        <y>460</y>
+        <width>91</width>
         <height>22</height>
        </rect>
       </property>
