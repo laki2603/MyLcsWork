@@ -20,8 +20,7 @@ import sqlite3
 #     print(pw)
 # c.close()
 # conn.close()
-conn = sqlite3.connect('WeighBridge.db')
-c = conn.cursor()
+
 # code1 = "MATERIA"
 # code2 = "AGENT NAME"
 # code3 = "PLACE OF LOADING"
@@ -53,15 +52,31 @@ conn = sqlite3.connect("WeighBridge.db")
 c = conn.cursor()
 # c.execute("INSERT INTO T_CommSettings (Id,Comm,BaudRate,Controller) VALUES (?,?,?,?)",(1,"com5",9600,"wt"))
 # conn.commit()
-result = c.execute("SELECT Comm,BaudRate FROM T_CommSettings")
+values = (header1, header2, header3, header4, header5, code1, code2, code3, code4, code5, grosswt, grossunit, grosstime, grossdate,
+          tarewt, tareunit, taretime, taredate, netwt, amount, serialno)
+result = c.execute("UPDATE T_Entry SET header1=?,header2=?,header3=?,header4=?,header5=?,code1_no=?,code2_no=?,code3_no=?,code4_no=?,code5_no=?,grossWt=?,grossUnit=?,grossTime=?,grossDate=?,tareWt=?,tareUnit=?,tareTime=?,tareDate=?,netWt=?,Amount=? WHERE SerialNo=?",values)
+print(result)
+if result:
 
-for i,data in enumerate(result):
-    comm = str(data[0]).upper()
-    bdrate = int(data[1])
+    for i,data in enumerate(result):
+        print("s")
+        print(data)
+        if not data[15]:
+            print("s")
+else:
+    print("no data")
 c.close()
 conn.close()
-print(comm,bdrate,sep="\n")
 
+# con = sqlite3.connect("myDb.db")
+# c = con.cursor()
+# c.execute("""CREATE TABLE "T_Code1" (
+# 	"Code"	TEXT,
+# 	"Name"	TEXT
+# );""")
+# con.commit()
+# c.close()
+# con.close()
 # s = ""
 # if s:
 #     print('ok')

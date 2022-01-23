@@ -110,14 +110,22 @@ class UI:
 
         ## Setting up Vehicle Entry Page
         self.ui.pb_VehicleEntry_close.clicked.connect(self.showHome)
-        self.ui.pb_VehicleEntry_entry.clicked.connect(self.Entry)
+        self.ui.pb_VehicleEntry_entry.clicked.connect(self.Entry_Entry)
         self.ui.pb_VehicleEntry_cancel.clicked.connect(self.VehicleEntryCancel)
         self.ui.pb_VehicleEntry_save.clicked.connect(self.VehicleEntrySave)
-        self.ui.pb_VehicleEntry_G_weight.clicked.connect(self.getGrossWeight)
-        self.ui.pb_VehicleEntry_T_Weight.clicked.connect(self.getTareWeight)
+        self.ui.pb_VehicleEntry_G_weight.clicked.connect(self.Entry_getGrossWeight)
+        self.ui.pb_VehicleEntry_T_Weight.clicked.connect(self.Entry_getTareWeight)
 
         ## Setting up Vehicle ReEntry Page
         self.ui.pb_VehicleReEntry_close_3.clicked.connect(self.showHome)
+        self.ui.pb_VehicleReEntry_entry_2.clicked.connect(self.Exit_Entry)
+        self.ui.pb_VehicleReEntry_cancel_2.clicked.connect(self.Exit_Cancel)
+        self.ui.pb_VehicleReEntry_serialNoSearch_3.clicked.connect(self.Exit_SnoSearch)
+        self.ui.pb_VehicleReEntry_G_weight_3.clicked.connect(self.Exit_getGrossWeight)
+        self.ui.pb_VehicleReEntry_T_Weight_3.clicked.connect(self.Exit_getTareWeight)
+        self.ui.le_VehicleReEntry_netWeight_3.setReadOnly(True)
+        self.ui.pb_VehicleReEntry_N_weight_3.clicked.connect(self.Exit_netWeight)
+        self.ui.pb_VehicleReEntry_save_2.clicked.connect(self.Exit_Save)
 
         ## Setting up Parameter Settings Page
         self.setCancelSaveAddDelete()
@@ -292,11 +300,11 @@ class UI:
         self.setParameters()
         self.addValuesInCodeComboBox()
         self.ui.pb_VehicleEntry_entry.setEnabled(True)
-        self.disableCancelSaveAllLe()
-        self.settingReadOnly()
-        self.setInitialValues()
+        self.Entry_disableCancelSaveAllLe()
+        self.Entry_settingReadOnly()
+        self.Entry_setInitialValues()
 
-    def setInitialValues(self):
+    def Entry_setInitialValues(self):
         self.conn = sqlite3.connect('WeighBridge.db')
         self.c = self.conn.cursor()
         r1 = self.c.execute("SELECT SerialNo FROM T_Entry")
@@ -321,7 +329,9 @@ class UI:
         self.ui.le_VehicleEntry_header1_vehicle.clear()
 
 
-    def settingReadOnly(self):
+
+
+    def Entry_settingReadOnly(self):
         self.ui.le_VehicleEntry_grossDate.setReadOnly(True)
         self.ui.le_VehicleEntry_grossTime.setReadOnly(True)
         self.ui.le_VehicleEntry_tareDate.setReadOnly(True)
@@ -331,7 +341,7 @@ class UI:
         # self.ui.le_VehicleEntry_tareWeight.setReadOnly(True)
         self.ui.le_VehicleEntry_netWeight.setReadOnly(True)
 
-    def disableCancelSaveAllLe(self):
+    def Entry_disableCancelSaveAllLe(self):
         self.ui.le_VehicleEntry_serialNumber.setEnabled(False)
         self.ui.le_VehicleEntry_grossWeight.setEnabled(False)
         self.ui.le_VehicleEntry_tareWeight.setEnabled(False)
@@ -351,7 +361,7 @@ class UI:
         self.ui.pb_VehicleEntry_G_weight.setEnabled(False)
         self.ui.pb_VehicleEntry_T_Weight.setEnabled(False)
 
-    def Entry(self):
+    def Entry_Entry(self):
         self.ui.pb_VehicleEntry_save.setEnabled(True)
         self.ui.pb_VehicleEntry_cancel.setEnabled(True)
         self.ui.pb_VehicleEntry_entry.setEnabled(False)
@@ -376,7 +386,7 @@ class UI:
 
     def VehicleEntryCancel(self):
         self.ui.pb_VehicleEntry_entry.setEnabled(True)
-        self.disableCancelSaveAllLe()
+        self.Entry_disableCancelSaveAllLe()
 
 
     def setParameters(self):
@@ -501,9 +511,7 @@ class UI:
         self.conn.close()
 
     def VehicleEntrySave(self):
-
-
-
+        self.ui.pb_VehicleEntry_entry.setEnabled(True)
         self.conn = sqlite3.connect('WeighBridge.db')
         self.c = self.conn.cursor()
         r1 = self.c.execute("SELECT SerialNo FROM T_Entry")
@@ -552,14 +560,14 @@ class UI:
             self.showErrormsg("error","enter the weight")
 
 
-        self.disableCancelSaveAllLe()
+        self.Entry_disableCancelSaveAllLe()
         self.c.close()
         self.conn.close()
-        self.setInitialValues()
+        self.Entry_setInitialValues()
 
 
 
-    def getGrossWeight(self):
+    def Entry_getGrossWeight(self):
         self.ui.pb_VehicleEntry_G_weight.setEnabled(False)
         self.ui.pb_VehicleEntry_T_Weight.setEnabled(False)
         # self.ui.le_VehicleEntry_grossWeight.setText(self.weight)
@@ -571,7 +579,7 @@ class UI:
 
         self.ui.le_VehicleEntry_grossTime.setText(str(time_))
 
-    def getTareWeight(self):
+    def Entry_getTareWeight(self):
         self.ui.pb_VehicleEntry_G_weight.setEnabled(False)
         self.ui.pb_VehicleEntry_T_Weight.setEnabled(False)
         # self.ui.le_VehicleEntry_tareWeight.setText(self.weight)
@@ -650,6 +658,12 @@ class UI:
         self.ui.combo_VehicleEntry_code4_moisturevalue.addItems(code4)
         self.ui.combo_VehicleEntry_code5_size.addItems(code5)
 
+        self.ui.combo_VehicleReEntry_code1_materia_3.addItems(code1)
+        self.ui.combo_VehicleReEntry_code2_agentName_3.addItems(code2)
+        self.ui.combo_VehicleReEntry_code3_placeOfLoading_3.addItems(code3)
+        self.ui.combo_VehicleReEntry_code4_moistureValue.addItems(code4)
+        self.ui.combo_VehicleReEntry_code5_size.addItems(code5)
+
         self.c.close()
         self.conn.close()
 
@@ -657,6 +671,225 @@ class UI:
     def showVehicleReEntry(self):
         self.ui.stackedWidgetMain.setCurrentWidget(self.ui.VehicleExit)
         self.getLableNameFromDB()
+        self.setParameters()
+        self.addValuesInCodeComboBox()
+        self.ui.pb_VehicleReEntry_entry_2.setEnabled(True)
+        self.Exit_disableCancelSaveAllLe()
+        self.Exit_settingReadOnly()
+        self.Exit_setInitialValues()
+        self.Exit_addVehicleComboBox()
+
+    def Exit_addVehicleComboBox(self):
+        self.conn = sqlite3.connect("WeighBridge.db")
+        self.c = self.conn.cursor()
+        vehicles = []
+        result = self.c.execute("SELECT header1 FROM T_Entry")
+        for v in result:
+            vehicles.append(v[0])
+
+        self.ui.combo_VehicleReEntry_vehicle.addItems(vehicles)
+        self.c.close()
+        self.conn.close()
+
+    def Exit_disableCancelSaveAllLe(self):
+        self.ui.le_VehicleReEntry_serialNumber_3.setEnabled(False)
+        self.ui.le_VehicleReEntry_grossWeight_3.setEnabled(False)
+        self.ui.le_VehicleReEntry_tareWeight_3.setEnabled(False)
+        self.ui.le_VehicleReEntry_netWeight_3.setEnabled(False)
+        self.ui.combo_VehicleReEntry_vehicle.setEnabled(False)
+        self.ui.le_VehicleReEntry_header2_supervisorName_3.setEnabled(False)
+        self.ui.le_VehicleReEntry_header3_count_3.setEnabled(False)
+        self.ui.le_VehicleReEntry_header4_msezDeliverNo_3.setEnabled(False)
+        self.ui.le_VehicleReEntry_header5_supplierChalanNo_3.setEnabled(False)
+        # self.ui.le_VehicleEntry_code1.setEnabled(False)
+        # self.ui.le_VehicleEntry_code2.setEnabled(False)
+        # self.ui.le_VehicleEntry_name_6.setEnabled(False)
+        self.ui.le_VehicleReEntry_amount_3.setEnabled(False)
+
+        self.ui.pb_VehicleReEntry_save_2.setEnabled(False)
+        self.ui.pb_VehicleReEntry_cancel_2.setEnabled(False)
+        self.ui.pb_VehicleReEntry_G_weight_3.setEnabled(False)
+        self.ui.pb_VehicleReEntry_T_Weight_3.setEnabled(False)
+
+    def Exit_settingReadOnly(self):
+        self.ui.le_VehicleReEntry_grossDate_2.setReadOnly(True)
+        self.ui.le_VehicleReEntry_grossTime_2.setReadOnly(True)
+        self.ui.le_VehicleReEntry_tareDate_2.setReadOnly(True)
+        self.ui.le_VehicleReEntry_tareTime_2.setReadOnly(True)
+
+        # self.ui.le_VehicleEntry_grossWeight.setReadOnly(True)
+        # self.ui.le_VehicleEntry_tareWeight.setReadOnly(True)
+        self.ui.le_VehicleReEntry_netWeight_3.setReadOnly(True)
+
+    def Exit_setInitialValues(self):
+
+        self.ui.le_VehicleReEntry_serialNumber_3.clear()
+        self.ui.le_VehicleReEntry_grossWeight_3.clear()
+        self.ui.le_VehicleReEntry_netWeight_3.clear()
+        self.ui.le_VehicleReEntry_tareWeight_3.clear()
+        self.ui.le_VehicleReEntry_grossDate_2.clear()
+        self.ui.le_VehicleReEntry_grossTime_2.clear()
+        self.ui.le_VehicleReEntry_tareDate_2.clear()
+        self.ui.le_VehicleReEntry_tareTime_2.clear()
+        self.ui.le_VehicleReEntry_header5_supplierChalanNo_3.clear()
+        self.ui.le_VehicleReEntry_header4_msezDeliverNo_3.clear()
+        self.ui.le_VehicleReEntry_header3_count_3.clear()
+        self.ui.le_VehicleReEntry_header2_supervisorName_3.clear()
+
+
+
+    def Exit_Entry(self):
+        self.ui.pb_VehicleReEntry_save_2.setEnabled(True)
+        self.ui.pb_VehicleReEntry_cancel_2.setEnabled(True)
+        self.ui.pb_VehicleReEntry_entry_2.setEnabled(False)
+
+        self.ui.le_VehicleReEntry_serialNumber_3.setEnabled(True)
+
+
+        self.ui.le_VehicleReEntry_grossWeight_3.setEnabled(True)
+        self.ui.le_VehicleReEntry_tareWeight_3.setEnabled(True)
+        self.ui.le_VehicleReEntry_netWeight_3.setEnabled(True)
+        self.ui.combo_VehicleReEntry_vehicle.setEnabled(True)
+        self.ui.le_VehicleReEntry_header2_supervisorName_3.setEnabled(True)
+        self.ui.le_VehicleReEntry_header3_count_3.setEnabled(True)
+        self.ui.le_VehicleReEntry_header4_msezDeliverNo_3.setEnabled(True)
+        self.ui.le_VehicleReEntry_header5_supplierChalanNo_3.setEnabled(True)
+        # self.ui.le_VehicleEntry_code1.setEnabled(True)
+        # self.ui.le_VehicleEntry_code2.setEnabled(True)
+        # self.ui.le_VehicleEntry_name_6.setEnabled(True)
+        self.ui.le_VehicleReEntry_amount_3.setEnabled(True)
+        self.ui.pb_VehicleReEntry_G_weight_3.setEnabled(True)
+        self.ui.pb_VehicleReEntry_T_Weight_3.setEnabled(True)
+
+
+    def Exit_Cancel(self):
+        self.ui.pb_VehicleReEntry_entry_2.setEnabled(True)
+        self.Exit_disableCancelSaveAllLe()
+
+    def Exit_SnoSearch(self):
+        snum = self.ui.le_VehicleReEntry_serialNumber_3.text()
+        self.Exit_setInitialValues()
+        flag = 1
+        self.conn = sqlite3.connect("WeighBridge.db")
+        self.c = self.conn.cursor()
+        try:
+
+            result = self.c.execute("SELECT * FROM T_Entry WHERE SerialNo=?",snum)
+
+            for i,data in enumerate(result):
+                flag = 0
+                self.ui.le_VehicleReEntry_serialNumber_3.setText(data[0])
+                self.ui.combo_VehicleReEntry_vehicle.setCurrentText(data[1])
+                self.ui.le_VehicleReEntry_header2_supervisorName_3.setText(data[2])
+                self.ui.le_VehicleReEntry_header3_count_3.setText(data[3])
+                self.ui.le_VehicleReEntry_header4_msezDeliverNo_3.setText(data[4])
+                self.ui.le_VehicleReEntry_header5_supplierChalanNo_3.setText(data[5])
+                self.ui.combo_VehicleReEntry_code1_materia_3.setCurrentText(data[6])
+                self.ui.combo_VehicleReEntry_code2_agentName_3.setCurrentText(data[7])
+                self.ui.combo_VehicleReEntry_code3_placeOfLoading_3.setCurrentText(data[8])
+                self.ui.combo_VehicleReEntry_code4_moistureValue.setCurrentText(data[9])
+                self.ui.combo_VehicleReEntry_code5_size.setCurrentText(data[10])
+                if data[11]:
+                    self.ui.pb_VehicleReEntry_G_weight_3.setEnabled(False)
+                    self.ui.le_VehicleReEntry_grossWeight_3.setText(data[11])
+                    self.ui.le_VehicleReEntry_grossTime_2.setText(data[13])
+                    self.ui.le_VehicleReEntry_grossDate_2.setText(data[14])
+                elif data[15]:
+                    self.ui.pb_VehicleReEntry_T_Weight_3.setEnabled(False)
+                    self.ui.le_VehicleReEntry_tareWeight_3.setText(data[15])
+                    self.ui.le_VehicleReEntry_tareTime_2.setText(data[17])
+                    self.ui.le_VehicleReEntry_tareDate_2.setText(data[18])
+            if flag == 1:
+                raise Exception()
+
+        except:
+            print("Error")
+            self.showErrormsg("Warning","No data with the given Serial Number")
+
+
+        self.c.close()
+        self.conn.close()
+
+    def Exit_Save(self):
+        self.ui.pb_VehicleReEntry_entry_2.setEnabled(True)
+        self.conn = sqlite3.connect("WeighBridge.db")
+        self.c = self.conn.cursor()
+
+        serialno = self.ui.le_VehicleReEntry_serialNumber_3.text()
+        header1 = self.ui.combo_VehicleReEntry_vehicle.currentText()
+        header2 = self.ui.le_VehicleReEntry_header2_supervisorName_3.text()
+        header3 = self.ui.le_VehicleReEntry_header3_count_3.text()
+        header4 = self.ui.le_VehicleReEntry_header4_msezDeliverNo_3.text()
+        header5 = self.ui.le_VehicleReEntry_header5_supplierChalanNo_3.text()
+        code1 = self.ui.combo_VehicleReEntry_code1_materia_3.currentText()
+        code2 = self.ui.combo_VehicleReEntry_code2_agentName_3.currentText()
+        code3 = self.ui.combo_VehicleReEntry_code3_placeOfLoading_3.currentText()
+        code4 = self.ui.combo_VehicleReEntry_code4_moistureValue.currentText()
+        code5 = self.ui.combo_VehicleReEntry_code5_size.currentText()
+        grosswt = self.ui.le_VehicleReEntry_grossWeight_3.text()
+        grossunit = self.ui.lb_vehicleReEntry_unit_gross.text()
+        grossdate = self.ui.le_VehicleReEntry_grossDate_2.text()
+        grosstime = self.ui.le_VehicleReEntry_grossTime_2.text()
+        tarewt = self.ui.le_VehicleReEntry_tareWeight_3.text()
+        tareunit = self.ui.lb_vehicleReEntry_unit_tare.text()
+        taredate = self.ui.le_VehicleReEntry_tareDate_2.text()
+        taretime = self.ui.le_VehicleReEntry_tareTime_2.text()
+        netwt = self.ui.le_VehicleReEntry_netWeight_3.text()
+        amount = self.ui.le_VehicleReEntry_amount_3.text()
+
+        if netwt and amount:
+            values = (
+            header1, header2, header3, header4, header5, code1, code2, code3, code4, code5, grosswt, grossunit, grosstime, grossdate,
+            tarewt, tareunit, taretime, taredate, netwt, amount, serialno)
+            self.c.execute(
+                "UPDATE T_Entry SET header1=?,header2=?,header3=?,header4=?,header5=?,code1_no=?,code2_no=?,code3_no=?,code4_no=?,code5_no=?,grossWt=?,grossUnit=?,grossTime=?,grossDate=?,tareWt=?,tareUnit=?,tareTime=?,tareDate=?,netWt=?,Amount=? WHERE SerialNo=?",
+                values)
+            self.conn.commit()
+
+        elif not netwt:
+            self.showErrormsg("Error","Enter Net Weight")
+        elif not amount:
+            self.showErrormsg("Error","Enter Amount")
+
+        self.c.close()
+        self.conn.close()
+        self.Exit_disableCancelSaveAllLe()
+        self.Exit_setInitialValues()
+
+    def Exit_getGrossWeight(self):
+        self.ui.pb_VehicleReEntry_G_weight_3.setEnabled(False)
+        self.ui.pb_VehicleReEntry_T_Weight_3.setEnabled(False)
+        # self.ui.le_VehicleEntry_grossWeight.setText(self.weight)
+        DateTime = datetime.now()
+        date = DateTime.date()
+        time_ = DateTime.strftime("%H:%M:%S")
+
+        self.ui.le_VehicleReEntry_grossDate_2.setText(str(date))
+
+        self.ui.le_VehicleReEntry_grossTime_2.setText(str(time_))
+
+    def Exit_getTareWeight(self):
+        self.ui.pb_VehicleReEntry_G_weight_3.setEnabled(False)
+        self.ui.pb_VehicleReEntry_T_Weight_3.setEnabled(False)
+        # self.ui.le_VehicleEntry_tareWeight.setText(self.weight)
+        DateTime = datetime.now()
+        date = DateTime.date()
+        time_ = DateTime.strftime("%H:%M:%S")
+
+        self.ui.le_VehicleReEntry_tareDate_2.setText(str(date))
+
+        self.ui.le_VehicleReEntry_tareTime_2.setText(str(time_))
+
+    def Exit_netWeight(self):
+        gw = self.ui.le_VehicleReEntry_grossWeight_3.text()
+        tw = self.ui.le_VehicleReEntry_tareWeight_3.text()
+        if gw and tw :
+            nw = int(gw)+int(tw)
+            self.ui.le_VehicleReEntry_netWeight_3.setText(str(nw))
+        else:
+            self.showErrormsg("Error","Enter both weights")
+
+
     # Functions used in Parameter Settings page
     def showParameterSettings(self):
         self.ui.stackedWidgetParameterSettings.setCurrentWidget(self.ui.ParameterSettingsMainPage)
