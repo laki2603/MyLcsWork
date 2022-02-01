@@ -2,7 +2,7 @@ import sys
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtWidgets import QMainWindow
 from PyQt5.QtWidgets import QMessageBox
-from PyQt5.QtWidgets import QLineEdit
+from PyQt5.QtWidgets import QLineEdit,QWidget
 from PyQt5 import QtWidgets
 from PyQt5.Qt import QAbstractItemView
 from PyQt5.QtCore import *
@@ -21,24 +21,32 @@ from tabulate import tabulate
 from uitest import Ui_MainWindow
 import xlsxwriter
 from PyQt5.uic import loadUiType
-loginscreen,_ = loadUiType("LoginWindow.ui")
-class LoginWindowcls(QObject,loginscreen):
-    def __init__(self):
-        super(LoginWindowcls,self).__init__()
+import LoginWindow
 
-        self.mainwindow = QMainWindow()
-        self.setupUi(self.mainwindow)
-        self.le_passWord.setEchoMode(QLineEdit.Password)
-        self.mainwindow.show()
-        self.pb_login.clicked.connect(self.CheckUser)
+from PyQt5.QtWidgets import *
+from PyQt5.QtCore import *
+from PyQt5 import QtCore, QtGui, QtWidgets
+import sys
+import time
+
+class LoginWindowcls(QObject):
+    def __init__(self):
+        super().__init__()
+        self.main_window = QMainWindow()
+        self.lui = LoginWindow.Ui_MainWindow()
+        self.lui.setupUi(self.main_window)
+        self.lui.le_passWord.setEchoMode(QLineEdit.Password)
+        self.main_window.show()
+        self.lui.pb_login.clicked.connect(self.CheckUser)
 
 
 
     LoginUpdate = pyqtSignal(str)
 
     def CheckUser(self):
-        self.name = self.le_userName.text()
-        self.password = self.le_passWord.text()
+
+        self.name = self.lui.le_userName.text()
+        self.password = self.lui.le_passWord.text()
         self.conn = sqlite3.connect("WeighBridge.db")
         self.c = self.conn.cursor()
         self.set = False
@@ -59,8 +67,8 @@ class LoginWindowcls(QObject,loginscreen):
                 self.main_window.close()
 
         if self.set == False:
-            self.le_userName.clear()
-            self.le_passWord.clear()
+            self.lui.le_userName.clear()
+            self.lui.le_passWord.clear()
             self.showErrormsg("Error", "Type the correct information")
         self.c.close()
         self.conn.close()
@@ -69,7 +77,7 @@ class LoginWindowcls(QObject,loginscreen):
 
 
 
-class UI:
+class UI():
     def __init__(self):
         ###  Ui setup
         self.main_window = QMainWindow()
@@ -77,36 +85,50 @@ class UI:
         self.ui.setupUi(self.main_window)
         self.ui.stackedWidgetMain.setCurrentWidget(self.ui.Home)
 
-        # self.lws = LoginWindowcls()
-        # self.lws.LoginUpdate.connect(self.login)
-        self.main_window.show()
-        self.t0 = threading.Thread(target=self.initialisation)
-        self.t0.start()
-
-    def initialisation(self):
-        self.serial = Serial()
-        self.serial.start()
-
-        ### DataBase setup
-        # self.connection = sqlite3.connect("WeighBridge.db")
-        # self.cursor = self.connection.cursor()
-
+        self.lws = LoginWindowcls()
+        self.lws.LoginUpdate.connect(self.login)
         ### Declaring variables
         self.idList = []
         self.userList = []
         self.passwordList = []
         self.adminList = []
         self.activeList = []
-        self.t1 = threading.Thread(target=self.ShowDate)
-        self.t1.start()
+        # self.t1 = threading.Thread(target=self.ShowDate)
+        # self.t1.start()
+
         self.DownloadDataFromUserAccountTable()
         self.uniquenum = 0
-        ## Setting Up Main Page
+        # ## Setting Up Main Page
+        self.serial = Serial()
+        self.serial.start()
         self.serial.WeightUpdate.connect(self.WeightDisplay)
         self.setTheField()
         self.mainPageTable()
 
+        ### Setting up Parameter page
+        self.setCancelSaveAddDelete()
+        self.CodesLeDefault()
+        # self.initialisation()
+        # self.main_window.show()
+    def initialisation(self):
+
+
+        ### DataBase setup
+        # self.connection = sqlite3.connect("WeighBridge.db")
+        # self.cursor = self.connection.cursor()
+
+
+
+
         # self.ShowDate()
+
+        timer = QTimer(self.main_window)
+
+        # adding action to timer
+        timer.timeout.connect(self.ShowDate)
+
+        # update the timer every second
+        timer.start(1000)
         self.ui.pb_home_Settings.clicked.connect(self.showSettings)
 
         self.ui.pb_home_report.setHidden(True)
@@ -139,8 +161,7 @@ class UI:
         self.ui.pb_VehicleReEntry_save_2.clicked.connect(self.Exit_Save)
 
         ## Setting up Parameter Settings Page
-        self.setCancelSaveAddDelete()
-        self.CodesLeDefault()
+
 
         self.ui.pb_Parameter_Close.clicked.connect(self.showHome)
         self.ui.pb_parameter_Code1Details.clicked.connect(self.showCode1Details)
@@ -249,17 +270,7 @@ class UI:
         self.ui.rb_settings_adminYes.setCheckable(False)
         self.ui.rb_settings_adminNo.setCheckable(False)
 
-        # self.DownloadDataFromUserAccountTable()
 
-        # self.conn = sqlite3.connect('WeighBridge.db')
-        # self.c = self.conn.cursor()
-        # cmd = "SELECT User FROM T_UserAccountSettings"
-        # result = self.c.execute(cmd)
-        # ButtonNames = []
-        # for name in result:
-        #     ButtonNames.append(name[0])
-        # self.c.close()
-        # self.conn.close()
 
         self.ui.pb_settings_edit.clicked.connect(self.UserSettingsEdit)
         self.ui.pb_settings_cancel.clicked.connect(self.UserSettingsCancel)
@@ -299,10 +310,12 @@ class UI:
     def showErrormsg(self,title,msg):
         QMessageBox.information(None,title,msg)
     def login(self,admin):
-        print("1")
+
         self.Admin = admin
+        self.initialisation()
         if self.Admin == "1":
             self.AdminUnMask()
+
         self.main_window.show()
 
     # Functions used in main page
@@ -311,12 +324,20 @@ class UI:
         self.setTheField()
         self.mainPageTable()
     def ShowDate(self):
-        while True:
-            DateTime = datetime.now()
-            date = DateTime.strftime("%d-%m-%y")
-            time_ = DateTime.strftime("%H:%M:%S")
-            self.ui.lb_DateDisplay.setText(str(date))
-            self.ui.lb_TimeDisplay.setText(str(time_))
+        # while True:
+        DateTime = datetime.now()
+        date = DateTime.strftime("%d-%m-%y")
+        #     time_ = DateTime.strftime("%H:%M:%S")
+        self.ui.lb_DateDisplay.setText(str(date))
+        #     self.ui.lb_TimeDisplay.setText(str(time_))
+        current_time = QTime.currentTime()
+
+        # converting QTime object to string
+        label_time = current_time.toString('hh:mm:ss')
+
+        # showing it to the label
+        self.ui.lb_TimeDisplay.setText(label_time)
+
     def WeightDisplay(self, w):
         self.ui.lb_home_WeightDisplay.setText(w)
         self.ui.lb_VehicleEntry_weightDisplay.setText(w)
@@ -2865,13 +2886,112 @@ class Serial(QThread):
             pass
 
 
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    # loginwindow = LoginWindowcls()
-    ui = UI()
 
-    try:
-        sys.exit(app.exec_())
-    except:
-        print("Exiting")
+# if __name__ == '__main__':
+#     app = QApplication(sys.argv)
+#     ui = UI()
+#     try:
+#         sys.exit(app.exec_())
+#     except:
+#         print("Exiting")
+#
+
+class SplashScreen(QWidget):
+    def _init_(self):
+        super()._init_()
+        self.setFixedSize(700, 350)
+        self.setWindowFlag(Qt.FramelessWindowHint)
+        self.setAttribute(Qt.WA_TranslucentBackground)
+        self.counter = 0
+        self.n = 100
+        self.initUI()
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.loading)
+        self.timer.start(30)
+    def initUI(self):
+        # layout to display splash scrren frame
+        layout = QVBoxLayout()
+        self.setLayout(layout)
+        # splash screen frame
+        self.frame = QFrame()
+        layout.addWidget(self.frame)
+        # splash screen title
+        self.title_label = QLabel(self.frame)
+        self.title_label.setObjectName('title_label')
+        self.title_label.resize(690, 120)
+        self.title_label.move(0, 5) # x, y
+        self.title_label.setText('Splash Screen')
+        self.title_label.setAlignment(Qt.AlignCenter)
+        # splash screen title description
+        self.description_label = QLabel(self.frame)
+        self.description_label.resize(690, 40)
+        self.description_label.move(0, self.title_label.height())
+        self.description_label.setObjectName('desc_label')
+        self.description_label.setText('<b>Splash Screen PyQt-5</b>')
+        self.description_label.setAlignment(Qt.AlignCenter)
+        # splash screen pogressbar
+        self.progressBar = QProgressBar(self.frame)
+        self.progressBar.resize(self.width() - 200 - 10, 50)
+        self.progressBar.move(100, 180) # self.description_label.y()+130
+        self.progressBar.setAlignment(Qt.AlignCenter)
+        self.progressBar.setFormat('%p%')
+        self.progressBar.setTextVisible(True)
+        self.progressBar.setRange(0, self.n)
+        self.progressBar.setValue(20)
+        # spash screen loading label
+        self.loading_label = QLabel(self.frame)
+        self.loading_label.resize(self.width() - 10, 50)
+        self.loading_label.move(0, self.progressBar.y() + 70)
+        self.loading_label.setObjectName('loading_label')
+        self.loading_label.setAlignment(Qt.AlignCenter)
+        self.loading_label.setText('Loading...')
+    def loading(self):
+        # set progressbar value
+        self.progressBar.setValue(self.counter)
+        # stop progress if counter
+        # is greater than n and
+        # display main window app
+        if self.counter >= self.n:
+            self.timer.stop()
+            self.close()
+            time.sleep(1)
+            self.WindowApp = UI()
+            # self.WindowApp.show()
+        self.counter += 1
+
+app = QApplication(sys.argv)
+app.setStyleSheet('''
+        #title_label {
+            font-size: 50px;
+            color: #ffffff;
+        }
+        #desc_label {
+            font-size: 20px;
+            color: #c2ced1;
+        }
+        #loading_label {
+            font-size: 30px;
+            color: #e8e8eb;
+        }
+        QFrame {
+            background-color: #625899;
+            color: #c8c8c8;
+        }
+        QProgressBar {
+            background-color: #000000;
+            color: #c8c8c8;
+            border-style: none;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 25px;
+        }
+        QProgressBar::chunk {
+            border-radius: 5px;
+            background-color: qlineargradient(spread:pad x1:0, x2:1, y1:0.511364, y2:0.523, stop:0 #44DD44);
+        }
+''')
+if __name__ == "__main__":
+    splash = SplashScreen()
+    splash.show()
+    sys.exit(app.exec_())
 
