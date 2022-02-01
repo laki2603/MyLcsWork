@@ -14,53 +14,106 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(800, 600)
+        MainWindow.resize(1024, 600)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.lb_userName = QtWidgets.QLabel(self.centralwidget)
-        self.lb_userName.setGeometry(QtCore.QRect(190, 240, 151, 51))
+        self.lb_userName.setGeometry(QtCore.QRect(330, 320, 151, 41))
         font = QtGui.QFont()
-        font.setPointSize(13)
+        font.setPointSize(-1)
         font.setBold(True)
+        font.setItalic(False)
         font.setWeight(75)
         self.lb_userName.setFont(font)
+        self.lb_userName.setStyleSheet("background-color: rgb(71, 98, 186);\n"
+"color:white;\n"
+"boder-style: outset;\n"
+"border-wiidth: 2px;\n"
+"border-radius: 8px;\n"
+"border-color: black;\n"
+"font: bold 20px;")
+        self.lb_userName.setAlignment(QtCore.Qt.AlignCenter)
         self.lb_userName.setObjectName("lb_userName")
         self.le_userName = QtWidgets.QLineEdit(self.centralwidget)
-        self.le_userName.setGeometry(QtCore.QRect(360, 250, 161, 31))
+        self.le_userName.setGeometry(QtCore.QRect(510, 320, 161, 31))
         font = QtGui.QFont()
-        font.setPointSize(12)
+        font.setPointSize(-1)
+        font.setBold(True)
+        font.setItalic(False)
+        font.setWeight(75)
         self.le_userName.setFont(font)
+        self.le_userName.setStyleSheet("\n"
+"boder-style: outset;\n"
+"border-wiidth: 2px;\n"
+"border-radius: 8px;\n"
+"border-color: black;\n"
+"font: bold 16px;")
+        self.le_userName.setText("")
         self.le_userName.setObjectName("le_userName")
         self.lb_passWord = QtWidgets.QLabel(self.centralwidget)
-        self.lb_passWord.setGeometry(QtCore.QRect(190, 310, 151, 51))
+        self.lb_passWord.setGeometry(QtCore.QRect(330, 380, 151, 41))
         font = QtGui.QFont()
-        font.setPointSize(13)
+        font.setPointSize(-1)
         font.setBold(True)
+        font.setItalic(False)
         font.setWeight(75)
         self.lb_passWord.setFont(font)
+        self.lb_passWord.setStyleSheet("background-color: rgb(71, 98, 186);\n"
+"color:white;\n"
+"boder-style: outset;\n"
+"border-wiidth: 2px;\n"
+"border-radius: 8px;\n"
+"border-color: black;\n"
+"font: bold 20px;")
+        self.lb_passWord.setAlignment(QtCore.Qt.AlignCenter)
         self.lb_passWord.setObjectName("lb_passWord")
         self.le_passWord = QtWidgets.QLineEdit(self.centralwidget)
-        self.le_passWord.setGeometry(QtCore.QRect(360, 320, 161, 31))
+        self.le_passWord.setGeometry(QtCore.QRect(510, 390, 161, 31))
         font = QtGui.QFont()
-        font.setPointSize(12)
+        font.setPointSize(-1)
+        font.setBold(True)
+        font.setItalic(False)
+        font.setWeight(75)
         self.le_passWord.setFont(font)
+        self.le_passWord.setStyleSheet("\n"
+"boder-style: outset;\n"
+"border-wiidth: 2px;\n"
+"border-radius: 8px;\n"
+"border-color: black;\n"
+"font: bold 16px;")
         self.le_passWord.setObjectName("le_passWord")
         self.pb_login = QtWidgets.QPushButton(self.centralwidget)
-        self.pb_login.setGeometry(QtCore.QRect(290, 400, 101, 41))
+        self.pb_login.setGeometry(QtCore.QRect(430, 440, 141, 61))
         font = QtGui.QFont()
-        font.setPointSize(13)
+        font.setPointSize(-1)
         font.setBold(True)
+        font.setItalic(False)
         font.setWeight(75)
         self.pb_login.setFont(font)
+        self.pb_login.setStyleSheet("\n"
+"boder-style: outset;\n"
+"border-wiidth: 2px;\n"
+"border-radius: 12px;\n"
+"border-color: black;\n"
+"font: bold 16px;")
+        self.pb_login.setText("")
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap("WeighBridgeScreens/Button/login.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pb_login.setIcon(icon)
+        self.pb_login.setIconSize(QtCore.QSize(141, 141))
         self.pb_login.setObjectName("pb_login")
+        self.label = QtWidgets.QLabel(self.centralwidget)
+        self.label.setGeometry(QtCore.QRect(0, 0, 1024, 600))
+        self.label.setText("")
+        self.label.setPixmap(QtGui.QPixmap("WeighBridgeScreens/weigh bridge screen/log-in.png"))
+        self.label.setObjectName("label")
+        self.label.raise_()
+        self.lb_userName.raise_()
+        self.le_userName.raise_()
+        self.lb_passWord.raise_()
+        self.le_passWord.raise_()
+        self.pb_login.raise_()
         MainWindow.setCentralWidget(self.centralwidget)
-        self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 26))
-        self.menubar.setObjectName("menubar")
-        MainWindow.setMenuBar(self.menubar)
-        self.statusbar = QtWidgets.QStatusBar(MainWindow)
-        self.statusbar.setObjectName("statusbar")
-        MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -70,7 +123,6 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.lb_userName.setText(_translate("MainWindow", "USER NAME"))
         self.lb_passWord.setText(_translate("MainWindow", "PASSWORD"))
-        self.pb_login.setText(_translate("MainWindow", "LOGIN"))
 
 
 if __name__ == "__main__":

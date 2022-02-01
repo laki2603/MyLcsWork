@@ -17,26 +17,28 @@ from reportlab.lib import colors
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle
 from tabulate import tabulate
-import LoginWindow
+
 from uitest import Ui_MainWindow
 import xlsxwriter
-class LoginWindowcls(QObject):
+from PyQt5.uic import loadUiType
+loginscreen,_ = loadUiType("LoginWindow.ui")
+class LoginWindowcls(QObject,loginscreen):
     def __init__(self):
-        super().__init__()
-        self.main_window = QMainWindow()
-        self.lui = LoginWindow.Ui_MainWindow()
-        self.lui.setupUi(self.main_window)
-        self.lui.le_passWord.setEchoMode(QLineEdit.Password)
-        self.main_window.show()
-        self.lui.pb_login.clicked.connect(self.CheckUser)
+        super(LoginWindowcls,self).__init__()
+
+        self.mainwindow = QMainWindow()
+        self.setupUi(self.mainwindow)
+        self.le_passWord.setEchoMode(QLineEdit.Password)
+        self.mainwindow.show()
+        self.pb_login.clicked.connect(self.CheckUser)
 
 
 
     LoginUpdate = pyqtSignal(str)
 
     def CheckUser(self):
-        self.name = self.lui.le_userName.text()
-        self.password = self.lui.le_passWord.text()
+        self.name = self.le_userName.text()
+        self.password = self.le_passWord.text()
         self.conn = sqlite3.connect("WeighBridge.db")
         self.c = self.conn.cursor()
         self.set = False
@@ -57,8 +59,8 @@ class LoginWindowcls(QObject):
                 self.main_window.close()
 
         if self.set == False:
-            self.lui.le_userName.clear()
-            self.lui.le_passWord.clear()
+            self.le_userName.clear()
+            self.le_passWord.clear()
             self.showErrormsg("Error", "Type the correct information")
         self.c.close()
         self.conn.close()
@@ -75,12 +77,13 @@ class UI:
         self.ui.setupUi(self.main_window)
         self.ui.stackedWidgetMain.setCurrentWidget(self.ui.Home)
 
-        self.lws = LoginWindowcls()
-        self.lws.LoginUpdate.connect(self.login)
+        # self.lws = LoginWindowcls()
+        # self.lws.LoginUpdate.connect(self.login)
+        self.main_window.show()
+        self.t0 = threading.Thread(target=self.initialisation)
+        self.t0.start()
 
-        # self.t0 = threading.Thread(target=self.initialisation)
-        # self.t0.start()
-    # def initialisation(self):
+    def initialisation(self):
         self.serial = Serial()
         self.serial.start()
 
@@ -296,6 +299,7 @@ class UI:
     def showErrormsg(self,title,msg):
         QMessageBox.information(None,title,msg)
     def login(self,admin):
+        print("1")
         self.Admin = admin
         if self.Admin == "1":
             self.AdminUnMask()

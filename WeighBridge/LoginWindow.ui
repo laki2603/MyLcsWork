@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
+    <width>1024</width>
     <height>600</height>
    </rect>
   </property>
@@ -17,62 +17,40 @@
    <widget class="QLabel" name="lb_userName">
     <property name="geometry">
      <rect>
-      <x>190</x>
-      <y>240</y>
+      <x>330</x>
+      <y>320</y>
       <width>151</width>
-      <height>51</height>
+      <height>41</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>13</pointsize>
+      <pointsize>-1</pointsize>
       <weight>75</weight>
+      <italic>false</italic>
       <bold>true</bold>
      </font>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(71, 98, 186);
+color:white;
+boder-style: outset;
+border-wiidth: 2px;
+border-radius: 8px;
+border-color: black;
+font: bold 20px;</string>
+    </property>
     <property name="text">
      <string>USER NAME</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
     </property>
    </widget>
    <widget class="QLineEdit" name="le_userName">
     <property name="geometry">
      <rect>
-      <x>360</x>
-      <y>250</y>
-      <width>161</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>12</pointsize>
-     </font>
-    </property>
-   </widget>
-   <widget class="QLabel" name="lb_passWord">
-    <property name="geometry">
-     <rect>
-      <x>190</x>
-      <y>310</y>
-      <width>151</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>13</pointsize>
-      <weight>75</weight>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="text">
-     <string>PASSWORD</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="le_passWord">
-    <property name="geometry">
-     <rect>
-      <x>360</x>
+      <x>510</x>
       <y>320</y>
       <width>161</width>
       <height>31</height>
@@ -80,42 +58,145 @@
     </property>
     <property name="font">
      <font>
-      <pointsize>12</pointsize>
+      <pointsize>-1</pointsize>
+      <weight>75</weight>
+      <italic>false</italic>
+      <bold>true</bold>
      </font>
     </property>
+    <property name="styleSheet">
+     <string notr="true">
+boder-style: outset;
+border-wiidth: 2px;
+border-radius: 8px;
+border-color: black;
+font: bold 16px;</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
    </widget>
-   <widget class="QPushButton" name="pb_login">
+   <widget class="QLabel" name="lb_passWord">
     <property name="geometry">
      <rect>
-      <x>290</x>
-      <y>400</y>
-      <width>101</width>
+      <x>330</x>
+      <y>380</y>
+      <width>151</width>
       <height>41</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>13</pointsize>
+      <pointsize>-1</pointsize>
       <weight>75</weight>
+      <italic>false</italic>
       <bold>true</bold>
      </font>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(71, 98, 186);
+color:white;
+boder-style: outset;
+border-wiidth: 2px;
+border-radius: 8px;
+border-color: black;
+font: bold 20px;</string>
+    </property>
     <property name="text">
-     <string>LOGIN</string>
+     <string>PASSWORD</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
     </property>
    </widget>
+   <widget class="QLineEdit" name="le_passWord">
+    <property name="geometry">
+     <rect>
+      <x>510</x>
+      <y>390</y>
+      <width>161</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>-1</pointsize>
+      <weight>75</weight>
+      <italic>false</italic>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">
+boder-style: outset;
+border-wiidth: 2px;
+border-radius: 8px;
+border-color: black;
+font: bold 16px;</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pb_login">
+    <property name="geometry">
+     <rect>
+      <x>430</x>
+      <y>440</y>
+      <width>141</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>-1</pointsize>
+      <weight>75</weight>
+      <italic>false</italic>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">
+boder-style: outset;
+border-wiidth: 2px;
+border-radius: 12px;
+border-color: black;
+font: bold 16px;</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>WeighBridgeScreens/Button/login.png</normaloff>WeighBridgeScreens/Button/login.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>141</width>
+      <height>141</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>1024</width>
+      <height>600</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>WeighBridgeScreens/weigh bridge screen/log-in.png</pixmap>
+    </property>
+   </widget>
+   <zorder>label</zorder>
+   <zorder>lb_userName</zorder>
+   <zorder>le_userName</zorder>
+   <zorder>lb_passWord</zorder>
+   <zorder>le_passWord</zorder>
+   <zorder>pb_login</zorder>
   </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>800</width>
-     <height>26</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
  <connections/>
