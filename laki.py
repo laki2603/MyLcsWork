@@ -1,3 +1,4 @@
+import os
 import sys
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtWidgets import QMainWindow
@@ -646,7 +647,8 @@ class UI():
             self.ui.pb_VehicleEntry_save.setEnabled(True)
             self.showErrormsg("error","enter the weight")
 
-        file = open("Entry.txt", 'w')
+        filename = "Entry.txt"
+        file = open(filename, 'w')
         s0 = ("SERIALNO", currSerialNo)
         s1 = (self.names[5], header1)
         s2 = (self.names[6], header2)
@@ -676,8 +678,37 @@ class UI():
         self.c.close()
         self.conn.close()
         self.Entry_setInitialValues()
+        if self.ui.checkBox_VehicleEntry.isChecked():
+            self.Printout(filename)
 
+    def Printout(self,status):
+        from escpos import printer
+        from datetime import datetime
 
+        file = open(status, 'r')
+        line = file.readlines()
+
+        p = printer.File("/dev/usb/lp0")
+
+        p.set(align="CENTER", width=2)
+        p.text("LCS Control pvt ltd \n\n")
+        p.set(align="CENTER", width=1)
+        p.text("date: " + str(datetime.now().strftime("%d:%m:%y")) + "            time: " + str(
+            datetime.now().strftime("%H:%M")) + "\n\n")
+        p.set(align="CENTER")
+        p.text(status + "\n")
+        p.text("----------------------------------------------\n")
+        p.set(align="CENTER")
+        for i, l in enumerate(line):
+            p.text(l.strip() + "\n")
+        p.text("----------------------------------------------\n")
+        p.set(width=2)
+
+        p.text("ThankYou! visit again!")
+        p.cut()
+        p.close()
+        file.close()
+        os.remove(status)
 
     def Entry_getGrossWeight(self):
         self.ui.pb_VehicleEntry_G_weight.setEnabled(False)
@@ -975,7 +1006,8 @@ class UI():
         except:
             pass
 
-        file = open("Exit.txt",'w')
+        filename = "Re-entry.txt"
+        file = open(filename,'w')
         s0 = ("SERIALNO",serialno)
         s1 = (self.names[5], header1)
         s2 = (self.names[6], header2)
@@ -1005,6 +1037,8 @@ class UI():
         self.conn.close()
         self.Exit_disableCancelSaveAllLe()
         self.Exit_setInitialValues()
+        if self.ui.VehicleReEntry_checkBox_3.isChecked():
+            self.Printout(filename)
 
     def Exit_getGrossWeight(self):
         self.ui.pb_VehicleReEntry_G_weight_3.setEnabled(False)
@@ -1095,6 +1129,7 @@ class UI():
         self.ui.pb_parameter_delete_4.setEnabled(True)
         self.ui.pb_parameter_delete_5.setEnabled(True)
         self.ui.pb_parameter_delete_6.setEnabled(True)
+
 
         ### Code 1
     def showCode1Details(self):
@@ -1348,6 +1383,7 @@ class UI():
         self.showErrormsg("","Updated")
         self.c.close()
         self.conn.close()
+
 
     def EntryExitCheckbox(self):
         self.en_ed = {
