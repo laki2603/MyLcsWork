@@ -2969,7 +2969,7 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
     app.setStyleSheet("QLabel"
         "{"
-        "color:rgb(71, 98, 186);"
+        "color: White;"
         "}")
     ui = UI()
     try:

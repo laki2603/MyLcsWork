@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>3</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="Home">
      <widget class="QLabel" name="lb_HomeBackGround">
@@ -354,7 +354,7 @@ background-color: rgb(0, 0, 0);</string>
        </font>
       </property>
       <property name="autoFillBackground">
-       <bool>true</bool>
+       <bool>false</bool>
       </property>
       <property name="frameShape">
        <enum>QFrame::Box</enum>
@@ -381,7 +381,7 @@ background-color: rgb(0, 0, 0);</string>
        </font>
       </property>
       <property name="autoFillBackground">
-       <bool>true</bool>
+       <bool>false</bool>
       </property>
       <property name="frameShape">
        <enum>QFrame::Box</enum>
