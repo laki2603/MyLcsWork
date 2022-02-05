@@ -34,9 +34,11 @@ class LoginWindowcls(QObject):
         super().__init__()
         self.main_window = QMainWindow()
         self.lui = LoginWindow.Ui_MainWindow()
+        self.main_window.setWindowFlag(Qt.FramelessWindowHint)
         self.lui.setupUi(self.main_window)
         self.lui.le_passWord.setEchoMode(QLineEdit.Password)
         self.main_window.show()
+
         self.lui.pb_login.clicked.connect(self.CheckUser)
 
 
@@ -83,6 +85,7 @@ class UI():
         self.main_window = QMainWindow()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self.main_window)
+        self.main_window.setWindowFlag(Qt.FramelessWindowHint)
         self.ui.stackedWidgetMain.setCurrentWidget(self.ui.Home)
 
         self.lws = LoginWindowcls()
@@ -104,6 +107,7 @@ class UI():
         self.serial.WeightUpdate.connect(self.WeightDisplay)
         self.setTheField()
         self.mainPageTable()
+        self.setParameters()
 
         ### Setting up Parameter page
         self.setCancelSaveAddDelete()
@@ -139,7 +143,7 @@ class UI():
 
         self.ui.pb_home_VehicleEntry.clicked.connect(self.showVehicleEntry)
         self.ui.pb_home_VehicleReEntry.clicked.connect(self.showVehicleReEntry)
-        self.setMainPageLogo()
+        # self.setMainPageLogo()
 
         ## Setting up Vehicle Entry Page
         self.ui.pb_VehicleEntry_close.clicked.connect(self.showHome)
@@ -229,14 +233,13 @@ class UI():
         self.ui.stackedWidgetSettings.setCurrentWidget(self.ui.settingsMainPage)
 
         self.ui.pb_settings_close.clicked.connect(self.showHome)
-
         self.ui.pb_settings_search.clicked.connect(self.findPorts)
         self.ui.pb_CommPortSettings.clicked.connect(self.showCommPortSettings)
-        self.ui.pb_HeaderSettings.clicked.connect(self.showHeaderSettings)
+        self.ui.pb_UserAccountSettings.setHidden(True)
+
         self.ui.pb_UserAccountSettings.clicked.connect(self.showUserAccountSettings)
 
-        self.ui.pb_UserAccountSettings.setHidden(True)
-        self.ui.pb_HeaderSettings.setHidden(True)
+
 
         self.ui.pb_settings_comport_close.clicked.connect(self.showSettingsMainPage)
         self.ui.pb_settings_header_close.clicked.connect(self.showSettingsMainPage)
@@ -594,8 +597,39 @@ class UI():
                     self.ui.lb_VehicleReEntry_header5_supplierChalanNo_3.setHidden(True)
                     self.ui.le_VehicleReEntry_header5_supplierChalanNo_3.setHidden(True)
 
+        result = self.c.execute("SELECT Status FROM T_OtherSettings")
+        values = []
+        for st in result:
+            values.append(st[0])
 
+        if values[0] == "0":
+            self.ui.lb_VehicleEntry_amount.setHidden(True)
+            self.ui.lb_VehicleReEntry_amount_3.setHidden(True)
+            self.ui.le_VehicleEntry_amount.setHidden(True)
+            self.ui.le_VehicleReEntry_amount_3.setHidden(True)
+        else:
+            self.ui.lb_VehicleEntry_amount.setHidden(False)
+            self.ui.lb_VehicleReEntry_amount_3.setHidden(False)
+            self.ui.le_VehicleEntry_amount.setHidden(False)
+            self.ui.le_VehicleReEntry_amount_3.setHidden(False)
+        if values[3] == "Tonne":
 
+            self.ui.lb_vehicleEntry_unit_gross.setText("Tonne")
+            self.ui.lb_vehicleEntry_unit_tare.setText("Tonne")
+            self.ui.lb_vehicleEntry_unit_net.setText("Tonne")
+            self.ui.lb_vehicleReEntry_unit_gross.setText("Tonne")
+            self.ui.lb_vehicleReEntry_unit_tare.setText("Tonne")
+            self.ui.lb_vehicleReEntry_unit_net.setText("Tonne")
+            self.ui.lb_home_unit.setText("Tonne")
+        else:
+
+            self.ui.lb_vehicleEntry_unit_gross.setText("Kg")
+            self.ui.lb_vehicleEntry_unit_tare.setText("Kg")
+            self.ui.lb_vehicleEntry_unit_net.setText("Kg")
+            self.ui.lb_vehicleReEntry_unit_gross.setText("Kg")
+            self.ui.lb_vehicleReEntry_unit_tare.setText("Kg")
+            self.ui.lb_vehicleReEntry_unit_net.setText("Kg")
+            self.ui.lb_home_unit.setText("Kg")
         self.c.close()
         self.conn.close()
 
@@ -603,9 +637,12 @@ class UI():
         self.ui.pb_VehicleEntry_entry.setEnabled(True)
         self.conn = sqlite3.connect('WeighBridge.db')
         self.c = self.conn.cursor()
-        r1 = self.c.execute("SELECT SerialNo FROM T_Entry")
-        for data in r1:
-            prevSerialNum = data[0]
+        try:
+            r1 = self.c.execute("SELECT SerialNo FROM T_Entry")
+            for data in r1:
+                prevSerialNum = data[0]
+        except:
+            prevSerialNum = 0
 
         currSerialNo = int(prevSerialNum) +1
 
@@ -1047,7 +1084,7 @@ class UI():
         gw = self.ui.le_VehicleReEntry_grossWeight_3.text()
         tw = self.ui.le_VehicleReEntry_tareWeight_3.text()
         if gw and tw :
-            nw = float(tw)-float(gw)
+            nw = float(gw)-float(tw)
             self.ui.le_VehicleReEntry_netWeight_3.setText(str(nw))
         else:
             self.showErrormsg("Error","Enter both weights")
@@ -1176,7 +1213,7 @@ class UI():
 
         self.ui.cb_parameter_Amount.setCheckable(False)
         self.ui.cb_parameter_GunnyBag.setCheckable(False)
-        self.ui.cb_parameterDateTime.setCheckable(False)
+        self.ui.cb_parameter_DateTime.setCheckable(False)
         self.ui.rb_parameter_kg.setCheckable(False)
         self.ui.rb_parameter_Tonne.setCheckable(False)
     def setWrite(self):
@@ -1214,7 +1251,7 @@ class UI():
 
         self.ui.cb_parameter_Amount.setCheckable(True)
         self.ui.cb_parameter_GunnyBag.setCheckable(True)
-        self.ui.cb_parameterDateTime.setCheckable(True)
+        self.ui.cb_parameter_DateTime.setCheckable(True)
         self.ui.rb_parameter_kg.setCheckable(True)
         self.ui.rb_parameter_Tonne.setCheckable(True)
 
@@ -1303,7 +1340,27 @@ class UI():
                 if ex:self.ui.cb_parameter_VehicleExit_header5.setChecked(True)
                 else:self.ui.cb_parameter_VehicleExit_header5.setChecked(False)
 
-
+        result = self.c.execute("SELECT Status FROM T_OtherSettings")
+        values = []
+        for st in result:
+            values.append(st[0])
+        print(values)
+        if values[0] == "1":
+            self.ui.cb_parameter_Amount.setChecked(True)
+        else:
+            self.ui.cb_parameter_Amount.setChecked(False)
+        if values[1] == "1":
+            self.ui.cb_parameter_DateTime.setChecked(True)
+        else:
+            self.ui.cb_parameter_DateTime.setChecked(False)
+        if values[2] == "1":
+            self.ui.cb_parameter_GunnyBag.setChecked(True)
+        else:
+            self.ui.cb_parameter_GunnyBag.setChecked(False)
+        if values[3] == "Tonne":
+            self.ui.rb_parameter_Tonne.setChecked(True)
+        else:
+            self.ui.rb_parameter_kg.setChecked(True)
 
         self.c.close()
         self.conn.close()
@@ -1348,12 +1405,29 @@ class UI():
                 self.c.execute("UPDATE T_CodeAndHeader SET EN_ED=?, EX_ED=? WHERE Type=?",
                                (self.en_hd_ed[hd], self.ex_hd_ed[hd], str(hd)))
                 self.conn.commit()
-
-        self.setRead()
-        self.showErrormsg("","Updated")
         self.c.close()
         self.conn.close()
+        self.ParameterOtherSettings()
+        self.setRead()
+        self.showErrormsg("","Updated")
 
+
+    def ParameterOtherSettings(self):
+        amount = self.ui.cb_parameter_Amount.isChecked()
+        dt = self.ui.cb_parameter_DateTime.isChecked()
+        gunnybag = self.ui.cb_parameter_GunnyBag.isChecked()
+        unit = "Kg" if self.ui.rb_parameter_kg.isChecked() else "Tonne" if self.ui.rb_parameter_Tonne.isChecked() else "None"
+        print(amount,gunnybag,dt,unit,sep="\n")
+        name = ["Amount", "DateTime", "GunnyBag", "Unit"]
+        values = [amount,dt,gunnybag,unit]
+        self.conn = sqlite3.connect('WeighBridge.db')
+        self.c = self.conn.cursor()
+        for i in range(len(name)):
+            self.c.execute("UPDATE T_OtherSettings SET Status=? WHERE Name=?",(values[i],name[i]))
+
+        self.conn.commit()
+        self.c.close()
+        self.conn.close()
     def EntryExitCheckbox(self):
         self.en_ed = {
             "code1": 1,
@@ -1959,7 +2033,7 @@ class UI():
         # print(self.adminList)
 
     def AdminUnMask(self):
-        self.ui.pb_HeaderSettings.setHidden(False)
+
         self.ui.pb_UserAccountSettings.setHidden(False)
         self.ui.pb_home_ParameterSettings.setHidden(False)
         self.ui.pb_home_report.setHidden(False)
@@ -1980,6 +2054,10 @@ class UI():
             p = str(p)
             p = p.split(" ")
             port = p[0]
+            # for pi
+            # p = p.split("- ")
+            # port = p[0]
+            # port = port.split(" ")
             self.ports.append(port)
         self.ui.lb_settings_CommPortDisplay.setText(self.ports[0])
         #self.s = self.ui.combo_settings_CommPortDisplay.setCurrentText()
@@ -2865,7 +2943,7 @@ class Serial(QThread):
             bdrate = int(data[1])
         c.close()
         conn.close()
-
+        print(comm)
         try:
 
             ip = serial.Serial(port=comm, baudrate=bdrate, bytesize=8, parity=serial.PARITY_NONE,
@@ -2887,111 +2965,17 @@ class Serial(QThread):
 
 
 
-# if __name__ == '__main__':
-#     app = QApplication(sys.argv)
-#     ui = UI()
-#     try:
-#         sys.exit(app.exec_())
-#     except:
-#         print("Exiting")
-#
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    app.setStyleSheet("QLabel"
+        "{"
+        "color:rgb(71, 98, 186);"
+        "}")
+    ui = UI()
+    try:
+        sys.exit(app.exec_())
+    except:
+        print("Exiting")
 
-class SplashScreen(QWidget):
-    def _init_(self):
-        super()._init_()
-        self.setFixedSize(700, 350)
-        self.setWindowFlag(Qt.FramelessWindowHint)
-        self.setAttribute(Qt.WA_TranslucentBackground)
-        self.counter = 0
-        self.n = 100
-        self.initUI()
-        self.timer = QTimer()
-        self.timer.timeout.connect(self.loading)
-        self.timer.start(30)
-    def initUI(self):
-        # layout to display splash scrren frame
-        layout = QVBoxLayout()
-        self.setLayout(layout)
-        # splash screen frame
-        self.frame = QFrame()
-        layout.addWidget(self.frame)
-        # splash screen title
-        self.title_label = QLabel(self.frame)
-        self.title_label.setObjectName('title_label')
-        self.title_label.resize(690, 120)
-        self.title_label.move(0, 5) # x, y
-        self.title_label.setText('Splash Screen')
-        self.title_label.setAlignment(Qt.AlignCenter)
-        # splash screen title description
-        self.description_label = QLabel(self.frame)
-        self.description_label.resize(690, 40)
-        self.description_label.move(0, self.title_label.height())
-        self.description_label.setObjectName('desc_label')
-        self.description_label.setText('<b>Splash Screen PyQt-5</b>')
-        self.description_label.setAlignment(Qt.AlignCenter)
-        # splash screen pogressbar
-        self.progressBar = QProgressBar(self.frame)
-        self.progressBar.resize(self.width() - 200 - 10, 50)
-        self.progressBar.move(100, 180) # self.description_label.y()+130
-        self.progressBar.setAlignment(Qt.AlignCenter)
-        self.progressBar.setFormat('%p%')
-        self.progressBar.setTextVisible(True)
-        self.progressBar.setRange(0, self.n)
-        self.progressBar.setValue(20)
-        # spash screen loading label
-        self.loading_label = QLabel(self.frame)
-        self.loading_label.resize(self.width() - 10, 50)
-        self.loading_label.move(0, self.progressBar.y() + 70)
-        self.loading_label.setObjectName('loading_label')
-        self.loading_label.setAlignment(Qt.AlignCenter)
-        self.loading_label.setText('Loading...')
-    def loading(self):
-        # set progressbar value
-        self.progressBar.setValue(self.counter)
-        # stop progress if counter
-        # is greater than n and
-        # display main window app
-        if self.counter >= self.n:
-            self.timer.stop()
-            self.close()
-            time.sleep(1)
-            self.WindowApp = UI()
-            # self.WindowApp.show()
-        self.counter += 1
 
-app = QApplication(sys.argv)
-app.setStyleSheet('''
-        #title_label {
-            font-size: 50px;
-            color: #ffffff;
-        }
-        #desc_label {
-            font-size: 20px;
-            color: #c2ced1;
-        }
-        #loading_label {
-            font-size: 30px;
-            color: #e8e8eb;
-        }
-        QFrame {
-            background-color: #625899;
-            color: #c8c8c8;
-        }
-        QProgressBar {
-            background-color: #000000;
-            color: #c8c8c8;
-            border-style: none;
-            border-radius: 5px;
-            text-align: center;
-            font-size: 25px;
-        }
-        QProgressBar::chunk {
-            border-radius: 5px;
-            background-color: qlineargradient(spread:pad x1:0, x2:1, y1:0.511364, y2:0.523, stop:0 #44DD44);
-        }
-''')
-if __name__ == "__main__":
-    splash = SplashScreen()
-    splash.show()
-    sys.exit(app.exec_())
 

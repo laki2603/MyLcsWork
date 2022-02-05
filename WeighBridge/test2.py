@@ -2863,6 +2863,7 @@ class Serial(QThread):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
+    # app.setStyleSheet("color: rgb(71, 98, 186);")
     print("addsaas")
     # loginwindow = LoginWindowcls()
     ui = UI()

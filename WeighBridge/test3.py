@@ -1,10 +1,10 @@
-# import os
-# import sqlite3
-# from reportlab.lib import colors
-# from reportlab.lib.pagesizes import letter
-# from reportlab.platypus import SimpleDocTemplate, Table, TableStyle
-# from tabulate import tabulate
-# from datetime import datetime
+import os
+import sqlite3
+from reportlab.lib import colors
+from reportlab.lib.pagesizes import letter
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle
+from tabulate import tabulate
+from datetime import datetime
 # # i=55
 # # pgsize= (20*i , 10*i)
 # # doc = SimpleDocTemplate("simple_table.pdf", pagesize=pgsize)
@@ -139,8 +139,7 @@
 # #     else:
 # #         pass
 # # from datetime import timedelta, date
-# # conn = sqlite3.connect("WeighBridge.db")
-# # c = conn.cursor()
+
 # # sd = '22-01-22'
 # # ed = '25-01-22'
 # # sd = list(map(int,sd.split('-')))
@@ -174,8 +173,7 @@
 # #         print(d)
 #
 #
-# # c.close()
-# # conn.close()
+
 # # date = "25-01-22"
 # # conn = sqlite3.connect('WeighBridge.db')
 # # c = conn.cursor()
@@ -229,6 +227,13 @@
 #
 # # os.startfile('excel')
 # workbook.close
-from test2 import *
-
-ui = UI()
+conn = sqlite3.connect("WeighBridge.db")
+c = conn.cursor()
+name = ["Amount","DateTime","GunnyBag","Unit"]
+values = [True,False,True,"kg"]
+for i in range(len(name)):
+    c.execute("UPDATE T_OtherSettings SET Status=? WHERE Name=?",(values[i],name[i]))
+    # pass
+conn.commit()
+c.close()
+conn.close()

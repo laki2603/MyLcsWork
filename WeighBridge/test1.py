@@ -37,20 +37,20 @@ def FindPorts():
         p = p.split(" ")
         port = p[0]
         ports.append(port)
+        print(port)
+    return 0
+FindPorts()
 
-    return port
 
+ip = serial.Serial(port=pt, baudrate=19200, bytesize=8, parity=serial.PARITY_NONE, stopbits= serial.STOPBITS_ONE)
+while True:
+    l = str(ip.read(13))
 
+    val = l[2:15]
+    # print(val)
+    x = val[4:11]
+    weight = decode(x)
 
-# ip = serial.Ses11 = ("GROSS WEIGHT" + ":" + "\t" + grosswt + "\n").expandtabs(22)s11 = ("GROSS WEIGHT" + ":" + "\t" + grosswt + "\n").expandtabs(22)rial(port=pt, baudrate=19200, bytesize=8, parity=serial.PARITY_NONE, stopbits= serial.STOPBITS_ONE)
-# while True:
-#     l = str(ip.read(13))
-#
-#     val = l[2:15]
-#     # print(val)
-#     x = val[4:11]
-#     weight = decode(x)
-#
 
 
 
