@@ -1,11 +1,10 @@
 import sys
+import os
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtWidgets import QMainWindow
 from PyQt5.QtWidgets import QMessageBox
 from PyQt5.QtWidgets import QLineEdit,QWidget
-from PyQt5 import QtWidgets
-from PyQt5.Qt import QAbstractItemView
-from PyQt5.QtCore import *
+
 from PyQt5.QtGui import QPixmap
 import sqlite3
 import serial
@@ -14,20 +13,22 @@ import threading
 from datetime import datetime,timedelta,date
 
 from reportlab.lib import colors
-from reportlab.lib.pagesizes import letter
-from reportlab.platypus import SimpleDocTemplate, Table, TableStyle
+
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Image,Paragraph,Spacer
+from reportlab.lib.styles import getSampleStyleSheet,ParagraphStyle
 from tabulate import tabulate
 
 from uitest import Ui_MainWindow
 import xlsxwriter
-from PyQt5.uic import loadUiType
+
 import LoginWindow
 
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5 import QtCore, QtGui, QtWidgets
-import sys
 import time
+
+
 
 class LoginWindowcls(QObject):
     def __init__(self):
@@ -88,8 +89,8 @@ class UI():
         self.main_window.setWindowFlag(Qt.FramelessWindowHint)
         self.ui.stackedWidgetMain.setCurrentWidget(self.ui.Home)
 
-        self.lws = LoginWindowcls()
-        self.lws.LoginUpdate.connect(self.login)
+        # self.lws = LoginWindowcls()  #changed
+        # self.lws.LoginUpdate.connect(self.login)  #changed
         ### Declaring variables
         self.idList = []
         self.userList = []
@@ -107,6 +108,7 @@ class UI():
         self.serial.WeightUpdate.connect(self.WeightDisplay)
         self.setTheField()
         self.mainPageTable()
+        self.getLableNameFromDB() #changed
         self.setParameters()
 
         ### Setting up Parameter page
@@ -114,7 +116,7 @@ class UI():
         self.CodesLeDefault()
         # self.initialisation()
         # self.main_window.show()
-    def initialisation(self):
+    # def initialisation(self):  #changed
 
 
         ### DataBase setup
@@ -135,10 +137,10 @@ class UI():
         timer.start(1000)
         self.ui.pb_home_Settings.clicked.connect(self.showSettings)
 
-        self.ui.pb_home_report.setHidden(True)
+        # self.ui.pb_home_report.setHidden(True)  #changed
         self.ui.pb_home_report.clicked.connect(self.showReport)
 
-        self.ui.pb_home_ParameterSettings.setHidden(True)
+        # self.ui.pb_home_ParameterSettings.setHidden(True)  #changed
         self.ui.pb_home_ParameterSettings.clicked.connect(self.showParameterSettings)
 
         self.ui.pb_home_VehicleEntry.clicked.connect(self.showVehicleEntry)
@@ -235,7 +237,7 @@ class UI():
         self.ui.pb_settings_close.clicked.connect(self.showHome)
         self.ui.pb_settings_search.clicked.connect(self.findPorts)
         self.ui.pb_CommPortSettings.clicked.connect(self.showCommPortSettings)
-        self.ui.pb_UserAccountSettings.setHidden(True)
+        # self.ui.pb_UserAccountSettings.setHidden(True)
 
         self.ui.pb_UserAccountSettings.clicked.connect(self.showUserAccountSettings)
 
@@ -310,19 +312,32 @@ class UI():
         self.ui.pb_report_excel.clicked.connect(self.createExcel)
         self.setTheField()
 
+        self.main_window.show()
     def showErrormsg(self,title,msg):
         QMessageBox.information(None,title,msg)
     def login(self,admin):
 
         self.Admin = admin
-        self.initialisation()
+        # self.initialisation()
         if self.Admin == "1":
-            self.AdminUnMask()
+            # self.AdminUnMask()
+            # self.ui.pb_UserAccountSettings.setHidden(False)
+            self.ui.stackedWidgetMain.setCurrentWidget(self.ui.Settings)
+            self.getValuesFromDB()
+            self.ui.pb_settings_Comm_save.setEnabled(False)
+        else:
+            self.showErrormsg("","User not authorized")
 
-        self.main_window.show()
+    def AdminUnMask(self):
+
+        self.ui.pb_UserAccountSettings.setHidden(False)
+        # self.ui.pb_home_ParameterSettings.setHidden(False)
+        # self.ui.pb_home_report.setHidden(False)
+        # self.main_window.show()
 
     # Functions used in main page
     def showHome(self):
+        self.setParameters()
         self.ui.stackedWidgetMain.setCurrentWidget(self.ui.Home)
         self.setTheField()
         self.mainPageTable()
@@ -395,6 +410,7 @@ class UI():
         self.Entry_disableCancelSaveAllLe()
         self.Entry_settingReadOnly()
         self.Entry_setInitialValues()
+        self.setEntryInitialStyleSheets() #changed
 
     def Entry_setInitialValues(self):
         self.conn = sqlite3.connect('WeighBridge.db')
@@ -480,8 +496,18 @@ class UI():
         self.ui.pb_VehicleEntry_entry.setEnabled(True)
         self.Entry_disableCancelSaveAllLe()
 
-
+    def setEntryInitialStyleSheets(self): #changed
+        self.ui.lb_VehicleEntry_header1_vehicle.setStyleSheet("")
+        self.ui.lb_VehicleEntry_header2_supervisorName.setStyleSheet("")
+        self.ui.lb_VehicleEntry_header3_count.setStyleSheet("")
+        self.ui.lb_VehicleEntry_header4_msezDeliverNo.setStyleSheet("")
+        self.ui.lb_VehicleEntry_header5_supplierChalanNo.setStyleSheet("")
+        self.ui.lb_VehicleEntry_grossWeight.setStyleSheet("")
+        self.ui.lb_VehicleEntry_tareWeight.setStyleSheet("")
     def setParameters(self):
+        self.entryfields = [] #changed
+
+        self.exitfields = [] #changed
         self.conn = sqlite3.connect('WeighBridge.db')
         self.c = self.conn.cursor()
         result = self.c.execute("SELECT EN_ED, EX_ED FROM T_CodeAndHeader")
@@ -489,15 +515,19 @@ class UI():
             en = data[0]
             ex = data[1]
             if i==0:
+                self.entryfields.append(self.names[0]) #changed
+                self.exitfields.append(self.names[0]) #changed
                 continue
             elif i ==1 :
                 if en:
+                    self.entryfields.append(self.names[1]) #changed
                     self.ui.lb_VehicleEntry_code2_agentName.setHidden(False)
                     self.ui.combo_VehicleEntry_code2_agentName.setHidden(False)
                 else:
                     self.ui.lb_VehicleEntry_code2_agentName.setHidden(True)
                     self.ui.combo_VehicleEntry_code2_agentName.setHidden(True)
                 if ex:
+                    self.exitfields.append(self.names[1]) #changed
                     self.ui.lb_VehicleReEntry_code2_agentName_3.setHidden(False)
                     self.ui.combo_VehicleReEntry_code2_agentName_3.setHidden(False)
                 else:
@@ -505,12 +535,14 @@ class UI():
                     self.ui.combo_VehicleReEntry_code2_agentName_3.setHidden(True)
             elif i ==2 :
                 if en:
+                    self.entryfields.append(self.names[2]) #changed
                     self.ui.lb_VehicleEntry_code3_placeOfLoading.setHidden(False)
                     self.ui.combo_VehicleEntry_code3_placeOfLoading.setHidden(False)
                 else:
                     self.ui.lb_VehicleEntry_code3_placeOfLoading.setHidden(True)
                     self.ui.combo_VehicleEntry_code3_placeOfLoading.setHidden(True)
                 if ex:
+                    self.exitfields.append(self.names[2]) #changed
                     self.ui.lb_VehicleReEntry_code3_placeOfLoading_3.setHidden(False)
                     self.ui.combo_VehicleReEntry_code3_placeOfLoading_3.setHidden(False)
                 else:
@@ -518,12 +550,14 @@ class UI():
                     self.ui.combo_VehicleReEntry_code3_placeOfLoading_3.setHidden(True)
             elif i ==3 :
                 if en:
+                    self.entryfields.append(self.names[3]) #changed
                     self.ui.lb_VehicleEntry_code4_moistureValue.setHidden(False)
                     self.ui.combo_VehicleEntry_code4_moisturevalue.setHidden(False)
                 else:
                     self.ui.lb_VehicleEntry_code4_moistureValue.setHidden(True)
                     self.ui.combo_VehicleEntry_code4_moisturevalue.setHidden(True)
                 if ex:
+                    self.exitfields.append(self.names[3]) #changed
                     self.ui.lb_VehicleReEntry_code4_moistureValue.setHidden(False)
                     self.ui.combo_VehicleReEntry_code4_moistureValue.setHidden(False)
                 else:
@@ -531,27 +565,34 @@ class UI():
                     self.ui.combo_VehicleReEntry_code4_moistureValue.setHidden(True)
             elif i ==4 :
                 if en:
+                    self.entryfields.append(self.names[4]) #changed
                     self.ui.lb_VehicleEntry_code5_size.setHidden(False)
                     self.ui.combo_VehicleEntry_code5_size.setHidden(False)
                 else:
                     self.ui.lb_VehicleEntry_code5_size.setHidden(True)
                     self.ui.combo_VehicleEntry_code5_size.setHidden(True)
                 if ex:
+                    self.exitfields.append(self.names[4]) #changed
                     self.ui.lb_VehicleReEntry_code5_size.setHidden(False)
                     self.ui.combo_VehicleReEntry_code5_size.setHidden(False)
                 else:
                     self.ui.lb_VehicleReEntry_code5_size.setHidden(True)
                     self.ui.combo_VehicleReEntry_code5_size.setHidden(True)
             elif i ==5 :
+
+                self.entryfields.append(self.names[5]) #changed
+                self.exitfields.append(self.names[5]) #changed
                 continue
             elif i ==6 :
                 if en:
+                    self.entryfields.append(self.names[6]) #changed
                     self.ui.lb_VehicleEntry_header2_supervisorName.setHidden(False)
                     self.ui.le_VehicleEntry_header2_supervisorName.setHidden(False)
                 else:
                     self.ui.lb_VehicleEntry_header2_supervisorName.setHidden(True)
                     self.ui.le_VehicleEntry_header2_supervisorName.setHidden(True)
                 if ex:
+                    self.exitfields.append(self.names[6]) #changed
                     self.ui.lb_VehicleReEntry_header2_supervisorName_3.setHidden(False)
                     self.ui.le_VehicleReEntry_header2_supervisorName_3.setHidden(False)
                 else:
@@ -559,12 +600,14 @@ class UI():
                     self.ui.le_VehicleReEntry_header2_supervisorName_3.setHidden(True)
             elif i ==7 :
                 if en:
+                    self.entryfields.append(self.names[7]) #changed
                     self.ui.lb_VehicleEntry_header3_count.setHidden(False)
                     self.ui.le_VehicleEntry_header3_count.setHidden(False)
                 else:
                     self.ui.lb_VehicleEntry_header3_count.setHidden(True)
                     self.ui.le_VehicleEntry_header3_count.setHidden(True)
                 if ex:
+                    self.exitfields.append(self.names[7]) #changed
                     self.ui.lb_VehicleReEntry_header3_count_3.setHidden(False)
                     self.ui.le_VehicleReEntry_header3_count_3.setHidden(False)
                 else:
@@ -572,12 +615,14 @@ class UI():
                     self.ui.le_VehicleReEntry_header3_count_3.setHidden(True)
             elif i ==8 :
                 if en:
+                    self.entryfields.append(self.names[8]) #changed
                     self.ui.lb_VehicleEntry_header4_msezDeliverNo.setHidden(False)
                     self.ui.le_VehicleEntry_header4_msezDeliverNo.setHidden(False)
                 else:
                     self.ui.lb_VehicleEntry_header4_msezDeliverNo.setHidden(True)
                     self.ui.le_VehicleEntry_header4_msezDeliverNo.setHidden(True)
                 if ex:
+                    self.exitfields.append(self.names[8]) #changed
                     self.ui.lb_VehicleReEntry_header4_msezDeliverNo_3.setHidden(False)
                     self.ui.le_VehicleReEntry_header4_msezDeliverNo_3.setHidden(False)
                 else:
@@ -585,12 +630,14 @@ class UI():
                     self.ui.le_VehicleReEntry_header4_msezDeliverNo_3.setHidden(True)
             elif i ==9 :
                 if en:
+                    self.entryfields.append(self.names[9]) #changed
                     self.ui.lb_VehicleEntry_header5_supplierChalanNo.setHidden(False)
                     self.ui.le_VehicleEntry_header5_supplierChalanNo.setHidden(False)
                 else:
                     self.ui.lb_VehicleEntry_header5_supplierChalanNo.setHidden(True)
                     self.ui.le_VehicleEntry_header5_supplierChalanNo.setHidden(True)
                 if ex:
+                    self.exitfields.append(self.names[9]) #changed
                     self.ui.lb_VehicleReEntry_header5_supplierChalanNo_3.setHidden(False)
                     self.ui.le_VehicleReEntry_header5_supplierChalanNo_3.setHidden(False)
                 else:
@@ -613,7 +660,8 @@ class UI():
             self.ui.le_VehicleEntry_amount.setHidden(False)
             self.ui.le_VehicleReEntry_amount_3.setHidden(False)
         if values[3] == "Tonne":
-
+            self.ui.lb_vehicleEntry_unit.setText("Tonne")
+            self.ui.lb_vehicleReEntry_unit.setText("Tonne")
             self.ui.lb_vehicleEntry_unit_gross.setText("Tonne")
             self.ui.lb_vehicleEntry_unit_tare.setText("Tonne")
             self.ui.lb_vehicleEntry_unit_net.setText("Tonne")
@@ -622,7 +670,8 @@ class UI():
             self.ui.lb_vehicleReEntry_unit_net.setText("Tonne")
             self.ui.lb_home_unit.setText("Tonne")
         else:
-
+            self.ui.lb_vehicleEntry_unit.setText("Kg")
+            self.ui.lb_vehicleReEntry_unit.setText("Kg")
             self.ui.lb_vehicleEntry_unit_gross.setText("Kg")
             self.ui.lb_vehicleEntry_unit_tare.setText("Kg")
             self.ui.lb_vehicleEntry_unit_net.setText("Kg")
@@ -634,6 +683,11 @@ class UI():
         self.conn.close()
 
     def VehicleEntrySave(self):
+        self.setEntryInitialStyleSheets() #changed
+        textFlag = 0 #changed
+        saveFields = [] #changed
+        saveFlag = 1 #changed
+
         self.ui.pb_VehicleEntry_entry.setEnabled(True)
         self.conn = sqlite3.connect('WeighBridge.db')
         self.c = self.conn.cursor()
@@ -667,89 +721,173 @@ class UI():
         amount = self.ui.le_VehicleEntry_amount.text()
 
 
-        if grosswt and grossdate and grosstime:
-            rdate = grossdate
-            rtime = grosstime
-            a = (currSerialNo, header1, header2, header3, header4, header5, code1, code2, code3, code4, code5, grosswt, grossunit, grosstime, grossdate, amount, rdate, rtime)
-            self.c.execute("INSERT INTO T_Entry (SerialNo,header1,header2,header3,header4,header5,code1_no,code2_no,code3_no,code4_no,code5_no,grossWt,grossUnit,grossTime,grossDate,Amount,ReportDate,ReportTime) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
-                           a)
-            self.conn.commit()
 
-        elif tarewt:
-            rdate = taredate
-            rtime = taretime
-            a = (currSerialNo, header1, header2, header3, header4, header5, code1, code2, code3, code4, code5, tarewt,
-                 tareunit, taretime, taredate, amount, rdate, rtime)
-            self.c.execute(
-                "INSERT INTO T_Entry (SerialNo,header1,header2,header3,header4,header5,code1_no,code2_no,code3_no,code4_no,code5_no,tareWt,tareUnit,tareTime,tareDate,Amount,ReportDate,ReportTime) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
-                a)
-            self.conn.commit()
-        else:
-            self.ui.pb_VehicleEntry_save.setEnabled(True)
-            self.showErrormsg("error","enter the weight")
+        Fields = [code1,code2,code3,code4,code5,header1,header2,header3,header4,header5]  #changed
+        for i in self.entryfields:  #changed
+            saveFields.append(self.names.index(i))
+        for i in saveFields:  #changed
+            if Fields[i] != "":
+                saveFlag *= 1
+            else:
+                saveFlag *= 0
+                break
+        if not (grosswt or tarewt):
+            saveFlag *= 0
 
-        file = open("Entry.txt", 'w')
-        s0 = ("SERIALNO", currSerialNo)
-        s1 = (self.names[5], header1)
-        s2 = (self.names[6], header2)
-        s3 = (self.names[7], header3)
-        s4 = (self.names[8], header4)
-        s5 = (self.names[9], header5)
-        s7 = (self.names[1], code2)
-        s6 = (self.names[0], code1)
-        s8 = (self.names[2], code3)
-        s9 = (self.names[3], code4)
-        s10 = (self.names[4], code5)
-        s11 = ("GROSS WEIGHT", grosswt)
-        s12 = ("TARE WEIGHT", tarewt)
-        s13 = ("NET WEIGHT", " ")
-        s14 = ("AMOUNT", " ")
-        s = [s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, s13, s14]
-        en = [1] + self.enableField + [1, 1, 1, 1]
-        lines = []
-        for i in range(len(en)):
-            if en[i] == 1:
-                lines.append(s[i])
+        # print(self.entryfields,self.exitfields,sep='\n')
+        reply = QMessageBox.question(None,"Save","Do you want to save?",QMessageBox.Yes | QMessageBox.No, QMessageBox.No)  #changed
+        if reply == QMessageBox.Yes: #changed
+            print("saved")
+            if saveFlag == 1: #changed
+                if grosswt and grosswt.isdigit():
+                    textFlag = 1
+                    rdate = grossdate
+                    rtime = grosstime
+                    a = (currSerialNo, header1, header2, header3, header4, header5, code1, code2, code3, code4, code5, grosswt, grossunit, grosstime, grossdate, amount, rdate, rtime)
+                    self.c.execute("INSERT INTO T_Entry (SerialNo,header1,header2,header3,header4,header5,code1_no,code2_no,code3_no,code4_no,code5_no,grossWt,grossUnit,grossTime,grossDate,Amount,ReportDate,ReportTime) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                                   a)
+                    self.conn.commit()
+                    self.setEntryInitialStyleSheets() #changed
+                    self.Entry_disableCancelSaveAllLe() #changed
+                    self.c.close() #changed
+                    self.conn.close() #changed
+                    self.Entry_setInitialValues() #changed
 
-        file.write(tabulate(lines, tablefmt="grid"))
+                elif tarewt and tarewt.isdigit():
+                    textFlag=1
+                    rdate = taredate
+                    rtime = taretime
+                    a = (currSerialNo, header1, header2, header3, header4, header5, code1, code2, code3, code4, code5, tarewt,
+                         tareunit, taretime, taredate, amount, rdate, rtime)
+                    self.c.execute(
+                        "INSERT INTO T_Entry (SerialNo,header1,header2,header3,header4,header5,code1_no,code2_no,code3_no,code4_no,code5_no,tareWt,tareUnit,tareTime,tareDate,Amount,ReportDate,ReportTime) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                        a)
+                    self.conn.commit()
+                    self.setEntryInitialStyleSheets() #changed
+                    self.Entry_disableCancelSaveAllLe() #changed
+                    self.c.close() #changed
+                    self.conn.close() #changed
+                    self.Entry_setInitialValues() #changed
+                else:
+                    self.ui.pb_VehicleEntry_save.setEnabled(True) #changed
+                    self.ui.pb_VehicleEntry_entry.setEnabled(False) #changed
+                    self.showErrormsg("error","enter the weight")
+            else: #changed
+                self.ui.pb_VehicleEntry_entry.setEnabled(False)
+                if header1 == "":
+                    self.ui.lb_VehicleEntry_header1_vehicle.setStyleSheet("color:red;")
+                if header2 == "":
+                    self.ui.lb_VehicleEntry_header2_supervisorName.setStyleSheet("color:red;")
+                if header3 == "":
+                    self.ui.lb_VehicleEntry_header3_count.setStyleSheet("color:red;")
+                if header4 == "":
+                    self.ui.lb_VehicleEntry_header4_msezDeliverNo.setStyleSheet("color:red;")
+                if header5 == "":
+                    self.ui.lb_VehicleEntry_header5_supplierChalanNo.setStyleSheet("color:red;")
+                if not (grosswt or tarewt):
+                    self.ui.lb_VehicleEntry_grossWeight.setStyleSheet("color:red;")
+                    self.ui.lb_VehicleEntry_tareWeight.setStyleSheet("color:red;")
+                self.showErrormsg("","Enter all fields")
+        else: #changed
+            self.Entry_disableCancelSaveAllLe()
+            self.c.close()
+            self.conn.close()
+            self.Entry_Entry()
+        if textFlag == 1: #changed
+            filename = "Entry.txt"
+            file = open(filename, 'w')
+            s0 = ("SERIALNO", currSerialNo)
+            s1 = (self.names[5], header1)
+            s2 = (self.names[6], header2)
+            s3 = (self.names[7], header3)
+            s4 = (self.names[8], header4)
+            s5 = (self.names[9], header5)
+            s7 = (self.names[1], code2)
+            s6 = (self.names[0], code1)
+            s8 = (self.names[2], code3)
+            s9 = (self.names[3], code4)
+            s10 = (self.names[4], code5)
+            s11 = ("GROSS WEIGHT", grosswt)
+            s12 = ("TARE WEIGHT", tarewt)
+            s13 = ("NET WEIGHT", " ")
+            s14 = ("AMOUNT", " ")
+            s = [s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, s13, s14]
+            en = [1] + self.enableField + [1, 1, 1, 1]
+            lines = []
+            for i in range(len(en)):
+                if en[i] == 1:
+                    lines.append(s[i])
+
+            file.write(tabulate(lines, tablefmt="grid"))
+            file.close()
+
+
+        try: #changed
+            if self.ui.cb_VehicleEntry_print.isChecked():
+                self.Printout(filename)
+        except:
+            self.showErrormsg("","No data to print")
+
+    def Printout(self,status):
+        from escpos import printer
+        from datetime import datetime
+
+        file = open(status, 'r')
+        line = file.readlines()
+
+        p = printer.File("/dev/usb/lp0")
+
+        p.set(align="CENTER", width=2)
+        p.text("LCS Control pvt ltd \n\n")
+        p.set(align="CENTER", width=1)
+        p.text("date: " + str(datetime.now().strftime("%d:%m:%y")) + "            time: " + str(
+            datetime.now().strftime("%H:%M")) + "\n\n")
+        p.set(align="CENTER")
+        p.text(status.split(".")[0] + "\n")
+        p.text("----------------------------------------------\n")
+        p.set(align="CENTER")
+        for i, l in enumerate(line):
+            p.text(l.strip() + "\n")
+        p.text("----------------------------------------------\n")
+        p.set(width=2)
+
+        p.text("ThankYou! visit again!")
+        p.cut()
+        p.close()
         file.close()
-
-        self.Entry_disableCancelSaveAllLe()
-        self.c.close()
-        self.conn.close()
-        self.Entry_setInitialValues()
-
-
+        os.remove(status)
 
     def Entry_getGrossWeight(self):
         self.ui.pb_VehicleEntry_G_weight.setEnabled(False)
         self.ui.pb_VehicleEntry_T_Weight.setEnabled(False)
         try:
             self.ui.le_VehicleEntry_grossWeight.setText(self.weight)
+            DateTime = datetime.now() #changed
+            date = DateTime.strftime("%d-%m-%y") #changed
+            time_ = DateTime.strftime("%H:%M:%S")  #changed
+
+            self.ui.le_VehicleEntry_grossDate.setText(str(date)) #changed
+
+            self.ui.le_VehicleEntry_grossTime.setText(str(time_)) #changed
         except:
             self.showErrormsg("Error","No weight values")
-        DateTime = datetime.now()
-        date = DateTime.strftime("%d-%m-%y")
-        time_ = DateTime.strftime("%H:%M:%S")
 
-        self.ui.le_VehicleEntry_grossDate.setText(str(date))
-
-        self.ui.le_VehicleEntry_grossTime.setText(str(time_))
 
     def Entry_getTareWeight(self):
         self.ui.pb_VehicleEntry_G_weight.setEnabled(False)
         self.ui.pb_VehicleEntry_T_Weight.setEnabled(False)
         try:
             self.ui.le_VehicleEntry_tareWeight.setText(self.weight)
+            DateTime = datetime.now() #changed
+            date = DateTime.strftime("%d-%m-%y") #changed
+            time_ = DateTime.strftime("%H:%M:%S") #changed
+
+            self.ui.le_VehicleEntry_tareDate.setText(str(date)) #changed
+
+            self.ui.le_VehicleEntry_tareTime.setText(str(time_)) #changed
         except:
             self.showErrormsg("Error","No weight values")
-        DateTime = datetime.now()
-        date = DateTime.strftime("%d-%m-%y")
-        time_ = DateTime.strftime("%H:%M:%S")
 
-        self.ui.le_VehicleEntry_tareDate.setText(str(date))
-
-        self.ui.le_VehicleEntry_tareTime.setText(str(time_))
 
     def getLableNameFromDB(self):
         self.conn = sqlite3.connect('WeighBridge.db')
@@ -872,6 +1010,7 @@ class UI():
         self.ui.pb_VehicleReEntry_cancel_2.setEnabled(False)
         self.ui.pb_VehicleReEntry_G_weight_3.setEnabled(False)
         self.ui.pb_VehicleReEntry_T_Weight_3.setEnabled(False)
+        self.ui.pb_VehicleReEntry_N_weight_3.setEnabled(False)
 
     def Exit_settingReadOnly(self):
         self.ui.le_VehicleReEntry_grossDate_2.setReadOnly(True)
@@ -923,6 +1062,8 @@ class UI():
         self.ui.pb_VehicleReEntry_G_weight_3.setEnabled(True)
         self.ui.pb_VehicleReEntry_T_Weight_3.setEnabled(True)
 
+        self.ui.pb_VehicleReEntry_N_weight_3.setEnabled(True)
+
 
     def Exit_Cancel(self):
         self.ui.pb_VehicleReEntry_entry_2.setEnabled(True)
@@ -939,7 +1080,7 @@ class UI():
             result = self.c.execute("SELECT * FROM T_Entry WHERE SerialNo=?",snum)
 
             for i,data in enumerate(result):
-                print(data)
+                # print(data)
                 flag = 0
                 self.ui.le_VehicleReEntry_serialNumber_3.setText(data[0])
                 self.ui.combo_VehicleReEntry_vehicle.setCurrentText(data[1])
@@ -973,8 +1114,22 @@ class UI():
 
         self.c.close()
         self.conn.close()
-
+    def setExitInitialStyleSheets(self):
+        self.ui.lb_VehicleReEntry_header1_vehicle_3.setStyleSheet("")
+        self.ui.lb_VehicleReEntry_header2_supervisorName_3.setStyleSheet("")
+        self.ui.lb_VehicleReEntry_header3_count_3.setStyleSheet("")
+        self.ui.lb_VehicleReEntry_header4_msezDeliverNo_3.setStyleSheet("")
+        self.ui.lb_VehicleReEntry_header5_supplierChalanNo_3.setStyleSheet("")
+        self.ui.lb_VehicleReEntry_grossWeight_3.setStyleSheet("")
+        self.ui.lb_VehicleReEntry_tareWeight_3.setStyleSheet("")
+        self.ui.lb_VehicleReEntry_netWeight_3.setStyleSheet("")
+        self.ui.lb_VehicleReEntry_serialNumber_3.setStyleSheet("")
     def Exit_Save(self):
+        self.setExitInitialStyleSheets()  # changed
+        textFlag = 0  # changed
+        saveFields = []  # changed
+        saveFlag = 1  # changed
+
         self.ui.pb_VehicleReEntry_entry_2.setEnabled(True)
         self.conn = sqlite3.connect("WeighBridge.db")
         self.c = self.conn.cursor()
@@ -1000,85 +1155,137 @@ class UI():
         taretime = self.ui.le_VehicleReEntry_tareTime_2.text()
         netwt = self.ui.le_VehicleReEntry_netWeight_3.text()
         amount = self.ui.le_VehicleReEntry_amount_3.text()
-        try:
-            if netwt and amount:
-                values = (
-                header1, header2, header3, header4, header5, code1, code2, code3, code4, code5, grosswt, grossunit, grosstime, grossdate,
-                tarewt, tareunit, taretime, taredate, netwt, amount, self.reportdate, self.reportTime, serialno)
-                self.c.execute(
-                    "UPDATE T_Entry SET header1=?,header2=?,header3=?,header4=?,header5=?,code1_no=?,code2_no=?,code3_no=?,code4_no=?,code5_no=?,grossWt=?,grossUnit=?,grossTime=?,grossDate=?,tareWt=?,tareUnit=?,tareTime=?,tareDate=?,netWt=?,Amount=?,ReportDate=?,ReportTime=? WHERE SerialNo=?",
-                    values)
-                self.conn.commit()
+        Fields = [code1, code2, code3, code4, code5, header1, header2, header3, header4, header5]  # changed
+        for i in self.exitfields:  # changed
+            saveFields.append(self.names.index(i))
+        for i in saveFields:  # changed
+            if Fields[i] != "":
+                saveFlag *= 1
+            else:
+                saveFlag *= 0
+                break
 
-            elif not netwt:
-                self.showErrormsg("Error","Enter Net Weight")
-            elif not amount:
-                self.showErrormsg("Error","Enter Amount")
+        if grosswt == "":
+            saveFlag *= 0
+        elif tarewt == "":
+            saveFlag *= 0
+        elif netwt == "":
+            saveFlag *= 0
+        elif serialno == "":
+            saveFlag *=0
+
+        # print(self.entryfields,self.exitfields,sep='\n')
+        reply = QMessageBox.question(None, "Save", "Do you want to save?", QMessageBox.Yes | QMessageBox.No,QMessageBox.No)  # changed
+        try:
+            if reply == QMessageBox.Yes:  # changed
+                print("saved")
+                if saveFlag == 1:  # changed
+                    values = (
+                    header1, header2, header3, header4, header5, code1, code2, code3, code4, code5, grosswt, grossunit, grosstime, grossdate,
+                    tarewt, tareunit, taretime, taredate, netwt, amount, self.reportdate, self.reportTime, serialno)
+                    self.c.execute(
+                        "UPDATE T_Entry SET header1=?,header2=?,header3=?,header4=?,header5=?,code1_no=?,code2_no=?,code3_no=?,code4_no=?,code5_no=?,grossWt=?,grossUnit=?,grossTime=?,grossDate=?,tareWt=?,tareUnit=?,tareTime=?,tareDate=?,netWt=?,Amount=?,ReportDate=?,ReportTime=? WHERE SerialNo=?",
+                        values)
+                    self.conn.commit()  # changed
+                    self.c.close()  # changed
+                    self.conn.close()  # changed
+                    self.Exit_disableCancelSaveAllLe()  # changed
+                    self.Exit_setInitialValues()  # changed
+                    self.setExitInitialStyleSheets()
+
+
+                else:  # changed
+                    self.ui.pb_VehicleReEntry_entry_2.setEnabled(False)
+                    if serialno == "":
+                        self.ui.lb_VehicleReEntry_serialNumber_3.setStyleSheet("color:red")
+                    if header1 == "":
+                        self.ui.lb_VehicleReEntry_header1_vehicle_3.setStyleSheet("color:red;")
+                    if header2 == "":
+                        self.ui.lb_VehicleReEntry_header2_supervisorName_3.setStyleSheet("color:red;")
+                    if header3 == "":
+                        self.ui.lb_VehicleReEntry_header3_count_3.setStyleSheet("color:red;")
+                    if header4 == "":
+                        self.ui.lb_VehicleReEntry_header4_msezDeliverNo_3.setStyleSheet("color:red;")
+                    if header5 == "":
+                        self.ui.lb_VehicleReEntry_header5_supplierChalanNo_3.setStyleSheet("color:red;")
+                    if grosswt == "" and not grosswt.isdigit():
+                        self.ui.lb_VehicleReEntry_grossWeight_3.setStyleSheet("color:red;")
+                    if tarewt == "" and not tarewt.isdigit():
+                        self.ui.lb_VehicleReEntry_tareWeight_3.setStyleSheet("color:red;")
+                    if netwt == "":
+                        self.ui.lb_VehicleReEntry_netWeight_3.setStyleSheet("color:red;")
+                    self.showErrormsg("", "Enter all fields")
+            else: #changed
+                self.c.close()
+                self.conn.close()
+                self.Exit_disableCancelSaveAllLe()
+                self.Exit_Entry()
         except:
             pass
+        if textFlag == 1: #changed
+            filename = "Exit.txt"
+            file = open(filename,'w')
+            s0 = ("SERIALNO",serialno)
+            s1 = (self.names[5], header1)
+            s2 = (self.names[6], header2)
+            s3 = (self.names[7], header3)
+            s4 = (self.names[8], header4)
+            s5 = (self.names[9], header5)
+            s7 = (self.names[1], code2)
+            s6 = (self.names[0], code1)
+            s8 = (self.names[2], code3)
+            s9 = (self.names[3], code4)
+            s10 = (self.names[4], code5)
+            s11 = ("GROSS WEIGHT", grosswt)
+            s12 = ("TARE WEIGHT", tarewt)
+            s13 = ("NET WEIGHT", netwt)
+            s14 = ("AMOUNT", amount)
+            s = [s0,s1,s2,s3,s4,s5,s6,s7,s8,s9,s10,s11,s12,s13,s14]
+            en = [1] + self.enableField + [1,1,1,1]
+            lines = []
+            for i in range(len(en)):
+                if en[i] == 1:
 
-        file = open("Exit.txt",'w')
-        s0 = ("SERIALNO",serialno)
-        s1 = (self.names[5], header1)
-        s2 = (self.names[6], header2)
-        s3 = (self.names[7], header3)
-        s4 = (self.names[8], header4)
-        s5 = (self.names[9], header5)
-        s7 = (self.names[1], code2)
-        s6 = (self.names[0], code1)
-        s8 = (self.names[2], code3)
-        s9 = (self.names[3], code4)
-        s10 = (self.names[4], code5)
-        s11 = ("GROSS WEIGHT", grosswt)
-        s12 = ("TARE WEIGHT", tarewt)
-        s13 = ("NET WEIGHT", netwt)
-        s14 = ("AMOUNT", amount)
-        s = [s0,s1,s2,s3,s4,s5,s6,s7,s8,s9,s10,s11,s12,s13,s14]
-        en = [1] + self.enableField + [1,1,1,1]
-        lines = []
-        for i in range(len(en)):
-            if en[i] == 1:
+                    lines.append(s[i])
 
-                lines.append(s[i])
+            file.write(tabulate(lines,tablefmt="grid"))
+            file.close()
 
-        file.write(tabulate(lines,tablefmt="grid"))
-        file.close()
-        self.c.close()
-        self.conn.close()
-        self.Exit_disableCancelSaveAllLe()
-        self.Exit_setInitialValues()
-
+        if self.ui.cb_VehicleReEntry_Print.isChecked():
+            self.Printout(filename)
     def Exit_getGrossWeight(self):
         self.ui.pb_VehicleReEntry_G_weight_3.setEnabled(False)
         self.ui.pb_VehicleReEntry_T_Weight_3.setEnabled(False)
         try:
-            self.ui.le_VehicleReEntry_grossWeight_3.setText(self.weight)
+            self.ui.le_VehicleReEntry_grossWeight_3.setText(self.weight) #changed
+            DateTime = datetime.now()  #changed
+            date = DateTime.strftime("%d-%m-%y") #changed
+            time_ = DateTime.strftime("%H:%M:%S") #changed
+            self.reportdate = date #changed
+            self.reportTime = time_ #changed
+            self.ui.le_VehicleReEntry_grossDate_2.setText(str(date)) #changed
+
+            self.ui.le_VehicleReEntry_grossTime_2.setText(str(time_)) #changed
         except:
             self.showErrormsg("Error","No weight values")
-        DateTime = datetime.now()
-        date = DateTime.strftime("%d-%m-%y")
-        time_ = DateTime.strftime("%H:%M:%S")
-        self.reportdate = date
-        self.reportTime = time_
-        self.ui.le_VehicleReEntry_grossDate_2.setText(str(date))
 
-        self.ui.le_VehicleReEntry_grossTime_2.setText(str(time_))
 
     def Exit_getTareWeight(self):
         self.ui.pb_VehicleReEntry_G_weight_3.setEnabled(False)
         self.ui.pb_VehicleReEntry_T_Weight_3.setEnabled(False)
         try:
             self.ui.le_VehicleReEntry_tareWeight_3.setText(self.weight)
+            DateTime = datetime.now() #changed
+            date = DateTime.strftime("%d-%m-%y") #changed
+            time_ = DateTime.strftime("%H:%M:%S") #changed
+            self.reportdate = date #changed
+            self.reportTime = time_ #changed
+            self.ui.le_VehicleReEntry_tareDate_2.setText(str(date)) #changed
+
+            self.ui.le_VehicleReEntry_tareTime_2.setText(str(time_)) #changed
         except:
             self.showErrormsg("Error","No weight values")
-        DateTime = datetime.now()
-        date = DateTime.strftime("%d-%m-%y")
-        time_ = DateTime.strftime("%H:%M:%S")
-        self.reportdate = date
-        self.reportTime = time_
-        self.ui.le_VehicleReEntry_tareDate_2.setText(str(date))
 
-        self.ui.le_VehicleReEntry_tareTime_2.setText(str(time_))
 
     def Exit_netWeight(self):
         gw = self.ui.le_VehicleReEntry_grossWeight_3.text()
@@ -1092,11 +1299,24 @@ class UI():
 
     # Functions used in Parameter Settings page
     def showParameterSettings(self):
-        self.ui.stackedWidgetParameterSettings.setCurrentWidget(self.ui.ParameterSettingsMainPage)
-        self.ui.stackedWidgetMain.setCurrentWidget(self.ui.ParameterSettings)
+        self.ParameterSettingslws = LoginWindowcls()
+        self.ParameterSettingslws.LoginUpdate.connect(self.ParameterSettingslogin)
 
-        self.setLePlaceHolderValues()
-        self.setRead()
+        # print(self.adminList)
+
+    def ParameterSettingslogin(self, admin):
+
+        self.Admin = admin
+        if self.Admin == "1":
+            # self.ui.pb_UserAccountSettings.setHidden(False)
+            self.ui.stackedWidgetParameterSettings.setCurrentWidget(self.ui.ParameterSettingsMainPage)
+            self.ui.stackedWidgetMain.setCurrentWidget(self.ui.ParameterSettings)
+
+            self.setLePlaceHolderValues()
+            self.setRead()
+        else:
+            self.showErrormsg("", "User not authorized")
+
     def CodesLeDefault(self):
         self.ui.le_parameter_code_1.setEnabled(False)
         self.ui.le_parameter_name_1.setEnabled(False)
@@ -1417,7 +1637,7 @@ class UI():
         dt = self.ui.cb_parameter_DateTime.isChecked()
         gunnybag = self.ui.cb_parameter_GunnyBag.isChecked()
         unit = "Kg" if self.ui.rb_parameter_kg.isChecked() else "Tonne" if self.ui.rb_parameter_Tonne.isChecked() else "None"
-        print(amount,gunnybag,dt,unit,sep="\n")
+
         name = ["Amount", "DateTime", "GunnyBag", "Unit"]
         values = [amount,dt,gunnybag,unit]
         self.conn = sqlite3.connect('WeighBridge.db')
@@ -2018,6 +2238,8 @@ class UI():
         self.ui.stackedWidgetMain.setCurrentWidget(self.ui.Settings)
         self.getValuesFromDB()
         self.ui.pb_settings_Comm_save.setEnabled(False)
+
+
     def showSettingsMainPage(self):
         self.ui.stackedWidgetSettings.setCurrentWidget(self.ui.settingsMainPage)
     def showCommPortSettings(self):
@@ -2028,15 +2250,21 @@ class UI():
         self.ui.stackedWidgetSettings.setCurrentWidget(self.ui.HeaderSettings)
 
     def showUserAccountSettings(self):
-        self.ui.stackedWidgetSettings.setCurrentWidget(self.ui.UserAccountSettings)
-        self.setTableData()
+        self.UserSettingslws = LoginWindowcls()
+        self.UserSettingslws.LoginUpdate.connect(self.UserSettingslogin)
+
         # print(self.adminList)
+    def UserSettingslogin(self, admin):
 
-    def AdminUnMask(self):
+        self.Admin = admin
+        if self.Admin == "1":
+            # self.ui.pb_UserAccountSettings.setHidden(False)
+            self.ui.stackedWidgetSettings.setCurrentWidget(self.ui.UserAccountSettings)
+            self.setTableData()
+        else:
+            self.showErrormsg("", "User not authorized")
 
-        self.ui.pb_UserAccountSettings.setHidden(False)
-        self.ui.pb_home_ParameterSettings.setHidden(False)
-        self.ui.pb_home_report.setHidden(False)
+
 
           # CommPort  Settings Page
     def findPorts(self):
@@ -2405,14 +2633,28 @@ class UI():
 
     # Functions used in Report page
     def showReport(self):
-        self.ui.stackedWidgetMain.setCurrentWidget(self.ui.Report)
-        self.setTheField()
-        self.Report_setInitialComponents()
-        self.getLableNameFromDB()
+        self.Reportlws = LoginWindowcls()
+        self.Reportlws.LoginUpdate.connect(self.Reportlogin)
 
-        self.ui.pb_report_pdf.setEnabled(False)
-        self.ui.report_tableWidget.clear()
-        self.OverallReportFlag = 0
+        # print(self.adminList)
+
+    def Reportlogin(self, admin):
+
+        self.Admin = admin
+        if self.Admin == "1":
+            # self.ui.pb_UserAccountSettings.setHidden(False)
+            self.ui.stackedWidgetMain.setCurrentWidget(self.ui.Report)
+            self.setTheField()
+            self.Report_setInitialComponents()
+            self.getLableNameFromDB()
+
+            self.ui.pb_report_pdf.setEnabled(False)
+            self.ui.report_tableWidget.clear()
+            self.OverallReportFlag = 0
+        else:
+            self.showErrormsg("", "User not authorized")
+
+
 
     def Report_setInitialComponents(self):
 
@@ -2860,14 +3102,19 @@ class UI():
         c.close()
         conn.close()
     def createPdf(self):
+        from reportlab.pdfgen import canvas
         self.uniquenum +=1
         self.ui.pb_report_pdf.setEnabled(False)
         inch = 55
         pgsize = (20 * inch, 10 * inch)
         dt = datetime.now()
-        d = dt.strftime("%d%m%y")
-        t = dt.strftime("%H%M%S")
-        doc = SimpleDocTemplate("WB_"+str(d)+str(t)+str(self.uniquenum)+".pdf", pagesize=pgsize)
+        date = dt.strftime("%d%m%y")
+        time = dt.strftime("%H%M%S")
+        doc_name= "WB_"+str(date)+str(time)+str(self.uniquenum)+".pdf"
+        doc = SimpleDocTemplate(doc_name, pagesize=pgsize)
+
+        date = dt.strftime("%d-%m-%y")
+        time = dt.strftime("%H:%M")
         elements = []
         t = Table(self.pdfTableData)
         t.setStyle(TableStyle(
@@ -2884,8 +3131,37 @@ class UI():
                 ('GRID', (0, 0), (-1, -1), 2, colors.black)
             ]
         ))
+        style = getSampleStyleSheet()
+        elements.append(Image('logo.jpeg', 1.5 * inch, 1.5 * inch, hAlign='LEFT'))
+        elements.append(Spacer(0, -90))
+        elements.append(Paragraph('LCS Control pvt Ltd', style=ParagraphStyle('abc',
+                                                                               fontName="Helvetica-Bold",
+                                                                               fontSize=40,
+                                                                               parent=style['Heading2'],
+                                                                               alignment=1,
+                                                                               spaceAfter=14,
+                                                                              )))
+        elements.append(Spacer(0, -30))
+
+        elements.append(Paragraph(f"Date: {date}", style=ParagraphStyle('abc',
+                                                                        fontName="Helvetica-Bold",
+                                                                        fontSize=15,
+                                                                        parent=style['Heading2'],
+                                                                        alignment=2,
+                                                                        spaceAfter=14)))
+        elements.append(Spacer(0, -26))
+
+        elements.append(Paragraph(f"Time: {time}", style=ParagraphStyle('abc',
+                                                                        fontName="Helvetica-Bold",
+                                                                        fontSize=15,
+                                                                        parent=style['Heading2'],
+                                                                        alignment=2,
+                                                                        spaceAfter=14,
+                                                                        rightIndent=21)))
+        elements.append(Spacer(0, 60))
         elements.append(t)
         doc.build(elements)
+        os.startfile(doc_name)
     def createExcel(self):
         self.uniquenum += 2
         self.ui.pb_report_excel.setEnabled(False)
@@ -2938,12 +3214,12 @@ class Serial(QThread):
         conn = sqlite3.connect("WeighBridge.db")
         c = conn.cursor()
         result = c.execute("SELECT Comm,BaudRate FROM T_CommSettings")
-        for i,data in enumerate(result):
+        for i, data in enumerate(result):
             comm = str(data[0]).upper()
             bdrate = int(data[1])
         c.close()
         conn.close()
-        print(comm)
+
         try:
 
             ip = serial.Serial(port=comm, baudrate=bdrate, bytesize=8, parity=serial.PARITY_NONE,
@@ -2951,26 +3227,57 @@ class Serial(QThread):
             print(comm)
 
             while ip.isOpen():
-
                 l = str(ip.read(13))
-
+                print(l)
                 val = l[2:15]
                 # print(val)
                 x = val[4:11]
                 weight = self.decode(x)
+                try:
+                    float(weight)
+                except:
+                    ip.close()
+                    self.run()
 
-                self.WeightUpdate.emit(str(weight))
-        except :
-            pass
+                if weight == None:
+                    ip.close()
+                    self.run()
+                elif weight == '99.999':
+                    self.WeightUpdate.emit("OR")
+                elif weight == '88.888':
+                    self.WeightUpdate.emit("OC")
+                elif weight == '77.777':
+                    self.WeightUpdate.emit("UR")
+                else:
+                    self.WeightUpdate.emit(str(weight))
+
+        except:
+            self.WeightUpdate.emit("COM\ndisconnected")  # give pop up window or set weight lable to connect comm
+            time.sleep(1)
+            self.run()
 
 
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    app.setStyleSheet("QLabel"
-        "{"
-        "color: White;"
-        "}")
+    app.setStyleSheet("""QLabel
+        {
+        color: White;
+        }
+        QMessageBox QLabel
+        {
+        color: black
+        }
+        QLineEdit
+        {
+        boder-style: outset;
+        border-wiidth: 2px;
+        border-radius: 8px;
+        border-color: red;
+        font:  16px;
+        }
+        """
+        )
     ui = UI()
     try:
         sys.exit(app.exec_())

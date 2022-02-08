@@ -268,9 +268,9 @@ font: bold 16px;
       <property name="geometry">
        <rect>
         <x>180</x>
-        <y>140</y>
-        <width>251</width>
-        <height>61</height>
+        <y>130</y>
+        <width>249</width>
+        <height>81</height>
        </rect>
       </property>
       <property name="font">
@@ -290,7 +290,7 @@ boder-style: outset;
 border-wiidth: 2px;
 border-radius: 20px;
 border-color: black;
-font: bold 16px;
+font: bold 32px;
 background-color: rgb(0, 0, 0);</string>
       </property>
       <property name="frameShape">
@@ -323,7 +323,7 @@ background-color: rgb(0, 0, 0);</string>
       <property name="geometry">
        <rect>
         <x>430</x>
-        <y>160</y>
+        <y>170</y>
         <width>51</width>
         <height>31</height>
        </rect>
@@ -417,10 +417,10 @@ background-color: rgb(0, 0, 0);</string>
      <widget class="QPushButton" name="pb_Parameter_Edit">
       <property name="geometry">
        <rect>
-        <x>32</x>
-        <y>530</y>
-        <width>91</width>
-        <height>28</height>
+        <x>80</x>
+        <y>520</y>
+        <width>151</width>
+        <height>51</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -442,8 +442,8 @@ font: bold 16px;
       </property>
       <property name="iconSize">
        <size>
-        <width>103</width>
-        <height>30</height>
+        <width>137</width>
+        <height>100</height>
        </size>
       </property>
       <property name="autoDefault">
@@ -485,7 +485,7 @@ font: bold 16px;
          </rect>
         </property>
         <property name="title">
-         <string>GroupBox</string>
+         <string>Code Settings</string>
         </property>
         <widget class="QPushButton" name="pb_parameter_Code5Details">
          <property name="geometry">
@@ -889,7 +889,7 @@ font: bold 16px;
          </rect>
         </property>
         <property name="title">
-         <string>GroupBox</string>
+         <string>Header Settings</string>
         </property>
         <widget class="QLabel" name="lb_parameter_Header3">
          <property name="enabled">
@@ -1895,7 +1895,7 @@ font: bold 16px;
          </font>
         </property>
         <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#000000;&quot;&gt;Name&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>Name</string>
         </property>
        </widget>
        <widget class="QLabel" name="lb_parameter_code_1">
@@ -1915,7 +1915,7 @@ font: bold 16px;
          </font>
         </property>
         <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#000000;&quot;&gt;Code&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>Code</string>
         </property>
        </widget>
        <widget class="QLineEdit" name="le_parameter_code_1">
@@ -1945,13 +1945,13 @@ font: bold 16px;
         <property name="geometry">
          <rect>
           <x>430</x>
-          <y>250</y>
-          <width>91</width>
-          <height>28</height>
+          <y>240</y>
+          <width>101</width>
+          <height>41</height>
          </rect>
         </property>
         <property name="styleSheet">
-         <string notr="true">background-color: rgb(43, 43, 43);
+         <string notr="true">
 color:white;
 boder-style: outset;
 border-wiidth: 2px;
@@ -1978,9 +1978,9 @@ font: bold 16px;
         <property name="geometry">
          <rect>
           <x>540</x>
-          <y>250</y>
+          <y>240</y>
           <width>91</width>
-          <height>28</height>
+          <height>41</height>
          </rect>
         </property>
         <property name="styleSheet">
@@ -2011,9 +2011,9 @@ font: bold 16px;
         <property name="geometry">
          <rect>
           <x>760</x>
-          <y>250</y>
+          <y>240</y>
           <width>91</width>
-          <height>28</height>
+          <height>41</height>
          </rect>
         </property>
         <property name="styleSheet">
@@ -2044,9 +2044,9 @@ font: bold 16px;
         <property name="geometry">
          <rect>
           <x>650</x>
-          <y>250</y>
+          <y>240</y>
           <width>91</width>
-          <height>28</height>
+          <height>41</height>
          </rect>
         </property>
         <property name="styleSheet">
@@ -2077,9 +2077,9 @@ font: bold 16px;
         <property name="geometry">
          <rect>
           <x>870</x>
-          <y>250</y>
+          <y>240</y>
           <width>91</width>
-          <height>28</height>
+          <height>41</height>
          </rect>
         </property>
         <property name="styleSheet">
@@ -2110,8 +2110,8 @@ font: bold 16px;
          <rect>
           <x>650</x>
           <y>290</y>
-          <width>91</width>
-          <height>28</height>
+          <width>101</width>
+          <height>41</height>
          </rect>
         </property>
         <property name="styleSheet">
@@ -2143,8 +2143,8 @@ font: bold 16px;
          <rect>
           <x>540</x>
           <y>290</y>
-          <width>91</width>
-          <height>28</height>
+          <width>101</width>
+          <height>41</height>
          </rect>
         </property>
         <property name="styleSheet">
@@ -2247,8 +2247,8 @@ font: bold 16px;
          <rect>
           <x>510</x>
           <y>310</y>
-          <width>91</width>
-          <height>28</height>
+          <width>101</width>
+          <height>41</height>
          </rect>
         </property>
         <property name="styleSheet">
@@ -2278,9 +2278,9 @@ font: bold 16px;
         <property name="geometry">
          <rect>
           <x>510</x>
-          <y>270</y>
-          <width>91</width>
-          <height>28</height>
+          <y>257</y>
+          <width>101</width>
+          <height>41</height>
          </rect>
         </property>
         <property name="styleSheet">
@@ -2312,8 +2312,8 @@ font: bold 16px;
          <rect>
           <x>620</x>
           <y>310</y>
-          <width>91</width>
-          <height>28</height>
+          <width>101</width>
+          <height>41</height>
          </rect>
         </property>
         <property name="styleSheet">
@@ -2356,7 +2356,7 @@ font: bold 16px;
          </font>
         </property>
         <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#000000;&quot;&gt;Code&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>Code</string>
         </property>
        </widget>
        <widget class="QLineEdit" name="le_parameter_name_3">
@@ -2376,9 +2376,9 @@ font: bold 16px;
         <property name="geometry">
          <rect>
           <x>400</x>
-          <y>270</y>
-          <width>91</width>
-          <height>28</height>
+          <y>257</y>
+          <width>101</width>
+          <height>41</height>
          </rect>
         </property>
         <property name="styleSheet">
@@ -2409,9 +2409,9 @@ font: bold 16px;
         <property name="geometry">
          <rect>
           <x>840</x>
-          <y>270</y>
-          <width>91</width>
-          <height>28</height>
+          <y>257</y>
+          <width>101</width>
+          <height>41</height>
          </rect>
         </property>
         <property name="styleSheet">
@@ -2441,9 +2441,9 @@ font: bold 16px;
         <property name="geometry">
          <rect>
           <x>730</x>
-          <y>270</y>
-          <width>91</width>
-          <height>28</height>
+          <y>257</y>
+          <width>101</width>
+          <height>41</height>
          </rect>
         </property>
         <property name="styleSheet">
@@ -2496,9 +2496,9 @@ font: bold 16px;
         <property name="geometry">
          <rect>
           <x>620</x>
-          <y>270</y>
-          <width>91</width>
-          <height>28</height>
+          <y>257</y>
+          <width>101</width>
+          <height>41</height>
          </rect>
         </property>
         <property name="styleSheet">
@@ -2569,9 +2569,9 @@ font: bold 16px;
         <property name="geometry">
          <rect>
           <x>650</x>
-          <y>270</y>
-          <width>91</width>
-          <height>28</height>
+          <y>257</y>
+          <width>101</width>
+          <height>41</height>
          </rect>
         </property>
         <property name="styleSheet">
@@ -2601,9 +2601,9 @@ font: bold 16px;
         <property name="geometry">
          <rect>
           <x>760</x>
-          <y>270</y>
-          <width>91</width>
-          <height>28</height>
+          <y>257</y>
+          <width>101</width>
+          <height>41</height>
          </rect>
         </property>
         <property name="styleSheet">
@@ -2653,9 +2653,9 @@ font: bold 16px;
         <property name="geometry">
          <rect>
           <x>870</x>
-          <y>270</y>
-          <width>91</width>
-          <height>28</height>
+          <y>257</y>
+          <width>101</width>
+          <height>41</height>
          </rect>
         </property>
         <property name="styleSheet">
@@ -2744,7 +2744,7 @@ font: bold 16px;
          </font>
         </property>
         <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#000000;&quot;&gt;Code&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>Code</string>
         </property>
        </widget>
        <widget class="QPushButton" name="pb_parameter_close_4">
@@ -2752,8 +2752,8 @@ font: bold 16px;
          <rect>
           <x>650</x>
           <y>310</y>
-          <width>91</width>
-          <height>28</height>
+          <width>101</width>
+          <height>41</height>
          </rect>
         </property>
         <property name="styleSheet">
@@ -2784,8 +2784,8 @@ font: bold 16px;
          <rect>
           <x>540</x>
           <y>310</y>
-          <width>91</width>
-          <height>28</height>
+          <width>101</width>
+          <height>41</height>
          </rect>
         </property>
         <property name="styleSheet">
@@ -2815,9 +2815,9 @@ font: bold 16px;
         <property name="geometry">
          <rect>
           <x>430</x>
-          <y>270</y>
-          <width>91</width>
-          <height>28</height>
+          <y>257</y>
+          <width>101</width>
+          <height>41</height>
          </rect>
         </property>
         <property name="styleSheet">
@@ -2847,9 +2847,9 @@ font: bold 16px;
         <property name="geometry">
          <rect>
           <x>540</x>
-          <y>270</y>
-          <width>91</width>
-          <height>28</height>
+          <y>257</y>
+          <width>101</width>
+          <height>41</height>
          </rect>
         </property>
         <property name="styleSheet">
@@ -2926,9 +2926,9 @@ font: bold 16px;
         <property name="geometry">
          <rect>
           <x>630</x>
-          <y>260</y>
-          <width>91</width>
-          <height>28</height>
+          <y>247</y>
+          <width>101</width>
+          <height>41</height>
          </rect>
         </property>
         <property name="styleSheet">
@@ -2991,16 +2991,16 @@ font: bold 16px;
          </font>
         </property>
         <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#000000;&quot;&gt;Code&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>Code</string>
         </property>
        </widget>
        <widget class="QPushButton" name="pb_parameter_cancel_5">
         <property name="geometry">
          <rect>
           <x>850</x>
-          <y>260</y>
-          <width>91</width>
-          <height>28</height>
+          <y>247</y>
+          <width>111</width>
+          <height>41</height>
          </rect>
         </property>
         <property name="styleSheet">
@@ -3031,8 +3031,8 @@ font: bold 16px;
          <rect>
           <x>520</x>
           <y>300</y>
-          <width>91</width>
-          <height>28</height>
+          <width>101</width>
+          <height>41</height>
          </rect>
         </property>
         <property name="styleSheet">
@@ -3072,9 +3072,9 @@ font: bold 16px;
         <property name="geometry">
          <rect>
           <x>740</x>
-          <y>260</y>
-          <width>91</width>
-          <height>28</height>
+          <y>247</y>
+          <width>101</width>
+          <height>41</height>
          </rect>
         </property>
         <property name="styleSheet">
@@ -3105,8 +3105,8 @@ font: bold 16px;
          <rect>
           <x>630</x>
           <y>300</y>
-          <width>91</width>
-          <height>28</height>
+          <width>101</width>
+          <height>41</height>
          </rect>
         </property>
         <property name="styleSheet">
@@ -3136,9 +3136,9 @@ font: bold 16px;
         <property name="geometry">
          <rect>
           <x>410</x>
-          <y>260</y>
-          <width>91</width>
-          <height>28</height>
+          <y>247</y>
+          <width>101</width>
+          <height>41</height>
          </rect>
         </property>
         <property name="styleSheet">
@@ -3204,9 +3204,9 @@ font: bold 16px;
         <property name="geometry">
          <rect>
           <x>520</x>
-          <y>260</y>
-          <width>91</width>
-          <height>28</height>
+          <y>247</y>
+          <width>101</width>
+          <height>41</height>
          </rect>
         </property>
         <property name="styleSheet">
@@ -3283,9 +3283,9 @@ font: bold 16px;
         <property name="geometry">
          <rect>
           <x>630</x>
-          <y>280</y>
-          <width>91</width>
-          <height>28</height>
+          <y>267</y>
+          <width>101</width>
+          <height>41</height>
          </rect>
         </property>
         <property name="styleSheet">
@@ -3315,9 +3315,9 @@ font: bold 16px;
         <property name="geometry">
          <rect>
           <x>520</x>
-          <y>280</y>
-          <width>91</width>
-          <height>28</height>
+          <y>267</y>
+          <width>101</width>
+          <height>41</height>
          </rect>
         </property>
         <property name="styleSheet">
@@ -3360,16 +3360,16 @@ font: bold 16px;
          </font>
         </property>
         <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#000000;&quot;&gt;Code&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>Code</string>
         </property>
        </widget>
        <widget class="QPushButton" name="pb_parameter_cancel_6">
         <property name="geometry">
          <rect>
           <x>850</x>
-          <y>280</y>
-          <width>91</width>
-          <height>28</height>
+          <y>267</y>
+          <width>101</width>
+          <height>41</height>
          </rect>
         </property>
         <property name="styleSheet">
@@ -3400,8 +3400,8 @@ font: bold 16px;
          <rect>
           <x>520</x>
           <y>320</y>
-          <width>91</width>
-          <height>28</height>
+          <width>101</width>
+          <height>41</height>
          </rect>
         </property>
         <property name="styleSheet">
@@ -3431,9 +3431,9 @@ font: bold 16px;
         <property name="geometry">
          <rect>
           <x>410</x>
-          <y>280</y>
-          <width>91</width>
-          <height>28</height>
+          <y>267</y>
+          <width>101</width>
+          <height>41</height>
          </rect>
         </property>
         <property name="styleSheet">
@@ -3486,9 +3486,9 @@ font: bold 16px;
         <property name="geometry">
          <rect>
           <x>740</x>
-          <y>280</y>
-          <width>91</width>
-          <height>28</height>
+          <y>267</y>
+          <width>101</width>
+          <height>41</height>
          </rect>
         </property>
         <property name="styleSheet">
@@ -3519,8 +3519,8 @@ font: bold 16px;
          <rect>
           <x>630</x>
           <y>320</y>
-          <width>91</width>
-          <height>28</height>
+          <width>101</width>
+          <height>41</height>
          </rect>
         </property>
         <property name="styleSheet">
@@ -3563,7 +3563,7 @@ font: bold 16px;
          </font>
         </property>
         <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#000000;&quot;&gt;Name&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>Name</string>
         </property>
        </widget>
        <widget class="QTableWidget" name="tableWidget_6">
@@ -3623,10 +3623,10 @@ font: bold 16px;
      <widget class="QPushButton" name="pb_Parameter_Save">
       <property name="geometry">
        <rect>
-        <x>430</x>
-        <y>530</y>
-        <width>91</width>
-        <height>28</height>
+        <x>310</x>
+        <y>520</y>
+        <width>151</width>
+        <height>51</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -3648,18 +3648,18 @@ font: bold 16px;
       </property>
       <property name="iconSize">
        <size>
-        <width>103</width>
-        <height>30</height>
+        <width>137</width>
+        <height>100</height>
        </size>
       </property>
      </widget>
      <widget class="QPushButton" name="pb_Parameter_Cancel">
       <property name="geometry">
        <rect>
-        <x>560</x>
-        <y>530</y>
-        <width>91</width>
-        <height>28</height>
+        <x>540</x>
+        <y>520</y>
+        <width>151</width>
+        <height>51</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -3681,18 +3681,18 @@ font: bold 16px;
       </property>
       <property name="iconSize">
        <size>
-        <width>103</width>
-        <height>30</height>
+        <width>137</width>
+        <height>100</height>
        </size>
       </property>
      </widget>
      <widget class="QPushButton" name="pb_Parameter_Close">
       <property name="geometry">
        <rect>
-        <x>900</x>
-        <y>530</y>
-        <width>91</width>
-        <height>28</height>
+        <x>790</x>
+        <y>520</y>
+        <width>151</width>
+        <height>51</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -3713,8 +3713,8 @@ font: bold 16px;
       </property>
       <property name="iconSize">
        <size>
-        <width>103</width>
-        <height>30</height>
+        <width>137</width>
+        <height>100</height>
        </size>
       </property>
      </widget>
@@ -3724,9 +3724,9 @@ font: bold 16px;
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>250</y>
+        <y>290</y>
         <width>1001</width>
-        <height>281</height>
+        <height>241</height>
        </rect>
       </property>
       <property name="columnCount">
@@ -3736,10 +3736,10 @@ font: bold 16px;
      <widget class="QPushButton" name="pb_report_OverallReport">
       <property name="geometry">
        <rect>
-        <x>40</x>
-        <y>50</y>
-        <width>127</width>
-        <height>45</height>
+        <x>20</x>
+        <y>80</y>
+        <width>151</width>
+        <height>51</height>
        </rect>
       </property>
       <property name="font">
@@ -3769,7 +3769,7 @@ font: bold 16px;
       <property name="iconSize">
        <size>
         <width>141</width>
-        <height>40</height>
+        <height>92</height>
        </size>
       </property>
      </widget>
@@ -3777,7 +3777,7 @@ font: bold 16px;
       <property name="geometry">
        <rect>
         <x>260</x>
-        <y>60</y>
+        <y>100</y>
         <width>161</width>
         <height>22</height>
        </rect>
@@ -3787,7 +3787,7 @@ font: bold 16px;
       <property name="geometry">
        <rect>
         <x>180</x>
-        <y>60</y>
+        <y>100</y>
         <width>71</width>
         <height>22</height>
        </rect>
@@ -3800,15 +3800,15 @@ font: bold 16px;
        </font>
       </property>
       <property name="text">
-       <string>Header</string>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ffffff;&quot;&gt;Header&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
      </widget>
      <widget class="QPushButton" name="pb_report_HeaderOk">
       <property name="geometry">
        <rect>
         <x>446</x>
-        <y>48</y>
-        <width>101</width>
+        <y>80</y>
+        <width>121</width>
         <height>51</height>
        </rect>
       </property>
@@ -3847,7 +3847,7 @@ font: bold 16px;
       <property name="geometry">
        <rect>
         <x>620</x>
-        <y>60</y>
+        <y>100</y>
         <width>71</width>
         <height>22</height>
        </rect>
@@ -3860,14 +3860,14 @@ font: bold 16px;
        </font>
       </property>
       <property name="text">
-       <string>Code</string>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ffffff;&quot;&gt;Code&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
      </widget>
      <widget class="QComboBox" name="combo_report_Code">
       <property name="geometry">
        <rect>
         <x>690</x>
-        <y>60</y>
+        <y>100</y>
         <width>161</width>
         <height>22</height>
        </rect>
@@ -3877,8 +3877,8 @@ font: bold 16px;
       <property name="geometry">
        <rect>
         <x>870</x>
-        <y>50</y>
-        <width>101</width>
+        <y>80</y>
+        <width>121</width>
         <height>51</height>
        </rect>
       </property>
@@ -3926,9 +3926,9 @@ font: bold 16px;
      <widget class="QPushButton" name="pb_report_excel">
       <property name="geometry">
        <rect>
-        <x>500</x>
+        <x>330</x>
         <y>540</y>
-        <width>127</width>
+        <width>131</width>
         <height>45</height>
        </rect>
       </property>
@@ -3966,9 +3966,9 @@ font: bold 16px;
      <widget class="QPushButton" name="pb_report_print">
       <property name="geometry">
        <rect>
-        <x>650</x>
+        <x>530</x>
         <y>540</y>
-        <width>127</width>
+        <width>131</width>
         <height>45</height>
        </rect>
       </property>
@@ -4006,9 +4006,9 @@ font: bold 16px;
      <widget class="QPushButton" name="pb_report_close">
       <property name="geometry">
        <rect>
-        <x>810</x>
+        <x>740</x>
         <y>540</y>
-        <width>127</width>
+        <width>131</width>
         <height>45</height>
        </rect>
       </property>
@@ -4046,9 +4046,9 @@ font: bold 16px;
      <widget class="QPushButton" name="pb_report_pdf">
       <property name="geometry">
        <rect>
-        <x>340</x>
+        <x>120</x>
         <y>540</y>
-        <width>127</width>
+        <width>141</width>
         <height>45</height>
        </rect>
       </property>
@@ -4083,34 +4083,11 @@ font: bold 16px;
        </size>
       </property>
      </widget>
-     <widget class="QLabel" name="lb_report">
-      <property name="geometry">
-       <rect>
-        <x>440</x>
-        <y>0</y>
-        <width>161</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>16</pointsize>
-        <weight>75</weight>
-        <bold>true</bold>
-       </font>
-      </property>
-      <property name="text">
-       <string>Report</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-     </widget>
      <widget class="QGroupBox" name="gb_Report_DaiyReport">
       <property name="geometry">
        <rect>
         <x>180</x>
-        <y>90</y>
+        <y>140</y>
         <width>421</width>
         <height>71</height>
        </rect>
@@ -4122,7 +4099,7 @@ font: bold 16px;
        <property name="geometry">
         <rect>
          <x>90</x>
-         <y>20</y>
+         <y>14</y>
          <width>151</width>
          <height>41</height>
         </rect>
@@ -4137,7 +4114,7 @@ font: bold 16px;
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>30</y>
+         <y>26</y>
          <width>71</width>
          <height>22</height>
         </rect>
@@ -4150,16 +4127,16 @@ font: bold 16px;
         </font>
        </property>
        <property name="text">
-        <string>Date</string>
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ffffff;&quot;&gt;Date&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
       </widget>
       <widget class="QPushButton" name="pb_report_dailyReportDateGo">
        <property name="geometry">
         <rect>
          <x>270</x>
-         <y>20</y>
-         <width>127</width>
-         <height>45</height>
+         <y>14</y>
+         <width>131</width>
+         <height>41</height>
         </rect>
        </property>
        <property name="font">
@@ -4171,8 +4148,7 @@ font: bold 16px;
         </font>
        </property>
        <property name="styleSheet">
-        <string notr="true">background-color: rgb(71, 98, 186);
-color:white;
+        <string notr="true">
 boder-style: outset;
 border-wiidth: 2px;
 border-radius: 12px;
@@ -4181,7 +4157,11 @@ font: bold 16px;
 </string>
        </property>
        <property name="text">
-        <string>Go</string>
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>WeighBridgeScreens/Button/GO.png</normaloff>WeighBridgeScreens/Button/GO.png</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -4195,9 +4175,9 @@ font: bold 16px;
       <property name="geometry">
        <rect>
         <x>620</x>
-        <y>100</y>
-        <width>381</width>
-        <height>51</height>
+        <y>140</y>
+        <width>391</width>
+        <height>71</height>
        </rect>
       </property>
       <property name="title">
@@ -4220,7 +4200,7 @@ font: bold 16px;
         </font>
        </property>
        <property name="text">
-        <string>Agent Name</string>
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ffffff;&quot;&gt;Agent Name&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
       </widget>
       <widget class="QComboBox" name="combo_report_selection">
@@ -4238,7 +4218,7 @@ font: bold 16px;
       <property name="geometry">
        <rect>
         <x>180</x>
-        <y>170</y>
+        <y>210</y>
         <width>831</width>
         <height>71</height>
        </rect>
@@ -4250,7 +4230,7 @@ font: bold 16px;
        <property name="geometry">
         <rect>
          <x>650</x>
-         <y>20</y>
+         <y>16</y>
          <width>127</width>
          <height>45</height>
         </rect>
@@ -4264,8 +4244,7 @@ font: bold 16px;
         </font>
        </property>
        <property name="styleSheet">
-        <string notr="true">background-color: rgb(71, 98, 186);
-color:white;
+        <string notr="true">
 boder-style: outset;
 border-wiidth: 2px;
 border-radius: 12px;
@@ -4274,7 +4253,11 @@ font: bold 16px;
 </string>
        </property>
        <property name="text">
-        <string>Go</string>
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>WeighBridgeScreens/Button/GO.png</normaloff>WeighBridgeScreens/Button/GO.png</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -4300,14 +4283,14 @@ font: bold 16px;
         </font>
        </property>
        <property name="text">
-        <string>To Date</string>
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ffffff;&quot;&gt;To Date&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
       </widget>
       <widget class="QDateEdit" name="report_FromDate">
        <property name="geometry">
         <rect>
          <x>130</x>
-         <y>20</y>
+         <y>16</y>
          <width>151</width>
          <height>41</height>
         </rect>
@@ -4335,14 +4318,14 @@ font: bold 16px;
         </font>
        </property>
        <property name="text">
-        <string>From Date</string>
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ffffff;&quot;&gt;From Date&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
       </widget>
       <widget class="QDateEdit" name="report_ToDate">
        <property name="geometry">
         <rect>
          <x>470</x>
-         <y>20</y>
+         <y>16</y>
          <width>151</width>
          <height>41</height>
         </rect>
@@ -4357,9 +4340,9 @@ font: bold 16px;
      <widget class="QGroupBox" name="gb_Report_TypOfReport">
       <property name="geometry">
        <rect>
-        <x>30</x>
-        <y>100</y>
-        <width>141</width>
+        <x>20</x>
+        <y>140</y>
+        <width>151</width>
         <height>141</height>
        </rect>
       </property>
@@ -4369,10 +4352,10 @@ font: bold 16px;
       <widget class="QPushButton" name="pb_Report_DailyReport">
        <property name="geometry">
         <rect>
-         <x>0</x>
-         <y>20</y>
+         <x>10</x>
+         <y>10</y>
          <width>127</width>
-         <height>45</height>
+         <height>41</height>
         </rect>
        </property>
        <property name="font">
@@ -4384,8 +4367,7 @@ font: bold 16px;
         </font>
        </property>
        <property name="styleSheet">
-        <string notr="true">background-color: rgb(71, 98, 186);
-color:white;
+        <string notr="true">
 boder-style: outset;
 border-wiidth: 2px;
 border-radius: 12px;
@@ -4394,7 +4376,11 @@ font: bold 16px;
 </string>
        </property>
        <property name="text">
-        <string>Daily Report</string>
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>WeighBridgeScreens/ReportScreen/Daily1.png</normaloff>WeighBridgeScreens/ReportScreen/Daily1.png</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -4406,8 +4392,8 @@ font: bold 16px;
       <widget class="QPushButton" name="pb_Report_MonthlyReport">
        <property name="geometry">
         <rect>
-         <x>0</x>
-         <y>90</y>
+         <x>10</x>
+         <y>80</y>
          <width>127</width>
          <height>45</height>
         </rect>
@@ -4421,8 +4407,7 @@ font: bold 16px;
         </font>
        </property>
        <property name="styleSheet">
-        <string notr="true">background-color: rgb(71, 98, 186);
-color:white;
+        <string notr="true">
 boder-style: outset;
 border-wiidth: 2px;
 border-radius: 12px;
@@ -4431,7 +4416,17 @@ font: bold 16px;
 </string>
        </property>
        <property name="text">
-        <string>Monthly Report</string>
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>WeighBridgeScreens/ReportScreen/Monthly1.png</normaloff>WeighBridgeScreens/ReportScreen/Monthly1.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>141</width>
+         <height>40</height>
+        </size>
        </property>
       </widget>
      </widget>
@@ -4446,6 +4441,9 @@ font: bold 16px;
       </property>
       <property name="text">
        <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap>WeighBridgeScreens/ReportScreen/ReportScreen.png</pixmap>
       </property>
      </widget>
      <zorder>lb_report_background</zorder>
@@ -4462,7 +4460,6 @@ font: bold 16px;
      <zorder>pb_report_print</zorder>
      <zorder>pb_report_close</zorder>
      <zorder>pb_report_pdf</zorder>
-     <zorder>lb_report</zorder>
      <zorder>gb_Report_DaiyReport</zorder>
      <zorder>gb_Report_HeaderCode</zorder>
      <zorder>gb_Report_MonthlyReport</zorder>
@@ -4579,7 +4576,7 @@ font: bold 16px;
           <x>820</x>
           <y>530</y>
           <width>181</width>
-          <height>51</height>
+          <height>61</height>
          </rect>
         </property>
         <property name="styleSheet">
@@ -6005,7 +6002,7 @@ font: bold 20px;</string>
      <widget class="QLineEdit" name="le_VehicleEntry_serialNumber">
       <property name="geometry">
        <rect>
-        <x>270</x>
+        <x>260</x>
         <y>90</y>
         <width>181</width>
         <height>22</height>
@@ -6023,133 +6020,38 @@ font: bold 20px;</string>
       </property>
       <property name="font">
        <font>
-        <pointsize>13</pointsize>
+        <pointsize>12</pointsize>
        </font>
       </property>
       <property name="text">
        <string>SERIAL NUMBER</string>
       </property>
      </widget>
-     <widget class="QLabel" name="lb_VehicleEntry_netWeight">
-      <property name="geometry">
-       <rect>
-        <x>40</x>
-        <y>210</y>
-        <width>201</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>13</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>NET WEIGHT</string>
-      </property>
-     </widget>
-     <widget class="QLineEdit" name="le_VehicleEntry_netWeight">
-      <property name="geometry">
-       <rect>
-        <x>270</x>
-        <y>210</y>
-        <width>181</width>
-        <height>22</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lb_VehicleEntry_tareWeight">
-      <property name="geometry">
-       <rect>
-        <x>40</x>
-        <y>170</y>
-        <width>201</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>13</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>TARE WEIGHT</string>
-      </property>
-     </widget>
-     <widget class="QLineEdit" name="le_VehicleEntry_tareWeight">
-      <property name="geometry">
-       <rect>
-        <x>270</x>
-        <y>170</y>
-        <width>181</width>
-        <height>22</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QLineEdit" name="le_VehicleEntry_grossWeight">
-      <property name="geometry">
-       <rect>
-        <x>270</x>
-        <y>130</y>
-        <width>181</width>
-        <height>22</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lb_VehicleEntry_grossWeight">
-      <property name="geometry">
-       <rect>
-        <x>40</x>
-        <y>130</y>
-        <width>201</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>13</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>GROSS WEIGHT</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lb_VehicleEntry_weight">
-      <property name="geometry">
-       <rect>
-        <x>660</x>
-        <y>104</y>
-        <width>111</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>13</pointsize>
-        <weight>75</weight>
-        <bold>true</bold>
-       </font>
-      </property>
-      <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#4762ba;&quot;&gt;WEIGHT&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-      </property>
-     </widget>
      <widget class="QLabel" name="lb_VehicleEntry_weightDisplay">
       <property name="geometry">
        <rect>
-        <x>690</x>
-        <y>140</y>
-        <width>211</width>
-        <height>51</height>
+        <x>650</x>
+        <y>120</y>
+        <width>261</width>
+        <height>71</height>
        </rect>
       </property>
       <property name="font">
        <font>
-        <pointsize>34</pointsize>
+        <pointsize>44</pointsize>
        </font>
       </property>
       <property name="autoFillBackground">
-       <bool>true</bool>
+       <bool>false</bool>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(255, 0, 0);
+boder-style: outset;
+background-color: rgb(255, 255, 255);
+border-width: 2px;
+border-radius: 12px;
+border-color: black;</string>
       </property>
       <property name="text">
        <string>000000</string>
@@ -6181,15 +6083,15 @@ font: bold 20px;</string>
      <widget class="QLabel" name="lb_VehicleEntry_grossDateTime">
       <property name="geometry">
        <rect>
-        <x>488</x>
+        <x>503</x>
         <y>370</y>
-        <width>211</width>
+        <width>191</width>
         <height>22</height>
        </rect>
       </property>
       <property name="font">
        <font>
-        <pointsize>13</pointsize>
+        <pointsize>12</pointsize>
        </font>
       </property>
       <property name="text">
@@ -6209,15 +6111,15 @@ font: bold 20px;</string>
      <widget class="QLabel" name="lb_VehicleEntry_tareDateTime">
       <property name="geometry">
        <rect>
-        <x>490</x>
+        <x>505</x>
         <y>410</y>
-        <width>211</width>
+        <width>191</width>
         <height>22</height>
        </rect>
       </property>
       <property name="font">
        <font>
-        <pointsize>13</pointsize>
+        <pointsize>12</pointsize>
        </font>
       </property>
       <property name="text">
@@ -6227,7 +6129,7 @@ font: bold 20px;</string>
      <widget class="QLabel" name="lb_VehicleEntry_amount">
       <property name="geometry">
        <rect>
-        <x>490</x>
+        <x>505</x>
         <y>450</y>
         <width>120</width>
         <height>22</height>
@@ -6235,7 +6137,7 @@ font: bold 20px;</string>
       </property>
       <property name="font">
        <font>
-        <pointsize>13</pointsize>
+        <pointsize>12</pointsize>
        </font>
       </property>
       <property name="text">
@@ -6245,10 +6147,10 @@ font: bold 20px;</string>
      <widget class="QPushButton" name="pb_VehicleEntry_G_weight">
       <property name="geometry">
        <rect>
-        <x>900</x>
-        <y>370</y>
-        <width>93</width>
-        <height>28</height>
+        <x>890</x>
+        <y>360</y>
+        <width>101</width>
+        <height>41</height>
        </rect>
       </property>
       <property name="font">
@@ -6260,25 +6162,31 @@ font: bold 20px;</string>
        </font>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(71, 98, 186);
-color:white;
+       <string notr="true">
 boder-style: outset;
 border-wiidth: 2px;
 border-radius: 8px;
 border-color: black;
 font: bold 16px;</string>
       </property>
-      <property name="text">
-       <string>G_WEIGHT</string>
+      <property name="icon">
+       <iconset>
+        <normaloff>WeighBridgeScreens/Button/gross-weight.png</normaloff>WeighBridgeScreens/Button/gross-weight.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>101</width>
+        <height>41</height>
+       </size>
       </property>
      </widget>
      <widget class="QPushButton" name="pb_VehicleEntry_T_Weight">
       <property name="geometry">
        <rect>
-        <x>900</x>
-        <y>410</y>
-        <width>93</width>
-        <height>28</height>
+        <x>890</x>
+        <y>400</y>
+        <width>101</width>
+        <height>41</height>
        </rect>
       </property>
       <property name="font">
@@ -6290,8 +6198,7 @@ font: bold 16px;</string>
        </font>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(71, 98, 186);
-color:white;
+       <string notr="true">
 boder-style: outset;
 border-wiidth: 2px;
 border-radius: 8px;
@@ -6299,7 +6206,17 @@ border-color: black;
 font: bold 16px;</string>
       </property>
       <property name="text">
-       <string>T_WEIGHT</string>
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>WeighBridgeScreens/Button/tare-weight.png</normaloff>WeighBridgeScreens/Button/tare-weight.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>101</width>
+        <height>41</height>
+       </size>
       </property>
      </widget>
      <widget class="QPushButton" name="pb_VehicleEntry_save">
@@ -6462,7 +6379,7 @@ font: bold 16px;
        </size>
       </property>
      </widget>
-     <widget class="QCheckBox" name="checkBox_VehicleEntry">
+     <widget class="QCheckBox" name="cb_VehicleEntry_print">
       <property name="geometry">
        <rect>
         <x>60</x>
@@ -6486,13 +6403,13 @@ color: rgb(71, 98, 186);</string>
        <string>PRINTOUT</string>
       </property>
      </widget>
-     <widget class="QLabel" name="lb_vehicleEntry_kg_1">
+     <widget class="QLabel" name="lb_vehicleEntry_unit">
       <property name="geometry">
        <rect>
         <x>920</x>
-        <y>160</y>
-        <width>31</width>
-        <height>31</height>
+        <y>150</y>
+        <width>71</width>
+        <height>41</height>
        </rect>
       </property>
       <property name="font">
@@ -6506,79 +6423,10 @@ color: rgb(71, 98, 186);</string>
        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#4762ba;&quot;&gt;Kg&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
      </widget>
-     <widget class="QLabel" name="lb_vehicleEntry_unit_net">
-      <property name="geometry">
-       <rect>
-        <x>450</x>
-        <y>210</y>
-        <width>51</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>10</pointsize>
-        <weight>50</weight>
-        <bold>false</bold>
-       </font>
-      </property>
-      <property name="text">
-       <string>kg</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lb_vehicleEntry_unit_tare">
-      <property name="geometry">
-       <rect>
-        <x>450</x>
-        <y>169</y>
-        <width>51</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>10</pointsize>
-        <weight>50</weight>
-        <bold>false</bold>
-       </font>
-      </property>
-      <property name="text">
-       <string>Kg</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lb_vehicleEntry_unit_gross">
-      <property name="geometry">
-       <rect>
-        <x>450</x>
-        <y>129</y>
-        <width>51</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>10</pointsize>
-        <weight>50</weight>
-        <bold>false</bold>
-       </font>
-      </property>
-      <property name="text">
-       <string>Kg</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
-      </property>
-     </widget>
      <widget class="QLabel" name="lb_VehicleEntry_code4_moistureValue">
       <property name="geometry">
        <rect>
-        <x>490</x>
+        <x>505</x>
         <y>290</y>
         <width>181</width>
         <height>22</height>
@@ -6586,7 +6434,7 @@ color: rgb(71, 98, 186);</string>
       </property>
       <property name="font">
        <font>
-        <pointsize>13</pointsize>
+        <pointsize>12</pointsize>
        </font>
       </property>
       <property name="text">
@@ -6596,7 +6444,7 @@ color: rgb(71, 98, 186);</string>
      <widget class="QLabel" name="lb_VehicleEntry_code5_size">
       <property name="geometry">
        <rect>
-        <x>490</x>
+        <x>505</x>
         <y>330</y>
         <width>120</width>
         <height>22</height>
@@ -6604,7 +6452,7 @@ color: rgb(71, 98, 186);</string>
       </property>
       <property name="font">
        <font>
-        <pointsize>13</pointsize>
+        <pointsize>12</pointsize>
        </font>
       </property>
       <property name="text">
@@ -6634,8 +6482,8 @@ color: rgb(71, 98, 186);</string>
      <widget class="QLineEdit" name="le_VehicleEntry_header2_supervisorName">
       <property name="geometry">
        <rect>
-        <x>270</x>
-        <y>290</y>
+        <x>260</x>
+        <y>170</y>
         <width>181</width>
         <height>22</height>
        </rect>
@@ -6645,14 +6493,14 @@ color: rgb(71, 98, 186);</string>
       <property name="geometry">
        <rect>
         <x>40</x>
-        <y>450</y>
+        <y>330</y>
         <width>181</width>
         <height>22</height>
        </rect>
       </property>
       <property name="font">
        <font>
-        <pointsize>13</pointsize>
+        <pointsize>12</pointsize>
        </font>
       </property>
       <property name="text">
@@ -6662,8 +6510,8 @@ color: rgb(71, 98, 186);</string>
      <widget class="QLineEdit" name="le_VehicleEntry_header5_supplierChalanNo">
       <property name="geometry">
        <rect>
-        <x>270</x>
-        <y>410</y>
+        <x>260</x>
+        <y>290</y>
         <width>181</width>
         <height>22</height>
        </rect>
@@ -6672,8 +6520,8 @@ color: rgb(71, 98, 186);</string>
      <widget class="QLineEdit" name="le_VehicleEntry_header3_count">
       <property name="geometry">
        <rect>
-        <x>270</x>
-        <y>330</y>
+        <x>260</x>
+        <y>210</y>
         <width>181</width>
         <height>22</height>
        </rect>
@@ -6682,15 +6530,15 @@ color: rgb(71, 98, 186);</string>
      <widget class="QLabel" name="lb_VehicleEntry_code3_placeOfLoading">
       <property name="geometry">
        <rect>
-        <x>487</x>
+        <x>502</x>
         <y>250</y>
-        <width>211</width>
+        <width>191</width>
         <height>22</height>
        </rect>
       </property>
       <property name="font">
        <font>
-        <pointsize>13</pointsize>
+        <pointsize>12</pointsize>
        </font>
       </property>
       <property name="text">
@@ -6700,8 +6548,8 @@ color: rgb(71, 98, 186);</string>
      <widget class="QLineEdit" name="le_VehicleEntry_header4_msezDeliverNo">
       <property name="geometry">
        <rect>
-        <x>270</x>
-        <y>370</y>
+        <x>260</x>
+        <y>250</y>
         <width>181</width>
         <height>22</height>
        </rect>
@@ -6711,14 +6559,14 @@ color: rgb(71, 98, 186);</string>
       <property name="geometry">
        <rect>
         <x>40</x>
-        <y>330</y>
+        <y>210</y>
         <width>201</width>
         <height>22</height>
        </rect>
       </property>
       <property name="font">
        <font>
-        <pointsize>13</pointsize>
+        <pointsize>12</pointsize>
        </font>
       </property>
       <property name="text">
@@ -6729,14 +6577,14 @@ color: rgb(71, 98, 186);</string>
       <property name="geometry">
        <rect>
         <x>40</x>
-        <y>250</y>
+        <y>130</y>
         <width>201</width>
         <height>22</height>
        </rect>
       </property>
       <property name="font">
        <font>
-        <pointsize>13</pointsize>
+        <pointsize>12</pointsize>
        </font>
       </property>
       <property name="text">
@@ -6747,14 +6595,14 @@ color: rgb(71, 98, 186);</string>
       <property name="geometry">
        <rect>
         <x>40</x>
-        <y>370</y>
+        <y>250</y>
         <width>201</width>
         <height>22</height>
        </rect>
       </property>
       <property name="font">
        <font>
-        <pointsize>13</pointsize>
+        <pointsize>12</pointsize>
        </font>
       </property>
       <property name="text">
@@ -6775,14 +6623,14 @@ color: rgb(71, 98, 186);</string>
       <property name="geometry">
        <rect>
         <x>40</x>
-        <y>290</y>
+        <y>170</y>
         <width>201</width>
         <height>22</height>
        </rect>
       </property>
       <property name="font">
        <font>
-        <pointsize>13</pointsize>
+        <pointsize>12</pointsize>
        </font>
       </property>
       <property name="text">
@@ -6792,15 +6640,15 @@ color: rgb(71, 98, 186);</string>
      <widget class="QLabel" name="lb_VehicleEntry_code2_agentName">
       <property name="geometry">
        <rect>
-        <x>507</x>
+        <x>502</x>
         <y>210</y>
-        <width>161</width>
+        <width>181</width>
         <height>22</height>
        </rect>
       </property>
       <property name="font">
        <font>
-        <pointsize>13</pointsize>
+        <pointsize>12</pointsize>
        </font>
       </property>
       <property name="text">
@@ -6820,8 +6668,8 @@ color: rgb(71, 98, 186);</string>
      <widget class="QComboBox" name="combo_VehicleEntry_code1_materia">
       <property name="geometry">
        <rect>
-        <x>270</x>
-        <y>450</y>
+        <x>260</x>
+        <y>330</y>
         <width>181</width>
         <height>22</height>
        </rect>
@@ -6831,14 +6679,14 @@ color: rgb(71, 98, 186);</string>
       <property name="geometry">
        <rect>
         <x>37</x>
-        <y>410</y>
+        <y>290</y>
         <width>221</width>
         <height>22</height>
        </rect>
       </property>
       <property name="font">
        <font>
-        <pointsize>13</pointsize>
+        <pointsize>12</pointsize>
        </font>
       </property>
       <property name="text">
@@ -6848,8 +6696,8 @@ color: rgb(71, 98, 186);</string>
      <widget class="QLineEdit" name="le_VehicleEntry_header1_vehicle">
       <property name="geometry">
        <rect>
-        <x>270</x>
-        <y>250</y>
+        <x>260</x>
+        <y>130</y>
         <width>181</width>
         <height>22</height>
        </rect>
@@ -6878,6 +6726,159 @@ color: rgb(71, 98, 186);</string>
        </rect>
       </property>
      </widget>
+     <widget class="QLabel" name="lb_vehicleEntry_unit_gross">
+      <property name="geometry">
+       <rect>
+        <x>450</x>
+        <y>369</y>
+        <width>51</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+        <weight>50</weight>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Kg</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="le_VehicleEntry_tareWeight">
+      <property name="geometry">
+       <rect>
+        <x>260</x>
+        <y>410</y>
+        <width>181</width>
+        <height>22</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lb_VehicleEntry_netWeight">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>450</y>
+        <width>201</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>NET WEIGHT</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="le_VehicleEntry_netWeight">
+      <property name="geometry">
+       <rect>
+        <x>260</x>
+        <y>450</y>
+        <width>181</width>
+        <height>22</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="le_VehicleEntry_grossWeight">
+      <property name="geometry">
+       <rect>
+        <x>260</x>
+        <y>370</y>
+        <width>181</width>
+        <height>22</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lb_VehicleEntry_tareWeight">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>410</y>
+        <width>201</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>TARE WEIGHT</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lb_vehicleEntry_unit_net">
+      <property name="geometry">
+       <rect>
+        <x>450</x>
+        <y>450</y>
+        <width>51</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+        <weight>50</weight>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>kg</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lb_vehicleEntry_unit_tare">
+      <property name="geometry">
+       <rect>
+        <x>450</x>
+        <y>409</y>
+        <width>51</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+        <weight>50</weight>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Kg</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lb_VehicleEntry_grossWeight">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>370</y>
+        <width>201</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>GROSS WEIGHT</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="VehicleExit">
      <widget class="QLabel" name="label_3">
@@ -6904,40 +6905,31 @@ color: rgb(71, 98, 186);</string>
        <pixmap>WeighBridgeScreens/weigh bridge screen/vehicle-re-entry-screen.png</pixmap>
       </property>
      </widget>
-     <widget class="QLabel" name="lb_VehicleReEntry_tareWeight_3">
-      <property name="geometry">
-       <rect>
-        <x>37</x>
-        <y>210</y>
-        <width>221</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>13</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>TARE WEIGHT</string>
-      </property>
-     </widget>
      <widget class="QLabel" name="lb_VehicleReEntry_weightDisplay_3">
       <property name="geometry">
        <rect>
-        <x>700</x>
-        <y>140</y>
-        <width>211</width>
-        <height>51</height>
+        <x>650</x>
+        <y>120</y>
+        <width>261</width>
+        <height>71</height>
        </rect>
       </property>
       <property name="font">
        <font>
-        <pointsize>36</pointsize>
+        <pointsize>44</pointsize>
        </font>
       </property>
       <property name="autoFillBackground">
-       <bool>true</bool>
+       <bool>false</bool>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(255, 0, 0);
+boder-style: outset;
+background-color: rgb(255, 255, 255);
+border-width: 2px;
+border-radius: 12px;
+border-color: black;</string>
       </property>
       <property name="text">
        <string>000000</string>
@@ -6957,7 +6949,7 @@ color: rgb(71, 98, 186);</string>
       </property>
       <property name="font">
        <font>
-        <pointsize>13</pointsize>
+        <pointsize>12</pointsize>
        </font>
       </property>
       <property name="text">
@@ -6967,10 +6959,10 @@ color: rgb(71, 98, 186);</string>
      <widget class="QPushButton" name="pb_VehicleReEntry_T_Weight_3">
       <property name="geometry">
        <rect>
-        <x>900</x>
-        <y>400</y>
-        <width>93</width>
-        <height>28</height>
+        <x>880</x>
+        <y>404</y>
+        <width>101</width>
+        <height>31</height>
        </rect>
       </property>
       <property name="font">
@@ -6982,8 +6974,7 @@ color: rgb(71, 98, 186);</string>
        </font>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(71, 98, 186);
-color:white;
+       <string notr="true">
 boder-style: outset;
 border-wiidth: 2px;
 border-radius: 8px;
@@ -6992,35 +6983,17 @@ font: bold 16px;
 </string>
       </property>
       <property name="text">
-       <string>T_WEIGHT</string>
+       <string/>
       </property>
-     </widget>
-     <widget class="QLabel" name="lb_VehicleReEntry_netWeight_3">
-      <property name="geometry">
-       <rect>
-        <x>37</x>
-        <y>250</y>
-        <width>221</width>
-        <height>22</height>
-       </rect>
+      <property name="icon">
+       <iconset>
+        <normaloff>WeighBridgeScreens/Button/tare-weight.png</normaloff>WeighBridgeScreens/Button/tare-weight.png</iconset>
       </property>
-      <property name="font">
-       <font>
-        <pointsize>13</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>NET WEIGHT</string>
-      </property>
-     </widget>
-     <widget class="QLineEdit" name="le_VehicleReEntry_netWeight_3">
-      <property name="geometry">
-       <rect>
-        <x>270</x>
-        <y>250</y>
-        <width>181</width>
-        <height>22</height>
-       </rect>
+      <property name="iconSize">
+       <size>
+        <width>97</width>
+        <height>41</height>
+       </size>
       </property>
      </widget>
      <widget class="QLabel" name="lb_VehicleReEntry_amount_3">
@@ -7034,50 +7007,20 @@ font: bold 16px;
       </property>
       <property name="font">
        <font>
-        <pointsize>13</pointsize>
+        <pointsize>12</pointsize>
        </font>
       </property>
       <property name="text">
        <string>AMOUNT</string>
       </property>
      </widget>
-     <widget class="QLabel" name="lb_VehicleReEntry_weight_3">
-      <property name="geometry">
-       <rect>
-        <x>650</x>
-        <y>100</y>
-        <width>101</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>13</pointsize>
-        <weight>75</weight>
-        <bold>true</bold>
-       </font>
-      </property>
-      <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#4762ba;&quot;&gt;WEIGHT&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-      </property>
-     </widget>
-     <widget class="QLineEdit" name="le_VehicleReEntry_tareWeight_3">
-      <property name="geometry">
-       <rect>
-        <x>270</x>
-        <y>210</y>
-        <width>181</width>
-        <height>22</height>
-       </rect>
-      </property>
-     </widget>
      <widget class="QPushButton" name="pb_VehicleReEntry_G_weight_3">
       <property name="geometry">
        <rect>
-        <x>902</x>
-        <y>360</y>
-        <width>91</width>
-        <height>28</height>
+        <x>880</x>
+        <y>363</y>
+        <width>101</width>
+        <height>31</height>
        </rect>
       </property>
       <property name="font">
@@ -7089,8 +7032,7 @@ font: bold 16px;
        </font>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(71, 98, 186);
-color:white;
+       <string notr="true">
 boder-style: outset;
 border-wiidth: 2px;
 border-radius: 8px;
@@ -7098,7 +7040,17 @@ border-color: black;
 font: bold 16px;</string>
       </property>
       <property name="text">
-       <string>G_WEIGHT</string>
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>WeighBridgeScreens/Button/gross-weight.png</normaloff>WeighBridgeScreens/Button/gross-weight.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>97</width>
+        <height>41</height>
+       </size>
       </property>
      </widget>
      <widget class="QLabel" name="lb_VehicleReEntry_grossDateTime_3">
@@ -7112,7 +7064,7 @@ font: bold 16px;</string>
       </property>
       <property name="font">
        <font>
-        <pointsize>13</pointsize>
+        <pointsize>12</pointsize>
        </font>
       </property>
       <property name="text">
@@ -7130,7 +7082,7 @@ font: bold 16px;</string>
       </property>
       <property name="font">
        <font>
-        <pointsize>13</pointsize>
+        <pointsize>12</pointsize>
        </font>
       </property>
       <property name="text">
@@ -7140,7 +7092,7 @@ font: bold 16px;</string>
      <widget class="QLineEdit" name="le_VehicleReEntry_amount_3">
       <property name="geometry">
        <rect>
-        <x>711</x>
+        <x>690</x>
         <y>450</y>
         <width>181</width>
         <height>22</height>
@@ -7152,12 +7104,28 @@ font: bold 16px;</string>
        <rect>
         <x>470</x>
         <y>90</y>
-        <width>93</width>
-        <height>28</height>
+        <width>101</width>
+        <height>31</height>
        </rect>
       </property>
+      <property name="styleSheet">
+       <string notr="true">boder-style: outset;
+border-width: 2px;
+border-radius: 12px;
+border-color: black;</string>
+      </property>
       <property name="text">
-       <string>Search</string>
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>WeighBridgeScreens/Button/search.png</normaloff>WeighBridgeScreens/Button/search.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>180</width>
+        <height>30</height>
+       </size>
       </property>
      </widget>
      <widget class="QPushButton" name="pb_VehicleReEntry_close_3">
@@ -7199,7 +7167,7 @@ font: bold 16px;
        </size>
       </property>
      </widget>
-     <widget class="QCheckBox" name="VehicleReEntry_checkBox_3">
+     <widget class="QCheckBox" name="cb_VehicleReEntry_Print">
       <property name="geometry">
        <rect>
         <x>30</x>
@@ -7305,7 +7273,7 @@ font: bold 16px;
      <widget class="QComboBox" name="combo_VehicleReEntry_code4_moistureValue">
       <property name="geometry">
        <rect>
-        <x>710</x>
+        <x>689</x>
         <y>330</y>
         <width>181</width>
         <height>22</height>
@@ -7317,13 +7285,13 @@ font: bold 16px;
        <rect>
         <x>510</x>
         <y>330</y>
-        <width>181</width>
+        <width>171</width>
         <height>22</height>
        </rect>
       </property>
       <property name="font">
        <font>
-        <pointsize>13</pointsize>
+        <pointsize>12</pointsize>
        </font>
       </property>
       <property name="text">
@@ -7333,7 +7301,7 @@ font: bold 16px;
      <widget class="QComboBox" name="combo_VehicleReEntry_code5_size">
       <property name="geometry">
        <rect>
-        <x>710</x>
+        <x>689</x>
         <y>290</y>
         <width>181</width>
         <height>22</height>
@@ -7351,19 +7319,19 @@ font: bold 16px;
       </property>
       <property name="font">
        <font>
-        <pointsize>13</pointsize>
+        <pointsize>12</pointsize>
        </font>
       </property>
       <property name="text">
        <string>SIZE</string>
       </property>
      </widget>
-     <widget class="QLabel" name="lb_vehicleReEntry_kg_1">
+     <widget class="QLabel" name="lb_vehicleReEntry_unit">
       <property name="geometry">
        <rect>
-        <x>930</x>
+        <x>920</x>
         <y>160</y>
-        <width>31</width>
+        <width>61</width>
         <height>31</height>
        </rect>
       </property>
@@ -7378,108 +7346,11 @@ font: bold 16px;
        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#4762ba;&quot;&gt;Kg&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
      </widget>
-     <widget class="QLabel" name="lb_vehicleReEntry_unit_net">
-      <property name="geometry">
-       <rect>
-        <x>450</x>
-        <y>250</y>
-        <width>51</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>10</pointsize>
-        <weight>50</weight>
-        <bold>false</bold>
-       </font>
-      </property>
-      <property name="text">
-       <string>kg</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lb_vehicleReEntry_unit_tare">
-      <property name="geometry">
-       <rect>
-        <x>450</x>
-        <y>210</y>
-        <width>51</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>10</pointsize>
-        <weight>50</weight>
-        <bold>false</bold>
-       </font>
-      </property>
-      <property name="text">
-       <string>Kg</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lb_vehicleReEntry_unit_gross">
-      <property name="geometry">
-       <rect>
-        <x>450</x>
-        <y>170</y>
-        <width>51</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>10</pointsize>
-        <weight>50</weight>
-        <bold>false</bold>
-       </font>
-      </property>
-      <property name="text">
-       <string>Kg</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lb_VehicleReEntry_grossWeight_3">
-      <property name="geometry">
-       <rect>
-        <x>37</x>
-        <y>170</y>
-        <width>221</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>13</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>GROSS WEIGHT</string>
-      </property>
-     </widget>
-     <widget class="QLineEdit" name="le_VehicleReEntry_grossWeight_3">
-      <property name="geometry">
-       <rect>
-        <x>270</x>
-        <y>170</y>
-        <width>181</width>
-        <height>22</height>
-       </rect>
-      </property>
-     </widget>
      <widget class="QLineEdit" name="le_VehicleReEntry_header5_supplierChalanNo_3">
       <property name="geometry">
        <rect>
-        <x>270</x>
-        <y>410</y>
+        <x>260</x>
+        <y>290</y>
         <width>181</width>
         <height>22</height>
        </rect>
@@ -7489,14 +7360,14 @@ font: bold 16px;
       <property name="geometry">
        <rect>
         <x>37</x>
-        <y>370</y>
+        <y>250</y>
         <width>221</width>
         <height>22</height>
        </rect>
       </property>
       <property name="font">
        <font>
-        <pointsize>13</pointsize>
+        <pointsize>12</pointsize>
        </font>
       </property>
       <property name="text">
@@ -7506,8 +7377,8 @@ font: bold 16px;
      <widget class="QLineEdit" name="le_VehicleReEntry_header3_count_3">
       <property name="geometry">
        <rect>
-        <x>270</x>
-        <y>330</y>
+        <x>260</x>
+        <y>210</y>
         <width>181</width>
         <height>22</height>
        </rect>
@@ -7517,14 +7388,14 @@ font: bold 16px;
       <property name="geometry">
        <rect>
         <x>37</x>
-        <y>290</y>
+        <y>170</y>
         <width>221</width>
         <height>22</height>
        </rect>
       </property>
       <property name="font">
        <font>
-        <pointsize>13</pointsize>
+        <pointsize>12</pointsize>
        </font>
       </property>
       <property name="text">
@@ -7535,14 +7406,14 @@ font: bold 16px;
       <property name="geometry">
        <rect>
         <x>37</x>
-        <y>410</y>
+        <y>290</y>
         <width>221</width>
         <height>22</height>
        </rect>
       </property>
       <property name="font">
        <font>
-        <pointsize>13</pointsize>
+        <pointsize>12</pointsize>
        </font>
       </property>
       <property name="text">
@@ -7553,14 +7424,14 @@ font: bold 16px;
       <property name="geometry">
        <rect>
         <x>37</x>
-        <y>330</y>
+        <y>210</y>
         <width>221</width>
         <height>22</height>
        </rect>
       </property>
       <property name="font">
        <font>
-        <pointsize>13</pointsize>
+        <pointsize>12</pointsize>
        </font>
       </property>
       <property name="text">
@@ -7570,8 +7441,8 @@ font: bold 16px;
      <widget class="QLineEdit" name="le_VehicleReEntry_header2_supervisorName_3">
       <property name="geometry">
        <rect>
-        <x>270</x>
-        <y>290</y>
+        <x>260</x>
+        <y>170</y>
         <width>181</width>
         <height>22</height>
        </rect>
@@ -7580,8 +7451,8 @@ font: bold 16px;
      <widget class="QLineEdit" name="le_VehicleReEntry_header4_msezDeliverNo_3">
       <property name="geometry">
        <rect>
-        <x>270</x>
-        <y>370</y>
+        <x>260</x>
+        <y>250</y>
         <width>181</width>
         <height>22</height>
        </rect>
@@ -7592,18 +7463,34 @@ font: bold 16px;
        <rect>
         <x>470</x>
         <y>130</y>
-        <width>93</width>
-        <height>28</height>
+        <width>101</width>
+        <height>31</height>
        </rect>
       </property>
+      <property name="styleSheet">
+       <string notr="true">boder-style: outset;
+border-width: 2px;
+border-radius: 12px;
+border-color: black;</string>
+      </property>
       <property name="text">
-       <string>Search</string>
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>WeighBridgeScreens/Button/search.png</normaloff>WeighBridgeScreens/Button/search.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>183</width>
+        <height>30</height>
+       </size>
       </property>
      </widget>
      <widget class="QComboBox" name="combo_VehicleReEntry_vehicle">
       <property name="geometry">
        <rect>
-        <x>270</x>
+        <x>260</x>
         <y>130</y>
         <width>181</width>
         <height>22</height>
@@ -7621,7 +7508,7 @@ font: bold 16px;
       </property>
       <property name="font">
        <font>
-        <pointsize>13</pointsize>
+        <pointsize>12</pointsize>
        </font>
       </property>
       <property name="text">
@@ -7639,7 +7526,7 @@ font: bold 16px;
       </property>
       <property name="font">
        <font>
-        <pointsize>13</pointsize>
+        <pointsize>12</pointsize>
        </font>
       </property>
       <property name="text">
@@ -7649,7 +7536,7 @@ font: bold 16px;
      <widget class="QComboBox" name="combo_VehicleReEntry_code2_agentName_3">
       <property name="geometry">
        <rect>
-        <x>710</x>
+        <x>689</x>
         <y>210</y>
         <width>181</width>
         <height>22</height>
@@ -7659,8 +7546,8 @@ font: bold 16px;
      <widget class="QComboBox" name="combo_VehicleReEntry_code1_materia_3">
       <property name="geometry">
        <rect>
-        <x>270</x>
-        <y>450</y>
+        <x>260</x>
+        <y>330</y>
         <width>181</width>
         <height>22</height>
        </rect>
@@ -7671,13 +7558,13 @@ font: bold 16px;
        <rect>
         <x>500</x>
         <y>250</y>
-        <width>211</width>
+        <width>191</width>
         <height>22</height>
        </rect>
       </property>
       <property name="font">
        <font>
-        <pointsize>13</pointsize>
+        <pointsize>12</pointsize>
        </font>
       </property>
       <property name="text">
@@ -7687,7 +7574,7 @@ font: bold 16px;
      <widget class="QComboBox" name="combo_VehicleReEntry_code3_placeOfLoading_3">
       <property name="geometry">
        <rect>
-        <x>710</x>
+        <x>689</x>
         <y>250</y>
         <width>181</width>
         <height>22</height>
@@ -7698,14 +7585,14 @@ font: bold 16px;
       <property name="geometry">
        <rect>
         <x>40</x>
-        <y>450</y>
+        <y>330</y>
         <width>171</width>
         <height>22</height>
        </rect>
       </property>
       <property name="font">
        <font>
-        <pointsize>13</pointsize>
+        <pointsize>12</pointsize>
        </font>
       </property>
       <property name="text">
@@ -7715,7 +7602,7 @@ font: bold 16px;
      <widget class="QLineEdit" name="le_VehicleReEntry_serialNumber_3">
       <property name="geometry">
        <rect>
-        <x>270</x>
+        <x>260</x>
         <y>90</y>
         <width>181</width>
         <height>22</height>
@@ -7742,7 +7629,7 @@ font: bold 16px;
       <property name="styleSheet">
        <string notr="true">
 boder-style: outset;
-border-wiidth: 2px;
+border-width: 2px;
 border-radius: 12px;
 border-color: black;
 font: bold 16px;
@@ -7765,7 +7652,7 @@ font: bold 16px;
      <widget class="QLineEdit" name="le_VehicleReEntry_tareTime_2">
       <property name="geometry">
        <rect>
-        <x>810</x>
+        <x>789</x>
         <y>410</y>
         <width>81</width>
         <height>22</height>
@@ -7775,7 +7662,7 @@ font: bold 16px;
      <widget class="QLineEdit" name="le_VehicleReEntry_grossDate_2">
       <property name="geometry">
        <rect>
-        <x>710</x>
+        <x>689</x>
         <y>370</y>
         <width>91</width>
         <height>22</height>
@@ -7785,7 +7672,7 @@ font: bold 16px;
      <widget class="QLineEdit" name="le_VehicleReEntry_grossTime_2">
       <property name="geometry">
        <rect>
-        <x>810</x>
+        <x>789</x>
         <y>370</y>
         <width>81</width>
         <height>22</height>
@@ -7795,7 +7682,7 @@ font: bold 16px;
      <widget class="QLineEdit" name="le_VehicleReEntry_tareDate_2">
       <property name="geometry">
        <rect>
-        <x>710</x>
+        <x>689</x>
         <y>410</y>
         <width>91</width>
         <height>22</height>
@@ -7805,10 +7692,10 @@ font: bold 16px;
      <widget class="QPushButton" name="pb_VehicleReEntry_N_weight_3">
       <property name="geometry">
        <rect>
-        <x>900</x>
-        <y>440</y>
-        <width>91</width>
-        <height>28</height>
+        <x>880</x>
+        <y>439</y>
+        <width>101</width>
+        <height>41</height>
        </rect>
       </property>
       <property name="font">
@@ -7820,8 +7707,7 @@ font: bold 16px;
        </font>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(71, 98, 186);
-color:white;
+       <string notr="true">
 boder-style: outset;
 border-wiidth: 2px;
 border-radius: 8px;
@@ -7830,7 +7716,170 @@ font: bold 16px;
 </string>
       </property>
       <property name="text">
-       <string>N_WEIGHT</string>
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>WeighBridgeScreens/Button/net-weight.png</normaloff>WeighBridgeScreens/Button/net-weight.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>97</width>
+        <height>41</height>
+       </size>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lb_VehicleReEntry_netWeight_3">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>450</y>
+        <width>211</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>NET WEIGHT</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lb_VehicleReEntry_tareWeight_3">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>410</y>
+        <width>211</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>TARE WEIGHT</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="le_VehicleReEntry_tareWeight_3">
+      <property name="geometry">
+       <rect>
+        <x>260</x>
+        <y>410</y>
+        <width>181</width>
+        <height>22</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lb_vehicleReEntry_unit_net">
+      <property name="geometry">
+       <rect>
+        <x>450</x>
+        <y>450</y>
+        <width>51</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+        <weight>50</weight>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>kg</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="le_VehicleReEntry_grossWeight_3">
+      <property name="geometry">
+       <rect>
+        <x>260</x>
+        <y>370</y>
+        <width>181</width>
+        <height>22</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="le_VehicleReEntry_netWeight_3">
+      <property name="geometry">
+       <rect>
+        <x>260</x>
+        <y>450</y>
+        <width>181</width>
+        <height>22</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lb_vehicleReEntry_unit_tare">
+      <property name="geometry">
+       <rect>
+        <x>450</x>
+        <y>410</y>
+        <width>51</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+        <weight>50</weight>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Kg</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lb_vehicleReEntry_unit_gross">
+      <property name="geometry">
+       <rect>
+        <x>450</x>
+        <y>370</y>
+        <width>51</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+        <weight>50</weight>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Kg</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lb_VehicleReEntry_grossWeight_3">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>370</y>
+        <width>211</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>GROSS WEIGHT</string>
       </property>
      </widget>
     </widget>

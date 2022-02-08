@@ -227,13 +227,19 @@ from datetime import datetime
 #
 # # os.startfile('excel')
 # workbook.close
-conn = sqlite3.connect("WeighBridge.db")
-c = conn.cursor()
-name = ["Amount","DateTime","GunnyBag","Unit"]
-values = [True,False,True,"kg"]
-for i in range(len(name)):
-    c.execute("UPDATE T_OtherSettings SET Status=? WHERE Name=?",(values[i],name[i]))
-    # pass
-conn.commit()
-c.close()
-conn.close()
+# conn = sqlite3.connect("WeighBridge.db")
+# c = conn.cursor()
+# name = ["Amount","DateTime","GunnyBag","Unit"]
+# values = [True,False,True,"kg"]
+# for i in range(len(name)):
+#     c.execute("UPDATE T_OtherSettings SET Status=? WHERE Name=?",(values[i],name[i]))
+#     # pass
+# conn.commit()
+# c.close()
+# conn.close()
+# a="ada"
+# b="12"
+# if not (a or b):
+#     print("ss")
+a = "123"
+print(a.isdigit())

@@ -1,13 +1,10 @@
-
 from PyQt5.QtCore import *
-from PyQt5 import QtCore, QtGui, QtWidgets
-from laki import *
 from PyQt5.QtWidgets import *
-import sys
-import time
+from laki import *
+
 class SplashScreen(QWidget):
-    def _init_(self):
-        super()._init_()
+    def __init__(self):
+        super().__init__()
         self.setFixedSize(700, 350)
         self.setWindowFlag(Qt.FramelessWindowHint)
         self.setAttribute(Qt.WA_TranslucentBackground)
@@ -68,8 +65,8 @@ class SplashScreen(QWidget):
             self.WindowApp.show()
         self.counter += 1
 class WindowApp(QMainWindow):
-    def _init_(self):
-        super()._init_()
+    def init(self):
+        super().init()
         self.setWindowTitle("Main Window")
         self.setGeometry(400, 200, 320, 315)
         self.show()
