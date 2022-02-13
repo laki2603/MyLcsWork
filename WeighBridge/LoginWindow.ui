@@ -138,8 +138,8 @@ font: bold 16px;</string>
    <widget class="QPushButton" name="pb_login">
     <property name="geometry">
      <rect>
-      <x>430</x>
-      <y>440</y>
+      <x>330</x>
+      <y>450</y>
       <width>141</width>
       <height>61</height>
      </rect>
@@ -190,12 +190,45 @@ font: bold 16px;</string>
      <pixmap>WeighBridgeScreens/weigh bridge screen/log-in.png</pixmap>
     </property>
    </widget>
+   <widget class="QPushButton" name="pb_close">
+    <property name="geometry">
+     <rect>
+      <x>540</x>
+      <y>450</y>
+      <width>161</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">
+boder-style: outset;
+border-wiidth: 2px;
+border-radius: 12px;
+border-color: black;
+font: bold 16px;
+</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>WeighBridgeScreens/Button/close.png</normaloff>WeighBridgeScreens/Button/close.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>141</width>
+      <height>141</height>
+     </size>
+    </property>
+   </widget>
    <zorder>label</zorder>
    <zorder>lb_userName</zorder>
    <zorder>le_userName</zorder>
    <zorder>lb_passWord</zorder>
    <zorder>le_passWord</zorder>
    <zorder>pb_login</zorder>
+   <zorder>pb_close</zorder>
   </widget>
  </widget>
  <resources/>

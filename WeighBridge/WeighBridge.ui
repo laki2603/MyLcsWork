@@ -49,7 +49,7 @@
      <widget class="QPushButton" name="pb_home_VehicleEntry">
       <property name="geometry">
        <rect>
-        <x>20</x>
+        <x>110</x>
         <y>480</y>
         <width>121</width>
         <height>101</height>
@@ -82,7 +82,7 @@ font: bold 16px;
      <widget class="QPushButton" name="pb_home_VehicleReEntry">
       <property name="geometry">
        <rect>
-        <x>200</x>
+        <x>280</x>
         <y>480</y>
         <width>121</width>
         <height>101</height>
@@ -114,7 +114,7 @@ font: bold 16px;
      <widget class="QPushButton" name="pb_home_ParameterSettings">
       <property name="geometry">
        <rect>
-        <x>530</x>
+        <x>620</x>
         <y>480</y>
         <width>121</width>
         <height>101</height>
@@ -146,7 +146,7 @@ font: bold 16px;
      <widget class="QPushButton" name="pb_home_Settings">
       <property name="geometry">
        <rect>
-        <x>360</x>
+        <x>450</x>
         <y>480</y>
         <width>121</width>
         <height>101</height>
@@ -179,7 +179,7 @@ font: bold 16px;
      <widget class="QPushButton" name="pb_home_report">
       <property name="geometry">
        <rect>
-        <x>700</x>
+        <x>790</x>
         <y>480</y>
         <width>121</width>
         <height>101</height>
@@ -205,38 +205,6 @@ font: bold 16px;
        <size>
         <width>131</width>
         <height>122</height>
-       </size>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="pb_home_Exit">
-      <property name="geometry">
-       <rect>
-        <x>870</x>
-        <y>480</y>
-        <width>121</width>
-        <height>101</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">
-boder-style: outset;
-border-wiidth: 2px;
-border-radius: 5px;
-border-color: black;
-font: bold 16px;
-</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="icon">
-       <iconset>
-        <normaloff>WeighBridgeScreens/Button/exit.png</normaloff>WeighBridgeScreens/Button/exit.png</iconset>
-      </property>
-      <property name="iconSize">
-       <size>
-        <width>131</width>
-        <height>121</height>
        </size>
       </property>
      </widget>
@@ -310,9 +278,9 @@ background-color: rgb(0, 0, 0);</string>
       <property name="geometry">
        <rect>
         <x>30</x>
-        <y>260</y>
+        <y>300</y>
         <width>941</width>
-        <height>192</height>
+        <height>161</height>
        </rect>
       </property>
       <property name="frameShape">
@@ -357,7 +325,7 @@ background-color: rgb(0, 0, 0);</string>
        <bool>false</bool>
       </property>
       <property name="frameShape">
-       <enum>QFrame::Box</enum>
+       <enum>QFrame::NoFrame</enum>
       </property>
       <property name="text">
        <string>Date</string>
@@ -384,13 +352,43 @@ background-color: rgb(0, 0, 0);</string>
        <bool>false</bool>
       </property>
       <property name="frameShape">
-       <enum>QFrame::Box</enum>
+       <enum>QFrame::NoFrame</enum>
       </property>
       <property name="text">
        <string>Time</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="cb_virtualKeyBoard">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>250</y>
+        <width>191</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>-1</pointsize>
+        <weight>75</weight>
+        <italic>false</italic>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color:white;
+boder-style: outset;
+border-wiidth: 2px;
+border-radius: 20px;
+border-color: black;
+font:  bold 20px;
+</string>
+      </property>
+      <property name="text">
+       <string>Vitual keyboard</string>
       </property>
      </widget>
     </widget>
@@ -419,8 +417,8 @@ background-color: rgb(0, 0, 0);</string>
        <rect>
         <x>80</x>
         <y>520</y>
-        <width>151</width>
-        <height>51</height>
+        <width>171</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -442,7 +440,7 @@ font: bold 16px;
       </property>
       <property name="iconSize">
        <size>
-        <width>137</width>
+        <width>170</width>
         <height>100</height>
        </size>
       </property>
@@ -664,7 +662,7 @@ font: bold 16px;
           <enum>QTabWidget::Rounded</enum>
          </property>
          <property name="currentIndex">
-          <number>0</number>
+          <number>1</number>
          </property>
          <property name="iconSize">
           <size>
@@ -951,7 +949,7 @@ font: bold 16px;
           <enum>QTabWidget::Rounded</enum>
          </property>
          <property name="currentIndex">
-          <number>0</number>
+          <number>1</number>
          </property>
          <property name="iconSize">
           <size>
@@ -1247,7 +1245,7 @@ font: bold 16px;
          <property name="geometry">
           <rect>
            <x>20</x>
-           <y>40</y>
+           <y>30</y>
            <width>69</width>
            <height>16</height>
           </rect>
@@ -1944,9 +1942,9 @@ font: bold 16px;
        <widget class="QPushButton" name="pb_parameter_create_1">
         <property name="geometry">
          <rect>
-          <x>430</x>
+          <x>363</x>
           <y>240</y>
-          <width>101</width>
+          <width>121</width>
           <height>41</height>
          </rect>
         </property>
@@ -1969,17 +1967,17 @@ font: bold 16px;
         </property>
         <property name="iconSize">
          <size>
-          <width>103</width>
-          <height>30</height>
+          <width>120</width>
+          <height>45</height>
          </size>
         </property>
        </widget>
        <widget class="QPushButton" name="pb_parameter_delete_1">
         <property name="geometry">
          <rect>
-          <x>540</x>
+          <x>487</x>
           <y>240</y>
-          <width>91</width>
+          <width>121</width>
           <height>41</height>
          </rect>
         </property>
@@ -2002,17 +2000,17 @@ font: bold 16px;
         </property>
         <property name="iconSize">
          <size>
-          <width>104</width>
-          <height>30</height>
+          <width>120</width>
+          <height>45</height>
          </size>
         </property>
        </widget>
        <widget class="QPushButton" name="pb_parameter_save_1">
         <property name="geometry">
          <rect>
-          <x>760</x>
+          <x>738</x>
           <y>240</y>
-          <width>91</width>
+          <width>121</width>
           <height>41</height>
          </rect>
         </property>
@@ -2035,17 +2033,17 @@ font: bold 16px;
         </property>
         <property name="iconSize">
          <size>
-          <width>103</width>
-          <height>30</height>
+          <width>120</width>
+          <height>45</height>
          </size>
         </property>
        </widget>
        <widget class="QPushButton" name="pb_parameter_edit_1">
         <property name="geometry">
          <rect>
-          <x>650</x>
+          <x>613</x>
           <y>240</y>
-          <width>91</width>
+          <width>121</width>
           <height>41</height>
          </rect>
         </property>
@@ -2068,17 +2066,17 @@ font: bold 16px;
         </property>
         <property name="iconSize">
          <size>
-          <width>103</width>
-          <height>30</height>
+          <width>120</width>
+          <height>45</height>
          </size>
         </property>
        </widget>
        <widget class="QPushButton" name="pb_parameter_cancel_1">
         <property name="geometry">
          <rect>
-          <x>870</x>
+          <x>863</x>
           <y>240</y>
-          <width>91</width>
+          <width>121</width>
           <height>41</height>
          </rect>
         </property>
@@ -2100,17 +2098,17 @@ font: bold 16px;
         </property>
         <property name="iconSize">
          <size>
-          <width>103</width>
-          <height>30</height>
+          <width>120</width>
+          <height>45</height>
          </size>
         </property>
        </widget>
        <widget class="QPushButton" name="pb_parameter_close_1">
         <property name="geometry">
          <rect>
-          <x>650</x>
+          <x>740</x>
           <y>290</y>
-          <width>101</width>
+          <width>121</width>
           <height>41</height>
          </rect>
         </property>
@@ -2133,17 +2131,17 @@ font: bold 16px;
         </property>
         <property name="iconSize">
          <size>
-          <width>103</width>
-          <height>30</height>
+          <width>120</width>
+          <height>45</height>
          </size>
         </property>
        </widget>
        <widget class="QPushButton" name="pb_parameter_print_1">
         <property name="geometry">
          <rect>
-          <x>540</x>
+          <x>613</x>
           <y>290</y>
-          <width>101</width>
+          <width>121</width>
           <height>41</height>
          </rect>
         </property>
@@ -2166,18 +2164,18 @@ font: bold 16px;
         </property>
         <property name="iconSize">
          <size>
-          <width>103</width>
-          <height>30</height>
+          <width>120</width>
+          <height>45</height>
          </size>
         </property>
        </widget>
        <widget class="QPushButton" name="pb_parameter_add">
         <property name="geometry">
          <rect>
-          <x>430</x>
+          <x>483</x>
           <y>290</y>
-          <width>91</width>
-          <height>28</height>
+          <width>111</width>
+          <height>41</height>
          </rect>
         </property>
         <property name="styleSheet">
@@ -2192,6 +2190,12 @@ font: bold 16px;
         </property>
         <property name="text">
          <string>Add</string>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>120</width>
+          <height>45</height>
+         </size>
         </property>
        </widget>
       </widget>
@@ -2245,9 +2249,9 @@ font: bold 16px;
        <widget class="QPushButton" name="pb_parameter_print_3">
         <property name="geometry">
          <rect>
-          <x>510</x>
+          <x>610</x>
           <y>310</y>
-          <width>101</width>
+          <width>121</width>
           <height>41</height>
          </rect>
         </property>
@@ -2269,17 +2273,17 @@ font: bold 16px;
         </property>
         <property name="iconSize">
          <size>
-          <width>103</width>
-          <height>30</height>
+          <width>120</width>
+          <height>45</height>
          </size>
         </property>
        </widget>
        <widget class="QPushButton" name="pb_parameter_delete_3">
         <property name="geometry">
          <rect>
-          <x>510</x>
+          <x>484</x>
           <y>257</y>
-          <width>101</width>
+          <width>121</width>
           <height>41</height>
          </rect>
         </property>
@@ -2302,17 +2306,17 @@ font: bold 16px;
         </property>
         <property name="iconSize">
          <size>
-          <width>103</width>
-          <height>30</height>
+          <width>120</width>
+          <height>45</height>
          </size>
         </property>
        </widget>
        <widget class="QPushButton" name="pb_parameter_close_3">
         <property name="geometry">
          <rect>
-          <x>620</x>
+          <x>735</x>
           <y>310</y>
-          <width>101</width>
+          <width>121</width>
           <height>41</height>
          </rect>
         </property>
@@ -2334,8 +2338,8 @@ font: bold 16px;
         </property>
         <property name="iconSize">
          <size>
-          <width>103</width>
-          <height>30</height>
+          <width>120</width>
+          <height>45</height>
          </size>
         </property>
        </widget>
@@ -2375,9 +2379,9 @@ font: bold 16px;
        <widget class="QPushButton" name="pb_parameter_create_3">
         <property name="geometry">
          <rect>
-          <x>400</x>
+          <x>360</x>
           <y>257</y>
-          <width>101</width>
+          <width>121</width>
           <height>41</height>
          </rect>
         </property>
@@ -2400,17 +2404,17 @@ font: bold 16px;
         </property>
         <property name="iconSize">
          <size>
-          <width>103</width>
-          <height>30</height>
+          <width>120</width>
+          <height>45</height>
          </size>
         </property>
        </widget>
        <widget class="QPushButton" name="pb_parameter_cancel_3">
         <property name="geometry">
          <rect>
-          <x>840</x>
+          <x>858</x>
           <y>257</y>
-          <width>101</width>
+          <width>121</width>
           <height>41</height>
          </rect>
         </property>
@@ -2432,17 +2436,17 @@ font: bold 16px;
         </property>
         <property name="iconSize">
          <size>
-          <width>103</width>
-          <height>30</height>
+          <width>120</width>
+          <height>45</height>
          </size>
         </property>
        </widget>
        <widget class="QPushButton" name="pb_parameter_save_3">
         <property name="geometry">
          <rect>
-          <x>730</x>
+          <x>733</x>
           <y>257</y>
-          <width>101</width>
+          <width>121</width>
           <height>41</height>
          </rect>
         </property>
@@ -2464,8 +2468,8 @@ font: bold 16px;
         </property>
         <property name="iconSize">
          <size>
-          <width>103</width>
-          <height>30</height>
+          <width>120</width>
+          <height>45</height>
          </size>
         </property>
        </widget>
@@ -2495,9 +2499,9 @@ font: bold 16px;
        <widget class="QPushButton" name="pb_parameter_edit_3">
         <property name="geometry">
          <rect>
-          <x>620</x>
+          <x>609</x>
           <y>257</y>
-          <width>101</width>
+          <width>121</width>
           <height>41</height>
          </rect>
         </property>
@@ -2519,15 +2523,15 @@ font: bold 16px;
         </property>
         <property name="iconSize">
          <size>
-          <width>103</width>
-          <height>30</height>
+          <width>120</width>
+          <height>45</height>
          </size>
         </property>
        </widget>
        <widget class="QPushButton" name="pb_parameter_add_3">
         <property name="geometry">
          <rect>
-          <x>400</x>
+          <x>510</x>
           <y>310</y>
           <width>93</width>
           <height>28</height>
@@ -2545,6 +2549,12 @@ font: bold 16px;
         </property>
         <property name="text">
          <string>Add</string>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>120</width>
+          <height>45</height>
+         </size>
         </property>
        </widget>
       </widget>
@@ -2568,9 +2578,9 @@ font: bold 16px;
        <widget class="QPushButton" name="pb_parameter_edit_4">
         <property name="geometry">
          <rect>
-          <x>650</x>
+          <x>615</x>
           <y>257</y>
-          <width>101</width>
+          <width>121</width>
           <height>41</height>
          </rect>
         </property>
@@ -2592,17 +2602,17 @@ font: bold 16px;
         </property>
         <property name="iconSize">
          <size>
-          <width>103</width>
-          <height>30</height>
+          <width>120</width>
+          <height>45</height>
          </size>
         </property>
        </widget>
        <widget class="QPushButton" name="pb_parameter_save_4">
         <property name="geometry">
          <rect>
-          <x>760</x>
+          <x>742</x>
           <y>257</y>
-          <width>101</width>
+          <width>121</width>
           <height>41</height>
          </rect>
         </property>
@@ -2624,8 +2634,8 @@ font: bold 16px;
         </property>
         <property name="iconSize">
          <size>
-          <width>103</width>
-          <height>30</height>
+          <width>120</width>
+          <height>45</height>
          </size>
         </property>
        </widget>
@@ -2652,9 +2662,9 @@ font: bold 16px;
        <widget class="QPushButton" name="pb_parameter_cancel_4">
         <property name="geometry">
          <rect>
-          <x>870</x>
+          <x>869</x>
           <y>257</y>
-          <width>101</width>
+          <width>121</width>
           <height>41</height>
          </rect>
         </property>
@@ -2676,8 +2686,8 @@ font: bold 16px;
         </property>
         <property name="iconSize">
          <size>
-          <width>103</width>
-          <height>30</height>
+          <width>120</width>
+          <height>45</height>
          </size>
         </property>
        </widget>
@@ -2750,9 +2760,9 @@ font: bold 16px;
        <widget class="QPushButton" name="pb_parameter_close_4">
         <property name="geometry">
          <rect>
-          <x>650</x>
+          <x>741</x>
           <y>310</y>
-          <width>101</width>
+          <width>121</width>
           <height>41</height>
          </rect>
         </property>
@@ -2774,17 +2784,17 @@ font: bold 16px;
         </property>
         <property name="iconSize">
          <size>
-          <width>103</width>
-          <height>30</height>
+          <width>120</width>
+          <height>45</height>
          </size>
         </property>
        </widget>
        <widget class="QPushButton" name="pb_parameter_print_4">
         <property name="geometry">
          <rect>
-          <x>540</x>
+          <x>612</x>
           <y>310</y>
-          <width>101</width>
+          <width>121</width>
           <height>41</height>
          </rect>
         </property>
@@ -2806,17 +2816,17 @@ font: bold 16px;
         </property>
         <property name="iconSize">
          <size>
-          <width>103</width>
-          <height>30</height>
+          <width>120</width>
+          <height>45</height>
          </size>
         </property>
        </widget>
        <widget class="QPushButton" name="pb_parameter_create_4">
         <property name="geometry">
          <rect>
-          <x>430</x>
+          <x>360</x>
           <y>257</y>
-          <width>101</width>
+          <width>121</width>
           <height>41</height>
          </rect>
         </property>
@@ -2838,17 +2848,17 @@ font: bold 16px;
         </property>
         <property name="iconSize">
          <size>
-          <width>103</width>
-          <height>30</height>
+          <width>120</width>
+          <height>45</height>
          </size>
         </property>
        </widget>
        <widget class="QPushButton" name="pb_parameter_delete_4">
         <property name="geometry">
          <rect>
-          <x>540</x>
+          <x>487</x>
           <y>257</y>
-          <width>101</width>
+          <width>121</width>
           <height>41</height>
          </rect>
         </property>
@@ -2870,18 +2880,18 @@ font: bold 16px;
         </property>
         <property name="iconSize">
          <size>
-          <width>103</width>
-          <height>30</height>
+          <width>120</width>
+          <height>45</height>
          </size>
         </property>
        </widget>
        <widget class="QPushButton" name="pb_parameter_add_4">
         <property name="geometry">
          <rect>
-          <x>430</x>
+          <x>480</x>
           <y>310</y>
-          <width>91</width>
-          <height>28</height>
+          <width>121</width>
+          <height>41</height>
          </rect>
         </property>
         <property name="styleSheet">
@@ -2899,8 +2909,8 @@ font: bold 16px;
         </property>
         <property name="iconSize">
          <size>
-          <width>103</width>
-          <height>30</height>
+          <width>120</width>
+          <height>45</height>
          </size>
         </property>
        </widget>
@@ -2925,9 +2935,9 @@ font: bold 16px;
        <widget class="QPushButton" name="pb_parameter_edit_5">
         <property name="geometry">
          <rect>
-          <x>630</x>
+          <x>600</x>
           <y>247</y>
-          <width>101</width>
+          <width>121</width>
           <height>41</height>
          </rect>
         </property>
@@ -2949,8 +2959,8 @@ font: bold 16px;
         </property>
         <property name="iconSize">
          <size>
-          <width>103</width>
-          <height>30</height>
+          <width>120</width>
+          <height>45</height>
          </size>
         </property>
        </widget>
@@ -2997,9 +3007,9 @@ font: bold 16px;
        <widget class="QPushButton" name="pb_parameter_cancel_5">
         <property name="geometry">
          <rect>
-          <x>850</x>
+          <x>860</x>
           <y>247</y>
-          <width>111</width>
+          <width>121</width>
           <height>41</height>
          </rect>
         </property>
@@ -3021,17 +3031,17 @@ font: bold 16px;
         </property>
         <property name="iconSize">
          <size>
-          <width>103</width>
-          <height>30</height>
+          <width>120</width>
+          <height>45</height>
          </size>
         </property>
        </widget>
        <widget class="QPushButton" name="pb_parameter_print_5">
         <property name="geometry">
          <rect>
-          <x>520</x>
+          <x>600</x>
           <y>300</y>
-          <width>101</width>
+          <width>121</width>
           <height>41</height>
          </rect>
         </property>
@@ -3053,8 +3063,8 @@ font: bold 16px;
         </property>
         <property name="iconSize">
          <size>
-          <width>103</width>
-          <height>30</height>
+          <width>120</width>
+          <height>45</height>
          </size>
         </property>
        </widget>
@@ -3071,9 +3081,9 @@ font: bold 16px;
        <widget class="QPushButton" name="pb_parameter_save_5">
         <property name="geometry">
          <rect>
-          <x>740</x>
+          <x>730</x>
           <y>247</y>
-          <width>101</width>
+          <width>121</width>
           <height>41</height>
          </rect>
         </property>
@@ -3095,17 +3105,17 @@ font: bold 16px;
         </property>
         <property name="iconSize">
          <size>
-          <width>103</width>
-          <height>30</height>
+          <width>120</width>
+          <height>45</height>
          </size>
         </property>
        </widget>
        <widget class="QPushButton" name="pb_parameter_close_5">
         <property name="geometry">
          <rect>
-          <x>630</x>
+          <x>730</x>
           <y>300</y>
-          <width>101</width>
+          <width>121</width>
           <height>41</height>
          </rect>
         </property>
@@ -3127,17 +3137,17 @@ font: bold 16px;
         </property>
         <property name="iconSize">
          <size>
-          <width>103</width>
-          <height>30</height>
+          <width>120</width>
+          <height>45</height>
          </size>
         </property>
        </widget>
        <widget class="QPushButton" name="pb_parameter_create_5">
         <property name="geometry">
          <rect>
-          <x>410</x>
+          <x>340</x>
           <y>247</y>
-          <width>101</width>
+          <width>121</width>
           <height>41</height>
          </rect>
         </property>
@@ -3159,8 +3169,8 @@ font: bold 16px;
         </property>
         <property name="iconSize">
          <size>
-          <width>103</width>
-          <height>30</height>
+          <width>120</width>
+          <height>45</height>
          </size>
         </property>
        </widget>
@@ -3203,9 +3213,9 @@ font: bold 16px;
        <widget class="QPushButton" name="pb_parameter_delete_5">
         <property name="geometry">
          <rect>
-          <x>520</x>
+          <x>470</x>
           <y>247</y>
-          <width>101</width>
+          <width>121</width>
           <height>41</height>
          </rect>
         </property>
@@ -3227,15 +3237,15 @@ font: bold 16px;
         </property>
         <property name="iconSize">
          <size>
-          <width>103</width>
-          <height>30</height>
+          <width>120</width>
+          <height>45</height>
          </size>
         </property>
        </widget>
        <widget class="QPushButton" name="pb_parameter_add_5">
         <property name="geometry">
          <rect>
-          <x>410</x>
+          <x>490</x>
           <y>300</y>
           <width>91</width>
           <height>28</height>
@@ -3282,9 +3292,9 @@ font: bold 16px;
        <widget class="QPushButton" name="pb_parameter_edit_6">
         <property name="geometry">
          <rect>
-          <x>630</x>
+          <x>600</x>
           <y>267</y>
-          <width>101</width>
+          <width>121</width>
           <height>41</height>
          </rect>
         </property>
@@ -3306,17 +3316,17 @@ font: bold 16px;
         </property>
         <property name="iconSize">
          <size>
-          <width>103</width>
-          <height>30</height>
+          <width>120</width>
+          <height>45</height>
          </size>
         </property>
        </widget>
        <widget class="QPushButton" name="pb_parameter_delete_6">
         <property name="geometry">
          <rect>
-          <x>520</x>
+          <x>470</x>
           <y>267</y>
-          <width>101</width>
+          <width>121</width>
           <height>41</height>
          </rect>
         </property>
@@ -3338,8 +3348,8 @@ font: bold 16px;
         </property>
         <property name="iconSize">
          <size>
-          <width>103</width>
-          <height>30</height>
+          <width>120</width>
+          <height>45</height>
          </size>
         </property>
        </widget>
@@ -3366,9 +3376,9 @@ font: bold 16px;
        <widget class="QPushButton" name="pb_parameter_cancel_6">
         <property name="geometry">
          <rect>
-          <x>850</x>
+          <x>860</x>
           <y>267</y>
-          <width>101</width>
+          <width>121</width>
           <height>41</height>
          </rect>
         </property>
@@ -3390,17 +3400,17 @@ font: bold 16px;
         </property>
         <property name="iconSize">
          <size>
-          <width>103</width>
-          <height>30</height>
+          <width>120</width>
+          <height>45</height>
          </size>
         </property>
        </widget>
        <widget class="QPushButton" name="pb_parameter_print_6">
         <property name="geometry">
          <rect>
-          <x>520</x>
+          <x>600</x>
           <y>320</y>
-          <width>101</width>
+          <width>121</width>
           <height>41</height>
          </rect>
         </property>
@@ -3422,17 +3432,17 @@ font: bold 16px;
         </property>
         <property name="iconSize">
          <size>
-          <width>103</width>
-          <height>30</height>
+          <width>120</width>
+          <height>45</height>
          </size>
         </property>
        </widget>
        <widget class="QPushButton" name="pb_parameter_create_6">
         <property name="geometry">
          <rect>
-          <x>410</x>
+          <x>340</x>
           <y>267</y>
-          <width>101</width>
+          <width>121</width>
           <height>41</height>
          </rect>
         </property>
@@ -3454,8 +3464,8 @@ font: bold 16px;
         </property>
         <property name="iconSize">
          <size>
-          <width>103</width>
-          <height>30</height>
+          <width>120</width>
+          <height>45</height>
          </size>
         </property>
        </widget>
@@ -3485,9 +3495,9 @@ font: bold 16px;
        <widget class="QPushButton" name="pb_parameter_save_6">
         <property name="geometry">
          <rect>
-          <x>740</x>
+          <x>730</x>
           <y>267</y>
-          <width>101</width>
+          <width>121</width>
           <height>41</height>
          </rect>
         </property>
@@ -3509,17 +3519,17 @@ font: bold 16px;
         </property>
         <property name="iconSize">
          <size>
-          <width>103</width>
-          <height>30</height>
+          <width>120</width>
+          <height>45</height>
          </size>
         </property>
        </widget>
        <widget class="QPushButton" name="pb_parameter_close_6">
         <property name="geometry">
          <rect>
-          <x>630</x>
+          <x>730</x>
           <y>320</y>
-          <width>101</width>
+          <width>121</width>
           <height>41</height>
          </rect>
         </property>
@@ -3541,8 +3551,8 @@ font: bold 16px;
         </property>
         <property name="iconSize">
          <size>
-          <width>103</width>
-          <height>30</height>
+          <width>120</width>
+          <height>45</height>
          </size>
         </property>
        </widget>
@@ -3592,7 +3602,7 @@ font: bold 16px;
        <widget class="QPushButton" name="pb_parameter_add_6">
         <property name="geometry">
          <rect>
-          <x>410</x>
+          <x>500</x>
           <y>320</y>
           <width>91</width>
           <height>28</height>
@@ -3625,8 +3635,8 @@ font: bold 16px;
        <rect>
         <x>310</x>
         <y>520</y>
-        <width>151</width>
-        <height>51</height>
+        <width>181</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -3648,7 +3658,7 @@ font: bold 16px;
       </property>
       <property name="iconSize">
        <size>
-        <width>137</width>
+        <width>170</width>
         <height>100</height>
        </size>
       </property>
@@ -3656,10 +3666,10 @@ font: bold 16px;
      <widget class="QPushButton" name="pb_Parameter_Cancel">
       <property name="geometry">
        <rect>
-        <x>540</x>
+        <x>550</x>
         <y>520</y>
-        <width>151</width>
-        <height>51</height>
+        <width>171</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -3681,7 +3691,7 @@ font: bold 16px;
       </property>
       <property name="iconSize">
        <size>
-        <width>137</width>
+        <width>170</width>
         <height>100</height>
        </size>
       </property>
@@ -3691,8 +3701,8 @@ font: bold 16px;
        <rect>
         <x>790</x>
         <y>520</y>
-        <width>151</width>
-        <height>51</height>
+        <width>171</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -3713,7 +3723,7 @@ font: bold 16px;
       </property>
       <property name="iconSize">
        <size>
-        <width>137</width>
+        <width>170</width>
         <height>100</height>
        </size>
       </property>
@@ -3926,10 +3936,10 @@ font: bold 16px;
      <widget class="QPushButton" name="pb_report_excel">
       <property name="geometry">
        <rect>
-        <x>330</x>
-        <y>540</y>
-        <width>131</width>
-        <height>45</height>
+        <x>310</x>
+        <y>534</y>
+        <width>171</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="font">
@@ -3958,18 +3968,18 @@ font: bold 16px;
       </property>
       <property name="iconSize">
        <size>
-        <width>141</width>
-        <height>43</height>
+        <width>170</width>
+        <height>100</height>
        </size>
       </property>
      </widget>
      <widget class="QPushButton" name="pb_report_print">
       <property name="geometry">
        <rect>
-        <x>530</x>
-        <y>540</y>
-        <width>131</width>
-        <height>45</height>
+        <x>510</x>
+        <y>534</y>
+        <width>171</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="font">
@@ -3998,18 +4008,18 @@ font: bold 16px;
       </property>
       <property name="iconSize">
        <size>
-        <width>141</width>
-        <height>43</height>
+        <width>170</width>
+        <height>100</height>
        </size>
       </property>
      </widget>
      <widget class="QPushButton" name="pb_report_close">
       <property name="geometry">
        <rect>
-        <x>740</x>
-        <y>540</y>
-        <width>131</width>
-        <height>45</height>
+        <x>720</x>
+        <y>534</y>
+        <width>171</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="font">
@@ -4038,18 +4048,18 @@ font: bold 16px;
       </property>
       <property name="iconSize">
        <size>
-        <width>141</width>
-        <height>43</height>
+        <width>170</width>
+        <height>100</height>
        </size>
       </property>
      </widget>
      <widget class="QPushButton" name="pb_report_pdf">
       <property name="geometry">
        <rect>
-        <x>120</x>
-        <y>540</y>
-        <width>141</width>
-        <height>45</height>
+        <x>100</x>
+        <y>534</y>
+        <width>181</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="font">
@@ -4078,8 +4088,8 @@ font: bold 16px;
       </property>
       <property name="iconSize">
        <size>
-        <width>141</width>
-        <height>43</height>
+        <width>170</width>
+        <height>100</height>
        </size>
       </property>
      </widget>
@@ -4095,21 +4105,6 @@ font: bold 16px;
       <property name="title">
        <string/>
       </property>
-      <widget class="QDateEdit" name="report_DateEdit">
-       <property name="geometry">
-        <rect>
-         <x>90</x>
-         <y>14</y>
-         <width>151</width>
-         <height>41</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>12</pointsize>
-        </font>
-       </property>
-      </widget>
       <widget class="QLabel" name="lb_report_Date">
        <property name="geometry">
         <rect>
@@ -4168,6 +4163,25 @@ font: bold 16px;
          <width>141</width>
          <height>40</height>
         </size>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pb_report_calendar">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>20</y>
+         <width>161</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>&lt;Click to Select Date&gt;</string>
        </property>
       </widget>
      </widget>
@@ -4270,7 +4284,7 @@ font: bold 16px;
        <property name="geometry">
         <rect>
          <x>360</x>
-         <y>30</y>
+         <y>26</y>
          <width>101</width>
          <height>22</height>
         </rect>
@@ -4286,26 +4300,11 @@ font: bold 16px;
         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ffffff;&quot;&gt;To Date&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
       </widget>
-      <widget class="QDateEdit" name="report_FromDate">
-       <property name="geometry">
-        <rect>
-         <x>130</x>
-         <y>16</y>
-         <width>151</width>
-         <height>41</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>12</pointsize>
-        </font>
-       </property>
-      </widget>
       <widget class="QLabel" name="lb_report_FromDate">
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>30</y>
+         <y>26</y>
          <width>111</width>
          <height>22</height>
         </rect>
@@ -4321,19 +4320,42 @@ font: bold 16px;
         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ffffff;&quot;&gt;From Date&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
       </widget>
-      <widget class="QDateEdit" name="report_ToDate">
+      <widget class="QPushButton" name="pb_report_fromcalendar">
        <property name="geometry">
         <rect>
-         <x>470</x>
-         <y>16</y>
-         <width>151</width>
-         <height>41</height>
+         <x>130</x>
+         <y>20</y>
+         <width>161</width>
+         <height>31</height>
         </rect>
        </property>
        <property name="font">
         <font>
-         <pointsize>12</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
         </font>
+       </property>
+       <property name="text">
+        <string>&lt;Click to Select Date&gt;</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pb_report_tocalendar">
+       <property name="geometry">
+        <rect>
+         <x>460</x>
+         <y>20</y>
+         <width>161</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>&lt;Click to Select Date&gt;</string>
        </property>
       </widget>
      </widget>
@@ -4446,6 +4468,36 @@ font: bold 16px;
        <pixmap>WeighBridgeScreens/ReportScreen/ReportScreen.png</pixmap>
       </property>
      </widget>
+     <widget class="QCalendarWidget" name="calendarWidget_daily">
+      <property name="geometry">
+       <rect>
+        <x>240</x>
+        <y>280</y>
+        <width>401</width>
+        <height>231</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QCalendarWidget" name="calendarWidget_monthly_to">
+      <property name="geometry">
+       <rect>
+        <x>240</x>
+        <y>280</y>
+        <width>401</width>
+        <height>231</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QCalendarWidget" name="calendarWidget_montly_from">
+      <property name="geometry">
+       <rect>
+        <x>240</x>
+        <y>280</y>
+        <width>401</width>
+        <height>231</height>
+       </rect>
+      </property>
+     </widget>
      <zorder>lb_report_background</zorder>
      <zorder>report_tableWidget</zorder>
      <zorder>pb_report_OverallReport</zorder>
@@ -4464,6 +4516,9 @@ font: bold 16px;
      <zorder>gb_Report_HeaderCode</zorder>
      <zorder>gb_Report_MonthlyReport</zorder>
      <zorder>gb_Report_TypOfReport</zorder>
+     <zorder>calendarWidget_daily</zorder>
+     <zorder>calendarWidget_monthly_to</zorder>
+     <zorder>calendarWidget_montly_from</zorder>
     </widget>
     <widget class="QWidget" name="Settings">
      <widget class="QStackedWidget" name="stackedWidgetSettings">
@@ -4476,7 +4531,7 @@ font: bold 16px;
        </rect>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="settingsMainPage">
        <widget class="QPushButton" name="pb_CommPortSettings">
@@ -4574,7 +4629,7 @@ font: bold 16px;
         <property name="geometry">
          <rect>
           <x>820</x>
-          <y>530</y>
+          <y>520</y>
           <width>181</width>
           <height>61</height>
          </rect>
@@ -4819,7 +4874,7 @@ font: bold 16px;
          <rect>
           <x>390</x>
           <y>400</y>
-          <width>181</width>
+          <width>171</width>
           <height>61</height>
          </rect>
         </property>
@@ -6038,7 +6093,7 @@ font: bold 20px;</string>
       </property>
       <property name="font">
        <font>
-        <pointsize>44</pointsize>
+        <pointsize>27</pointsize>
        </font>
       </property>
       <property name="autoFillBackground">
@@ -6222,10 +6277,10 @@ font: bold 16px;</string>
      <widget class="QPushButton" name="pb_VehicleEntry_save">
       <property name="geometry">
        <rect>
-        <x>390</x>
-        <y>500</y>
-        <width>151</width>
-        <height>51</height>
+        <x>380</x>
+        <y>511</y>
+        <width>181</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="font">
@@ -6254,7 +6309,7 @@ font: bold 16px;
       </property>
       <property name="iconSize">
        <size>
-        <width>137</width>
+        <width>170</width>
         <height>100</height>
        </size>
       </property>
@@ -6262,10 +6317,10 @@ font: bold 16px;
      <widget class="QPushButton" name="pb_VehicleEntry_cancel">
       <property name="geometry">
        <rect>
-        <x>570</x>
-        <y>500</y>
-        <width>151</width>
-        <height>51</height>
+        <x>580</x>
+        <y>511</y>
+        <width>181</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="font">
@@ -6294,7 +6349,7 @@ font: bold 16px;
       </property>
       <property name="iconSize">
        <size>
-        <width>137</width>
+        <width>170</width>
         <height>100</height>
        </size>
       </property>
@@ -6302,10 +6357,10 @@ font: bold 16px;
      <widget class="QPushButton" name="pb_VehicleEntry_close">
       <property name="geometry">
        <rect>
-        <x>750</x>
-        <y>500</y>
-        <width>151</width>
-        <height>51</height>
+        <x>790</x>
+        <y>511</y>
+        <width>171</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="font">
@@ -6334,7 +6389,7 @@ font: bold 16px;
       </property>
       <property name="iconSize">
        <size>
-        <width>137</width>
+        <width>170</width>
         <height>100</height>
        </size>
       </property>
@@ -6342,10 +6397,10 @@ font: bold 16px;
      <widget class="QPushButton" name="pb_VehicleEntry_entry">
       <property name="geometry">
        <rect>
-        <x>220</x>
-        <y>500</y>
-        <width>151</width>
-        <height>51</height>
+        <x>180</x>
+        <y>511</y>
+        <width>181</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="font">
@@ -6374,7 +6429,7 @@ font: bold 16px;
       </property>
       <property name="iconSize">
        <size>
-        <width>137</width>
+        <width>170</width>
         <height>100</height>
        </size>
       </property>
@@ -6382,7 +6437,7 @@ font: bold 16px;
      <widget class="QCheckBox" name="cb_VehicleEntry_print">
       <property name="geometry">
        <rect>
-        <x>60</x>
+        <x>30</x>
         <y>520</y>
         <width>131</width>
         <height>20</height>
@@ -6916,7 +6971,7 @@ color: rgb(71, 98, 186);</string>
       </property>
       <property name="font">
        <font>
-        <pointsize>44</pointsize>
+        <pointsize>28</pointsize>
        </font>
       </property>
       <property name="autoFillBackground">
@@ -7133,8 +7188,8 @@ border-color: black;</string>
        <rect>
         <x>800</x>
         <y>510</y>
-        <width>151</width>
-        <height>51</height>
+        <width>171</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="font">
@@ -7162,7 +7217,7 @@ font: bold 16px;
       </property>
       <property name="iconSize">
        <size>
-        <width>137</width>
+        <width>170</width>
         <height>100</height>
        </size>
       </property>
@@ -7195,8 +7250,8 @@ font: bold 16px;
        <rect>
         <x>400</x>
         <y>510</y>
-        <width>151</width>
-        <height>51</height>
+        <width>171</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="font">
@@ -7225,7 +7280,7 @@ font: bold 16px;
       </property>
       <property name="iconSize">
        <size>
-        <width>137</width>
+        <width>170</width>
         <height>100</height>
        </size>
       </property>
@@ -7235,8 +7290,8 @@ font: bold 16px;
        <rect>
         <x>600</x>
         <y>510</y>
-        <width>151</width>
-        <height>51</height>
+        <width>171</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="font">
@@ -7265,7 +7320,7 @@ font: bold 16px;
       </property>
       <property name="iconSize">
        <size>
-        <width>137</width>
+        <width>170</width>
         <height>100</height>
        </size>
       </property>
@@ -7612,10 +7667,10 @@ border-color: black;</string>
      <widget class="QPushButton" name="pb_VehicleReEntry_entry_2">
       <property name="geometry">
        <rect>
-        <x>200</x>
+        <x>198</x>
         <y>510</y>
-        <width>151</width>
-        <height>51</height>
+        <width>171</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="font">
@@ -7644,7 +7699,7 @@ font: bold 16px;
       </property>
       <property name="iconSize">
        <size>
-        <width>137</width>
+        <width>170</width>
         <height>100</height>
        </size>
       </property>
@@ -7886,6 +7941,226 @@ font: bold 16px;
    </widget>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>le_VehicleEntry_serialNumber</tabstop>
+  <tabstop>le_VehicleEntry_header1_vehicle</tabstop>
+  <tabstop>le_VehicleEntry_header2_supervisorName</tabstop>
+  <tabstop>le_VehicleEntry_header3_count</tabstop>
+  <tabstop>le_VehicleEntry_header4_msezDeliverNo</tabstop>
+  <tabstop>le_VehicleEntry_header5_supplierChalanNo</tabstop>
+  <tabstop>combo_VehicleEntry_code1_materia</tabstop>
+  <tabstop>le_VehicleEntry_grossWeight</tabstop>
+  <tabstop>le_VehicleEntry_tareWeight</tabstop>
+  <tabstop>le_VehicleEntry_netWeight</tabstop>
+  <tabstop>combo_VehicleEntry_code2_agentName</tabstop>
+  <tabstop>combo_VehicleEntry_code3_placeOfLoading</tabstop>
+  <tabstop>combo_VehicleEntry_code4_moisturevalue</tabstop>
+  <tabstop>combo_VehicleEntry_code5_size</tabstop>
+  <tabstop>le_VehicleEntry_grossDate</tabstop>
+  <tabstop>le_VehicleEntry_grossTime</tabstop>
+  <tabstop>le_VehicleEntry_tareDate</tabstop>
+  <tabstop>le_VehicleEntry_tareTime</tabstop>
+  <tabstop>le_VehicleEntry_amount</tabstop>
+  <tabstop>pb_VehicleEntry_G_weight</tabstop>
+  <tabstop>pb_VehicleEntry_T_Weight</tabstop>
+  <tabstop>cb_VehicleEntry_print</tabstop>
+  <tabstop>pb_VehicleEntry_entry</tabstop>
+  <tabstop>pb_VehicleEntry_save</tabstop>
+  <tabstop>pb_VehicleEntry_cancel</tabstop>
+  <tabstop>pb_VehicleEntry_close</tabstop>
+  <tabstop>le_VehicleReEntry_serialNumber_3</tabstop>
+  <tabstop>combo_VehicleReEntry_vehicle</tabstop>
+  <tabstop>le_VehicleReEntry_header2_supervisorName_3</tabstop>
+  <tabstop>le_VehicleReEntry_header3_count_3</tabstop>
+  <tabstop>le_VehicleReEntry_header4_msezDeliverNo_3</tabstop>
+  <tabstop>le_VehicleReEntry_header5_supplierChalanNo_3</tabstop>
+  <tabstop>combo_VehicleReEntry_code1_materia_3</tabstop>
+  <tabstop>le_VehicleReEntry_grossWeight_3</tabstop>
+  <tabstop>le_VehicleReEntry_tareWeight_3</tabstop>
+  <tabstop>le_VehicleReEntry_netWeight_3</tabstop>
+  <tabstop>combo_VehicleReEntry_code2_agentName_3</tabstop>
+  <tabstop>combo_VehicleReEntry_code3_placeOfLoading_3</tabstop>
+  <tabstop>combo_VehicleReEntry_code5_size</tabstop>
+  <tabstop>combo_VehicleReEntry_code4_moistureValue</tabstop>
+  <tabstop>le_VehicleReEntry_grossDate_2</tabstop>
+  <tabstop>le_VehicleReEntry_grossTime_2</tabstop>
+  <tabstop>le_VehicleReEntry_tareDate_2</tabstop>
+  <tabstop>le_VehicleReEntry_tareTime_2</tabstop>
+  <tabstop>le_VehicleReEntry_amount_3</tabstop>
+  <tabstop>pb_VehicleReEntry_G_weight_3</tabstop>
+  <tabstop>pb_VehicleReEntry_T_Weight_3</tabstop>
+  <tabstop>pb_VehicleReEntry_N_weight_3</tabstop>
+  <tabstop>cb_VehicleReEntry_Print</tabstop>
+  <tabstop>pb_VehicleReEntry_entry_2</tabstop>
+  <tabstop>pb_VehicleReEntry_save_2</tabstop>
+  <tabstop>pb_VehicleReEntry_cancel_2</tabstop>
+  <tabstop>pb_VehicleReEntry_close_3</tabstop>
+  <tabstop>pb_home_tare</tabstop>
+  <tabstop>cb_virtualKeyBoard</tabstop>
+  <tabstop>tw_Home_Entry</tabstop>
+  <tabstop>pb_home_VehicleEntry</tabstop>
+  <tabstop>pb_home_VehicleReEntry</tabstop>
+  <tabstop>pb_home_Settings</tabstop>
+  <tabstop>pb_home_ParameterSettings</tabstop>
+  <tabstop>pb_home_report</tabstop>
+  <tabstop>le_parameterMain_Code1</tabstop>
+  <tabstop>le_parameterMain_Code2</tabstop>
+  <tabstop>le_parameterMain_Code3</tabstop>
+  <tabstop>le_parameterMain_Code4</tabstop>
+  <tabstop>le_parameterMain_Code5</tabstop>
+  <tabstop>le_parameterMain_Header1</tabstop>
+  <tabstop>le_parameterMain_Header2</tabstop>
+  <tabstop>le_parameterMain_Header3</tabstop>
+  <tabstop>le_parameterMain_Header4</tabstop>
+  <tabstop>le_parameterMain_Header5</tabstop>
+  <tabstop>tabWidget_parameter_code</tabstop>
+  <tabstop>calendarWidget_montly_from</tabstop>
+  <tabstop>cb_parameter_VehicleEntry_Code2</tabstop>
+  <tabstop>calendarWidget_monthly_to</tabstop>
+  <tabstop>cb_parameter_VehicleEntry_Code3</tabstop>
+  <tabstop>cb_parameter_VehicleEntry_Code4</tabstop>
+  <tabstop>cb_parameter_VehicleEntry_Code5</tabstop>
+  <tabstop>tabWidget_parameter_header</tabstop>
+  <tabstop>cb_parameter_VehicleEntry_header2</tabstop>
+  <tabstop>cb_parameter_VehicleEntry_header3</tabstop>
+  <tabstop>cb_parameter_VehicleEntry_header4</tabstop>
+  <tabstop>cb_parameter_VehicleEntry_header5</tabstop>
+  <tabstop>cb_parameter_VehicleExit_Code2</tabstop>
+  <tabstop>cb_parameter_VehicleExit_Code3</tabstop>
+  <tabstop>cb_parameter_VehicleExit_Code4</tabstop>
+  <tabstop>cb_parameter_VehicleExit_Code5</tabstop>
+  <tabstop>cb_parameter_VehicleExit_header2</tabstop>
+  <tabstop>cb_parameter_VehicleExit_header3</tabstop>
+  <tabstop>cb_parameter_VehicleExit_header4</tabstop>
+  <tabstop>cb_parameter_VehicleExit_header5</tabstop>
+  <tabstop>pb_parameter_Code1Details</tabstop>
+  <tabstop>pb_parameter_Code2Details</tabstop>
+  <tabstop>pb_parameter_Code3Details</tabstop>
+  <tabstop>pb_parameter_Code4Details</tabstop>
+  <tabstop>pb_parameter_Code5Details</tabstop>
+  <tabstop>cb_parameter_Amount</tabstop>
+  <tabstop>cb_parameter_DateTime</tabstop>
+  <tabstop>cb_parameter_GunnyBag</tabstop>
+  <tabstop>rb_parameter_kg</tabstop>
+  <tabstop>rb_parameter_Tonne</tabstop>
+  <tabstop>le_parameter_code_1</tabstop>
+  <tabstop>le_parameter_name_1</tabstop>
+  <tabstop>pb_parameter_create_1</tabstop>
+  <tabstop>pb_parameter_delete_1</tabstop>
+  <tabstop>pb_parameter_edit_1</tabstop>
+  <tabstop>pb_parameter_save_1</tabstop>
+  <tabstop>pb_parameter_cancel_1</tabstop>
+  <tabstop>pb_parameter_add</tabstop>
+  <tabstop>pb_parameter_print_1</tabstop>
+  <tabstop>pb_parameter_close_1</tabstop>
+  <tabstop>tableWidget_1</tabstop>
+  <tabstop>pb_Parameter_Edit</tabstop>
+  <tabstop>pb_Parameter_Save</tabstop>
+  <tabstop>pb_Parameter_Cancel</tabstop>
+  <tabstop>pb_Parameter_Close</tabstop>
+  <tabstop>le_parameter_code_3</tabstop>
+  <tabstop>le_parameter_name_3</tabstop>
+  <tabstop>pb_parameter_create_3</tabstop>
+  <tabstop>pb_parameter_delete_3</tabstop>
+  <tabstop>pb_parameter_edit_3</tabstop>
+  <tabstop>pb_parameter_save_3</tabstop>
+  <tabstop>pb_parameter_cancel_3</tabstop>
+  <tabstop>pb_parameter_add_3</tabstop>
+  <tabstop>pb_parameter_print_3</tabstop>
+  <tabstop>pb_parameter_close_3</tabstop>
+  <tabstop>tableWidget_3</tabstop>
+  <tabstop>le_parameter_code_4</tabstop>
+  <tabstop>le_parameter_name_4</tabstop>
+  <tabstop>pb_parameter_create_4</tabstop>
+  <tabstop>pb_parameter_delete_4</tabstop>
+  <tabstop>pb_parameter_edit_4</tabstop>
+  <tabstop>pb_parameter_save_4</tabstop>
+  <tabstop>pb_parameter_cancel_4</tabstop>
+  <tabstop>pb_parameter_add_4</tabstop>
+  <tabstop>pb_parameter_print_4</tabstop>
+  <tabstop>pb_parameter_close_4</tabstop>
+  <tabstop>tableWidget_4</tabstop>
+  <tabstop>le_parameter_code_5</tabstop>
+  <tabstop>le_parameter_name_5</tabstop>
+  <tabstop>pb_parameter_create_5</tabstop>
+  <tabstop>pb_parameter_delete_5</tabstop>
+  <tabstop>pb_parameter_edit_5</tabstop>
+  <tabstop>pb_parameter_save_5</tabstop>
+  <tabstop>pb_parameter_cancel_5</tabstop>
+  <tabstop>pb_parameter_add_5</tabstop>
+  <tabstop>pb_parameter_print_5</tabstop>
+  <tabstop>pb_parameter_close_5</tabstop>
+  <tabstop>tableWidget_5</tabstop>
+  <tabstop>le_parameter_code_6</tabstop>
+  <tabstop>le_parameter_name_6</tabstop>
+  <tabstop>pb_parameter_create_6</tabstop>
+  <tabstop>pb_parameter_delete_6</tabstop>
+  <tabstop>pb_parameter_edit_6</tabstop>
+  <tabstop>pb_parameter_save_6</tabstop>
+  <tabstop>pb_parameter_cancel_6</tabstop>
+  <tabstop>pb_parameter_add_6</tabstop>
+  <tabstop>pb_parameter_print_6</tabstop>
+  <tabstop>pb_parameter_close_6</tabstop>
+  <tabstop>tableWidget_6</tabstop>
+  <tabstop>pb_report_OverallReport</tabstop>
+  <tabstop>combo_report_Header</tabstop>
+  <tabstop>pb_report_HeaderOk</tabstop>
+  <tabstop>combo_report_Code</tabstop>
+  <tabstop>pb_report_CodeOk</tabstop>
+  <tabstop>pb_Report_DailyReport</tabstop>
+  <tabstop>pb_report_calendar</tabstop>
+  <tabstop>pb_report_dailyReportDateGo</tabstop>
+  <tabstop>combo_report_selection</tabstop>
+  <tabstop>pb_Report_MonthlyReport</tabstop>
+  <tabstop>pb_report_fromcalendar</tabstop>
+  <tabstop>pb_report_tocalendar</tabstop>
+  <tabstop>pb_report_monthlyReportDateGo</tabstop>
+  <tabstop>calendarWidget_daily</tabstop>
+  <tabstop>report_tableWidget</tabstop>
+  <tabstop>pb_report_pdf</tabstop>
+  <tabstop>pb_report_excel</tabstop>
+  <tabstop>pb_report_print</tabstop>
+  <tabstop>pb_report_close</tabstop>
+  <tabstop>pb_CommPortSettings</tabstop>
+  <tabstop>pb_UserAccountSettings</tabstop>
+  <tabstop>pb_settings_close</tabstop>
+  <tabstop>combo_settings_BaudRate</tabstop>
+  <tabstop>combo_settings_Controller</tabstop>
+  <tabstop>combo_settings_PrinterBaudRate</tabstop>
+  <tabstop>combo_settings_PrinterType</tabstop>
+  <tabstop>pb_settings_search</tabstop>
+  <tabstop>pb_settings_Comm_save</tabstop>
+  <tabstop>pb_settings_comport_close</tabstop>
+  <tabstop>le_settings_title1</tabstop>
+  <tabstop>le_settings_title2</tabstop>
+  <tabstop>le_settings_title3</tabstop>
+  <tabstop>pb_settings_edit_2</tabstop>
+  <tabstop>pb_settings_cancel_2</tabstop>
+  <tabstop>le_settings_browse</tabstop>
+  <tabstop>pb_settings_browse</tabstop>
+  <tabstop>pb_settings_save_2</tabstop>
+  <tabstop>pb_settings_header_close</tabstop>
+  <tabstop>le_settings_id</tabstop>
+  <tabstop>le_settings_username</tabstop>
+  <tabstop>le_settings_password</tabstop>
+  <tabstop>le_settings_newpassword</tabstop>
+  <tabstop>le_settings_retypepassword</tabstop>
+  <tabstop>rb_settings_activeYes</tabstop>
+  <tabstop>rb_settings_activeNo</tabstop>
+  <tabstop>rb_settings_adminYes</tabstop>
+  <tabstop>rb_settings_adminNo</tabstop>
+  <tabstop>pb_settings_admin</tabstop>
+  <tabstop>pb_settings_operator</tabstop>
+  <tabstop>pb_settings_lcs</tabstop>
+  <tabstop>tw_settings_users</tabstop>
+  <tabstop>pb_settings_edit</tabstop>
+  <tabstop>pb_settings_save</tabstop>
+  <tabstop>pb_settings_cancel</tabstop>
+  <tabstop>pb_settings_UserSettings_close</tabstop>
+  <tabstop>pb_VehicleReEntry_vehicleSearch_3</tabstop>
+  <tabstop>pb_VehicleReEntry_serialNoSearch_3</tabstop>
+  <tabstop>dateEdit</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

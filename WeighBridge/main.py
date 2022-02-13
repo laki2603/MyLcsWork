@@ -18,6 +18,7 @@ from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Image,Parag
 from reportlab.lib.styles import getSampleStyleSheet,ParagraphStyle
 from tabulate import tabulate
 
+import LcsKeyBoard
 from uitest import Ui_MainWindow
 import xlsxwriter
 
@@ -27,25 +28,80 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5 import QtCore, QtGui, QtWidgets
 import time
+# import easyocr
+# import torch
+# import os
+# import math
+import cv2
+import re
+# import numpy as np
+# from imutils.video.videostream import VideoStream
 
-
-
+from LcsKeyBoard import *
+from LcsNumKeyPad import *
+# import LcsKeyBoard
+import keyboard
 class LoginWindowcls(QObject):
     def __init__(self):
         super().__init__()
         self.main_window = QMainWindow()
         self.lui = LoginWindow.Ui_MainWindow()
+
         self.main_window.setWindowFlag(Qt.FramelessWindowHint)
         self.lui.setupUi(self.main_window)
         self.lui.le_passWord.setEchoMode(QLineEdit.Password)
         self.main_window.show()
 
+        self.kb = LcsKeyBoard()
+        self.keyBoardFlag = False
+        self.userNameFlag = False
+        self.lui.le_userName.mousePressEvent = self.UserName
+        self.passwordFlag = False
+        self.lui.le_passWord.mousePressEvent = self.Password
         self.lui.pb_login.clicked.connect(self.CheckUser)
-
+        self.lui.pb_close.clicked.connect(self.CloseWindow)
 
 
     LoginUpdate = pyqtSignal(str)
+    def UserName(self,event):
 
+        self.userNameFlag = True
+        self.kb.setGeometry(0, 240, 1024, 350)
+        self.kb.flgKeyIsActivated = True
+        self.kb.set_receiver(self.kb.text_input)
+        self.kb.KeyboardSignal.connect(self.getUserName)
+        if self.keyBoardFlag:
+            self.kb.show()
+
+    def getUserName(self):
+        if self.userNameFlag == True:
+            if self.kb.flgLettersPressed == True:
+                self.lui.le_userName.setText(self.kb.text_input.text())
+            elif self.kb.flgNumbersPressed == True:
+                self.lui.le_userName.setText(self.kb.text_input1.text())
+            elif self.kb.flgSymbolsPressed == True:
+                self.lui.le_userName.setText(self.kb.text_input2.text())
+        self.userNameFlag = False
+
+    def Password(self, event):
+
+        self.passwordFlag = True
+        self.kb.setGeometry(0, 240, 1024, 350)
+        self.kb.flgKeyIsActivated = True
+        self.kb.set_receiver(self.kb.text_input)
+        self.kb.KeyboardSignal.connect(self.getPassword)
+        if self.keyBoardFlag:
+            self.kb.show()
+
+    def getPassword(self):
+        if self.passwordFlag == True:
+            if self.kb.flgLettersPressed == True:
+                self.lui.le_passWord.setText(self.kb.text_input.text())
+            elif self.kb.flgNumbersPressed == True:
+                self.lui.le_passWord.setText(self.kb.text_input1.text())
+            elif self.kb.flgSymbolsPressed == True:
+                self.lui.le_passWord.setText(self.kb.text_input2.text())
+        self.passwordFlag = False
     def CheckUser(self):
 
         self.name = self.lui.le_userName.text()
@@ -77,10 +133,14 @@ class LoginWindowcls(QObject):
         self.conn.close()
     def showErrormsg(self,title,msg):
         QMessageBox.information(None,title,msg)
-
+    def CloseWindow(self):
+        reply = QMessageBox.question(None, "Save", "Are you sure?", QMessageBox.Yes | QMessageBox.No,QMessageBox.No)
+        if reply == QMessageBox.Yes:
+            self.main_window.close()
 
 
 class UI():
+
     def __init__(self):
         ###  Ui setup
         self.main_window = QMainWindow()
@@ -88,7 +148,7 @@ class UI():
         self.ui.setupUi(self.main_window)
         self.main_window.setWindowFlag(Qt.FramelessWindowHint)
         self.ui.stackedWidgetMain.setCurrentWidget(self.ui.Home)
-
+        # self.DataBaseCreation()
         # self.lws = LoginWindowcls()  #changed
         # self.lws.LoginUpdate.connect(self.login)  #changed
         ### Declaring variables
@@ -97,19 +157,107 @@ class UI():
         self.passwordList = []
         self.adminList = []
         self.activeList = []
+        self.keyBoardFlag = False
+        self.loginKeyBoard = False
+        self.EntryExitButtonEnable = True
+        self.ui.tw_Home_Entry.setEditTriggers(QtWidgets.QTableWidget.NoEditTriggers)
+        self.ui.tw_settings_users.setEditTriggers(QtWidgets.QTableWidget.NoEditTriggers)
         # self.t1 = threading.Thread(target=self.ShowDate)
         # self.t1.start()
+        # keyBoadsignal = pyqtSignal(bool)
 
         self.DownloadDataFromUserAccountTable()
         self.uniquenum = 0
         # ## Setting Up Main Page
+        ## object creation for classes
         self.serial = Serial()
         self.serial.start()
+        self.key = Keyboard()
+        self.key.start()
+        self.kb = LcsKeyBoard()
+        self.Nkb = LcsNumKeyPad()
+
         self.serial.WeightUpdate.connect(self.WeightDisplay)
         self.setTheField()
         self.mainPageTable()
         self.getLableNameFromDB() #changed
         self.setParameters()
+        ### key press
+
+        self.key.keyupdate.connect(self.Keyevents)
+
+        ### Setting Mouse event
+                # Mouse Event Entry Page
+        self.ui.cb_virtualKeyBoard.stateChanged.connect(self.keyBoardCheck)
+
+        self.entryHeader1Flag = False
+        self.entryHeader2Flag = False
+        self.entryHeader3Flag = False
+        self.entryHeader4Flag = False
+        self.entryHFlag = False
+        self.entryAmountFlag = False
+        self.ui.le_VehicleEntry_header1_vehicle.mousePressEvent = self.showEntryHeader1
+        self.ui.le_VehicleEntry_header2_supervisorName.mousePressEvent = self.showEntryHeader2
+        self.ui.le_VehicleEntry_header3_count.mousePressEvent = self.showEntryHeader3
+        self.ui.le_VehicleEntry_header4_msezDeliverNo.mousePressEvent = self.showEntryHeader4
+        self.ui.le_VehicleEntry_header5_supplierChalanNo.mousePressEvent = self.showEntryHeader5
+        self.ui.le_VehicleEntry_amount.mousePressEvent = self.showEntryAmount
+                # Mouse Event Exit Page
+        self.exitHeader1Flag = False
+        self.exitHeader2Flag = False
+        self.exitHeader3Flag = False
+        self.exitHeader4Flag = False
+        self.exitHFlag = False
+        self.exitAmountFlag = False
+        self.ui.le_VehicleReEntry_header2_supervisorName_3.mousePressEvent = self.showExitHeader2
+        self.ui.le_VehicleReEntry_header3_count_3.mousePressEvent = self.showExitHeader3
+        self.ui.le_VehicleReEntry_header4_msezDeliverNo_3.mousePressEvent = self.showExitHeader4
+        self.ui.le_VehicleReEntry_header5_supplierChalanNo_3.mousePressEvent = self.showExitHeader5
+        self.ui.le_VehicleReEntry_amount_3.mousePressEvent = self.showExitAmount
+                # Mouse Event Paramter page
+        self.code1Flag = False
+        self.code2Flag = False
+        self.code3Flag = False
+        self.code4Flag = False
+        self.code5Flag = False
+        self.header1Flag = False
+        self.header2Flag = False
+        self.header3Flag = False
+        self.header4Flag = False
+        self.header5Flag = False
+        self.ui.le_parameterMain_Code1.mousePressEvent = self.showCode1KeyBoard
+        self.ui.le_parameterMain_Code2.mousePressEvent = self.showCode2KeyBoard
+        self.ui.le_parameterMain_Code3.mousePressEvent = self.showCode3KeyBoard
+        self.ui.le_parameterMain_Code4.mousePressEvent = self.showCode4KeyBoard
+        self.ui.le_parameterMain_Code5.mousePressEvent = self.showCode5KeyBoard
+        self.ui.le_parameterMain_Header1.mousePressEvent = self.showHeader1KeyBoard
+        self.ui.le_parameterMain_Header2.mousePressEvent = self.showHeader2KeyBoard
+        self.ui.le_parameterMain_Header3.mousePressEvent = self.showHeader3KeyBoard
+        self.ui.le_parameterMain_Header4.mousePressEvent = self.showHeader4KeyBoard
+        self.ui.le_parameterMain_Header5.mousePressEvent = self.showHeader5KeyBoard
+
+                #parameter code page
+        self.Code1CodeFlag = False
+        self.Code2CodeFlag = False
+        self.Code3CodeFlag = False
+        self.Code4CodeFlag = False
+        self.Code5CodeFlag = False
+        self.Code1NameFlag = False
+        self.Code2NameFlag = False
+        self.Code3NameFlag = False
+        self.Code4NameFlag = False
+        self.Code5NameFlag = False
+
+        self.ui.le_parameter_code_1.mousePressEvent = self.showCode1CodeKeyBoard
+        self.ui.le_parameter_code_3.mousePressEvent = self.showCode2CodeKeyBoard
+        self.ui.le_parameter_code_4.mousePressEvent = self.showCode3CodeKeyBoard
+        self.ui.le_parameter_code_5.mousePressEvent = self.showCode4CodeKeyBoard
+        self.ui.le_parameter_code_6.mousePressEvent = self.showCode5CodeKeyBoard
+        self.ui.le_parameter_name_1.mousePressEvent = self.showCode1NameKeyBoard
+        self.ui.le_parameter_name_3.mousePressEvent = self.showCode2NameKeyBoard
+        self.ui.le_parameter_name_4.mousePressEvent = self.showCode3NameKeyBoard
+        self.ui.le_parameter_name_5.mousePressEvent = self.showCode4NameKeyBoard
+        self.ui.le_parameter_name_6.mousePressEvent = self.showCode5NameKeyBoard
 
         ### Setting up Parameter page
         self.setCancelSaveAddDelete()
@@ -146,7 +294,6 @@ class UI():
         self.ui.pb_home_VehicleEntry.clicked.connect(self.showVehicleEntry)
         self.ui.pb_home_VehicleReEntry.clicked.connect(self.showVehicleReEntry)
         # self.setMainPageLogo()
-
         ## Setting up Vehicle Entry Page
         self.ui.pb_VehicleEntry_close.clicked.connect(self.showHome)
         self.ui.pb_VehicleEntry_entry.clicked.connect(self.Entry_Entry)
@@ -155,7 +302,7 @@ class UI():
         self.ui.pb_VehicleEntry_G_weight.clicked.connect(self.Entry_getGrossWeight)
         self.ui.pb_VehicleEntry_T_Weight.clicked.connect(self.Entry_getTareWeight)
 
-        ## Setting up Vehicle ReEntry Page
+        ## Setting up Vehicle exit Page
         self.ui.pb_VehicleReEntry_close_3.clicked.connect(self.showHome)
         self.ui.pb_VehicleReEntry_entry_2.clicked.connect(self.Exit_Entry)
         self.ui.pb_VehicleReEntry_cancel_2.clicked.connect(self.Exit_Cancel)
@@ -167,6 +314,7 @@ class UI():
         self.ui.pb_VehicleReEntry_save_2.clicked.connect(self.Exit_Save)
 
         ## Setting up Parameter Settings Page
+        self.parameterEditFlag = True
 
 
         self.ui.pb_Parameter_Close.clicked.connect(self.showHome)
@@ -182,7 +330,7 @@ class UI():
         self.ui.pb_parameter_close_5.clicked.connect(self.showParameterSettingsMainPage)
         self.ui.pb_parameter_close_6.clicked.connect(self.showParameterSettingsMainPage)
 
-        self.ui.pb_Parameter_Save.clicked.connect(self.CodeAndHeaderSettings)
+        self.ui.pb_Parameter_Save.clicked.connect(self.ParameterSave)
         self.ui.pb_Parameter_Edit.clicked.connect(self.ParameterEdit)
         self.ui.pb_Parameter_Cancel.clicked.connect(self.ParameterCancel)
         self.ui.pb_Parameter_Save.setEnabled(False)
@@ -304,15 +452,177 @@ class UI():
         self.ui.pb_Report_DailyReport.clicked.connect(self.openDailyReport)
         self.ui.pb_Report_MonthlyReport.clicked.connect(self.openMonthlyReport)
         self.ui.pb_report_dailyReportDateGo.clicked.connect(self.DailyReport)
+        self.ui.calendarWidget_daily.hide()
+        self.ui.pb_report_calendar.clicked.connect(self.showDailyCalendar)
+        self.ui.calendarWidget_daily.selectionChanged.connect(self.getReportDailyDate)
 
+        self.ui.calendarWidget_montly_from.hide()
+        self.ui.calendarWidget_monthly_to.hide()
         self.ui.pb_report_monthlyReportDateGo.clicked.connect(self.MonthlyReport)
         self.ui.pb_report_HeaderOk.clicked.connect(self.setSelectionHeader)
         self.ui.pb_report_CodeOk.clicked.connect(self.setSelectionCode)
         self.ui.pb_report_pdf.clicked.connect(self.createPdf)
         self.ui.pb_report_excel.clicked.connect(self.createExcel)
+        self.ui.pb_report_fromcalendar.clicked.connect(self.showMonthlyFromCalendar)
+        self.ui.calendarWidget_montly_from.selectionChanged.connect(self.getMonthlyFromDate)
+        self.ui.pb_report_tocalendar.clicked.connect(self.showMonthlyToCalendar)
+        self.ui.calendarWidget_monthly_to.selectionChanged.connect(self.getMonthlyToDate)
         self.setTheField()
 
         self.main_window.show()
+
+        ### ANPR
+        # self.model = torch.hub.load("yolov5", 'custom', path="last.pt", source='local')
+        # self.vs = VideoStream(src=0).start()
+        # self.reader = easyocr.Reader(['en'])
+    def keyBoardCheck(self):
+        print(self.ui.cb_virtualKeyBoard.isChecked())
+        if self.ui.cb_virtualKeyBoard.isChecked():
+            self.keyBoardFlag = True
+            self.loginKeyBoard = True
+        else:
+            self.keyBoardFlag = False
+            self.loginKeyBoard = False
+
+    def Keyevents(self, w):
+        if w == "f1" and self.EntryExitButtonEnable:
+            self.showVehicleEntry()
+        if w == "f2" and self.EntryExitButtonEnable:
+            self.showVehicleReEntry()
+    def DataBaseCreation(self):
+        self.conn = sqlite3.connect("WeighBridge.db")
+        self.c = self.conn.cursor()
+        self.c.execute("""CREATE TABLE IF NOT EXISTS "T_Code1" (
+        	"Code"	TEXT,
+        	"Name"	TEXT
+        );""")
+        self.c.execute("""CREATE TABLE IF NOT EXISTS "T_Code2" (
+        	"Code"	TEXT,
+        	"Name"	TEXT
+        );""")
+        self.c.execute("""CREATE TABLE IF NOT EXISTS "T_Code3" (
+        	"Code"	TEXT,
+        	"Name"	TEXT
+        );""")
+        self.c.execute("""CREATE TABLE IF NOT EXISTS "T_Code4" (
+        	"Code"	TEXT,
+        	"Name"	TEXT
+        );""")
+        self.c.execute("""CREATE TABLE IF NOT EXISTS "T_Code5" (
+        	"Code"	TEXT,
+        	"Name"	TEXT
+        );""")
+        self.c.execute("""CREATE TABLE IF NOT EXISTS "T_CodeAndHeader" (
+            "Type"	TEXT,
+            "Name"	TEXT,
+            "EN_ED"	INTEGER,
+            "EX_ED"	INTEGER
+        );""")
+        self.c.execute("""CREATE TABLE IF NOT EXISTS "T_CommSettings" (
+            "Id"	INTEGER,
+            "Comm"	TEXT,
+            "BaudRate"	TEXT,
+            "Controller"	TEXT,
+            "Printer"	TEXT,
+            "PrinterPort"	TEXT,
+            "PrinterBaudRate"	TEXT,
+            PRIMARY KEY("Id" AUTOINCREMENT)
+        );""")
+        self.c.execute("""CREATE TABLE IF NOT EXISTS "T_Entry" (
+            "SerialNo"	TEXT,
+            "header1"	TEXT,
+            "header2"	TEXT,
+            "header3"	TEXT,
+            "header4"	TEXT,
+            "Header5"	TEXT,
+            "code1_no"	TEXT,
+            "code2_no"	TEXT,
+            "code3_no"	TEXT,
+            "code4_no"	TEXT,
+            "code5_no"	TEXT,
+            "grossWt"	TEXT,
+            "grossUnit"	TEXT,
+            "grossTime"	TEXT,
+            "grossDate"	TEXT,
+            "tareWt"	TEXT,
+            "tareUnit"	TEXT,
+            "tareTime"	TEXT,
+            "tareDate"	TEXT,
+            "netWt"	TEXT,
+            "Amount"	TEXT,
+            "ReportDate"	TEXT,
+            "ReportTime"	TEXT
+        );""")
+        self.c.execute("""CREATE TABLE IF NOT EXISTS "T_HeaderSettings" (
+            "Sno"	INTEGER,
+            "Header"	TEXT,
+            PRIMARY KEY("Sno" AUTOINCREMENT)
+        );""")
+        self.c.execute("""CREATE TABLE IF NOT EXISTS "T_LogoImage" (
+            "LogoName"	TEXT,
+            "No"	INTEGER,
+            PRIMARY KEY("No")
+        );""")
+        self.c.execute("""CREATE TABLE IF NOT EXISTS "T_OtherSettings" (
+            "No"	INTEGER,
+            "Name"	TEXT,
+            "Status"	TEXT,
+            PRIMARY KEY("No" AUTOINCREMENT)
+        );""")
+        self.c.execute("""CREATE TABLE IF NOT EXISTS "T_UserAccountSettings" (
+            "ID"	INTEGER,
+            "User"	TEXT,
+            "Password"	TEXT,
+            "Active"	TEXT,
+            "Admin"	TEXT,
+            PRIMARY KEY("ID" AUTOINCREMENT)
+        );""")
+        self.c.close()
+        self.conn.close()
+    def anpr(self):
+        image = self.vs.read()
+        image = cv2.resize(image, (800, 600))
+        results = self.model(image)
+        cv2.imwrite("full.png", image)
+
+        try:
+            a = results.xyxy[0].numpy()[0]
+            image = image[int(a[1]):int(a[3]), int(a[0]):int(a[2])]
+            image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+            # image = cv2.fastNlMeansDenoisingMulti(image, None, 30, 7, 21)
+            # image = cv2.detailEnhance(image, sigma_s=10, sigma_r=0.15)
+            # R, G, B = cv2.split(image)
+            #
+            # output1_R = cv2.equalizeHist(R)
+            # output1_G = cv2.equalizeHist(G)
+            # output1_B = cv2.equalizeHist(B)
+            #
+            # image = cv2.merge((output1_R, output1_G, output1_B))
+            image = cv2.equalizeHist(image)
+            image = cv2.GaussianBlur(image, (5, 5), 1)
+
+            # threshold
+            th = 50
+            image[image >= th] = 255
+            image[image < th] = 0
+            from pylab import rcParams
+            rcParams['figure.figsize'] = 8, 16
+
+
+            cv2.imshow("test", image)
+            cv2.imwrite("saved.png", image)
+            # result = os.popen("tesseract saved.tif stdout --psm 8").read()  # use psm 4,5,6,7,8 and 13
+            # result = re.sub('\W+', '', result).upper()
+            s = []
+            result = self.reader.readtext(image)
+            for i in result:
+                s.append(re.sub('\W+', '', i[1]).upper())
+            print(result)
+            return "".join(s)
+        except Exception as e:
+            print(e)
+            return "not detected"
+
     def showErrormsg(self,title,msg):
         QMessageBox.information(None,title,msg)
     def login(self,admin):
@@ -337,10 +647,12 @@ class UI():
 
     # Functions used in main page
     def showHome(self):
-        self.setParameters()
-        self.ui.stackedWidgetMain.setCurrentWidget(self.ui.Home)
-        self.setTheField()
-        self.mainPageTable()
+        reply = QMessageBox.question(None, "Save", "Are you sure?", QMessageBox.Yes | QMessageBox.No,QMessageBox.No)
+        if reply == QMessageBox.Yes:
+            self.setParameters()
+            self.ui.stackedWidgetMain.setCurrentWidget(self.ui.Home)
+            self.setTheField()
+            self.mainPageTable()
     def ShowDate(self):
         # while True:
         DateTime = datetime.now()
@@ -361,6 +673,15 @@ class UI():
         self.ui.lb_VehicleEntry_weightDisplay.setText(w)
         self.ui.lb_VehicleReEntry_weightDisplay_3.setText(w)
         self.weight = w
+        if w == "COM err":
+            self.EntryExitButtonEnable = False
+            self.ui.pb_home_VehicleEntry.setEnabled(False)
+            self.ui.pb_home_VehicleReEntry.setEnabled(False)
+        else:
+            self.EntryExitButtonEnable = True
+            self.ui.pb_home_VehicleEntry.setEnabled(True)
+            self.ui.pb_home_VehicleReEntry.setEnabled(True)
+
 
     def mainPageTable(self):
         self.conn = sqlite3.connect("WeighBridge.db")
@@ -411,6 +732,129 @@ class UI():
         self.Entry_settingReadOnly()
         self.Entry_setInitialValues()
         self.setEntryInitialStyleSheets() #changed
+    def showEntryHeader1(self,event):
+        self.entryHeader1Flag = True
+        self.kb.setGeometry(0, 240, 1024, 350)
+        self.kb.text_input.setText(self.ui.le_VehicleEntry_header1_vehicle.text())
+        self.kb.text_input1.setText(self.ui.le_VehicleEntry_header1_vehicle.text())
+        self.kb.text_input2.setText(self.ui.le_VehicleEntry_header1_vehicle.text())
+        self.kb.flgKeyIsActivated = True
+        self.kb.set_receiver(self.kb.text_input)
+
+        if self.keyBoardFlag:
+            self.kb.KeyboardSignal.connect(self.getEntryHeader1)
+            self.kb.show()
+
+    def getEntryHeader1(self):
+        if self.entryHeader1Flag == True:
+            if self.kb.flgLettersPressed == True:
+                self.ui.le_VehicleEntry_header1_vehicle.setText(self.kb.text_input.text())
+            elif self.kb.flgNumbersPressed == True:
+                self.ui.le_VehicleEntry_header1_vehicle.setText(self.kb.text_input1.text())
+            elif self.kb.flgSymbolsPressed == True:
+                self.ui.le_VehicleEntry_header1_vehicle.setText(self.kb.text_input2.text())
+        self.entryHeader1Flag = False
+    def showEntryHeader2(self,event):
+        self.entryHeader2Flag = True
+        self.kb.setGeometry(0, 240, 1024, 350)
+        self.kb.text_input.setText(self.ui.le_VehicleEntry_header2_supervisorName.text())
+        self.kb.text_input1.setText(self.ui.le_VehicleEntry_header2_supervisorName.text())
+        self.kb.text_input2.setText(self.ui.le_VehicleEntry_header2_supervisorName.text())
+        self.kb.flgKeyIsActivated = True
+        self.kb.set_receiver(self.kb.text_input)
+        self.kb.KeyboardSignal.connect(self.getEntryHeader2)
+        if self.keyBoardFlag:
+            self.kb.show()
+
+    def getEntryHeader2(self):
+        if self.entryHeader2Flag == True:
+            if self.kb.flgLettersPressed == True:
+                self.ui.le_VehicleEntry_header2_supervisorName.setText(self.kb.text_input.text())
+            elif self.kb.flgNumbersPressed == True:
+                self.showErrormsg("","Only Letters is allowed")
+            elif self.kb.flgSymbolsPressed == True:
+                self.showErrormsg("","Only Letters is allowed")
+        self.entryHeader2Flag = False
+    def showEntryHeader3(self,event):
+        self.entryHeader3Flag = True
+        self.Nkb.setGeometry(0, 240, 1024, 350)
+        self.Nkb.text_inputNum.setText(self.ui.le_VehicleEntry_header3_count.text())
+
+        self.Nkb.flgNumKeyIsActivated = True
+        self.Nkb.set_receiver(self.Nkb.text_inputNum)
+        self.Nkb.KeyboardSignal.connect(self.getEntryHeader3)
+        if self.keyBoardFlag:
+
+            self.Nkb.show()
+
+    def getEntryHeader3(self):
+        if self.entryHeader3Flag == True:
+
+
+            self.ui.le_VehicleEntry_header3_count.setText(self.Nkb.text_inputNum.text())
+
+        self.entryHeader3Flag = False
+    def showEntryHeader4(self,event):
+        self.entryHeader4Flag = True
+        self.kb.setGeometry(0, 240, 1024, 350)
+        self.kb.text_input.setText(self.ui.le_VehicleEntry_header4_msezDeliverNo.text())
+        self.kb.text_input1.setText(self.ui.le_VehicleEntry_header4_msezDeliverNo.text())
+        self.kb.text_input2.setText(self.ui.le_VehicleEntry_header4_msezDeliverNo.text())
+        self.kb.flgKeyIsActivated = True
+        self.kb.set_receiver(self.kb.text_input)
+        self.kb.KeyboardSignal.connect(self.getEntryHeader4)
+        if self.keyBoardFlag:
+
+            self.kb.show()
+
+    def getEntryHeader4(self):
+        if self.entryHeader4Flag == True:
+            if self.kb.flgLettersPressed == True:
+                self.ui.le_VehicleEntry_header4_msezDeliverNo.setText(self.kb.text_input.text())
+            elif self.kb.flgNumbersPressed == True:
+                self.ui.le_VehicleEntry_header4_msezDeliverNo.setText(self.kb.text_input1.text())
+            elif self.kb.flgSymbolsPressed == True:
+                self.ui.le_VehicleEntry_header4_msezDeliverNo.setText(self.kb.text_input2.text())
+        self.entryHeader4Flag = False
+    def showEntryHeader5(self,event):
+        self.entryHeader5Flag = True
+        self.kb.setGeometry(0, 240, 1024, 350)
+        self.kb.text_input.setText(self.ui.le_VehicleEntry_header5_supplierChalanNo.text())
+        self.kb.text_input1.setText(self.ui.le_VehicleEntry_header5_supplierChalanNo.text())
+        self.kb.text_input2.setText(self.ui.le_VehicleEntry_header5_supplierChalanNo.text())
+        self.kb.flgKeyIsActivated = True
+        self.kb.set_receiver(self.kb.text_input)
+        self.kb.KeyboardSignal.connect(self.getEntryHeader5)
+        if self.keyBoardFlag:
+
+            self.kb.show()
+
+    def getEntryHeader5(self):
+        if self.entryHeader5Flag == True:
+            if self.kb.flgLettersPressed == True:
+                self.ui.le_VehicleEntry_header5_supplierChalanNo.setText(self.kb.text_input.text())
+            elif self.kb.flgNumbersPressed == True:
+                self.ui.le_VehicleEntry_header5_supplierChalanNo.setText(self.kb.text_input1.text())
+            elif self.kb.flgSymbolsPressed == True:
+                self.ui.le_VehicleEntry_header5_supplierChalanNo.setText(self.kb.text_input2.text())
+        self.entryHeader5FlagFlag = False
+    def showEntryAmount(self,event):
+        self.entryAmountFlag = True
+        self.Nkb.setGeometry(0, 240, 1024, 350)
+        self.Nkb.text_inputNum.setText(self.ui.le_VehicleEntry_amount.text())
+
+        self.Nkb.flgNumKeyIsActivated = True
+        self.Nkb.set_receiver(self.Nkb.text_inputNum)
+        self.Nkb.KeyboardSignal.connect(self.getEntryAmount)
+        if self.keyBoardFlag:
+            self.Nkb.show()
+
+    def getEntryAmount(self):
+        if self.entryAmountFlag == True:
+
+            self.ui.le_VehicleEntry_amount.setText(self.Nkb.text_inputNum.text())
+
+        self.entryAmountFlag = False
 
     def Entry_setInitialValues(self):
         self.conn = sqlite3.connect('WeighBridge.db')
@@ -470,6 +914,7 @@ class UI():
         self.ui.pb_VehicleEntry_T_Weight.setEnabled(False)
 
     def Entry_Entry(self):
+        # self.ui.le_VehicleEntry_header1_vehicle.setText(self.anpr())
         self.ui.pb_VehicleEntry_save.setEnabled(True)
         self.ui.pb_VehicleEntry_cancel.setEnabled(True)
         self.ui.pb_VehicleEntry_entry.setEnabled(False)
@@ -493,8 +938,11 @@ class UI():
         self.ui.pb_VehicleEntry_T_Weight.setEnabled(True)
 
     def VehicleEntryCancel(self):
-        self.ui.pb_VehicleEntry_entry.setEnabled(True)
-        self.Entry_disableCancelSaveAllLe()
+        reply = QMessageBox.question(None, "Cancel", "Are you sure?", QMessageBox.Yes | QMessageBox.No,QMessageBox.No)
+        if reply == QMessageBox.Yes:
+            self.ui.pb_VehicleEntry_entry.setEnabled(True)
+            self.Entry_disableCancelSaveAllLe()
+            self.Entry_setInitialValues()
 
     def setEntryInitialStyleSheets(self): #changed
         self.ui.lb_VehicleEntry_header1_vehicle.setStyleSheet("")
@@ -739,7 +1187,9 @@ class UI():
         if reply == QMessageBox.Yes: #changed
             print("saved")
             if saveFlag == 1: #changed
-                if grosswt and grosswt.isdigit():
+
+                if grosswt and grosswt != "COM err":
+
                     textFlag = 1
                     rdate = grossdate
                     rtime = grosstime
@@ -753,7 +1203,7 @@ class UI():
                     self.conn.close() #changed
                     self.Entry_setInitialValues() #changed
 
-                elif tarewt and tarewt.isdigit():
+                elif tarewt and tarewt != "COM err":
                     textFlag=1
                     rdate = taredate
                     rtime = taretime
@@ -784,7 +1234,7 @@ class UI():
                     self.ui.lb_VehicleEntry_header4_msezDeliverNo.setStyleSheet("color:red;")
                 if header5 == "":
                     self.ui.lb_VehicleEntry_header5_supplierChalanNo.setStyleSheet("color:red;")
-                if not (grosswt or tarewt):
+                if not (grosswt or tarewt) or grosswt == "COM err" or tarewt == "COM err":
                     self.ui.lb_VehicleEntry_grossWeight.setStyleSheet("color:red;")
                     self.ui.lb_VehicleEntry_tareWeight.setStyleSheet("color:red;")
                 self.showErrormsg("","Enter all fields")
@@ -793,8 +1243,10 @@ class UI():
             self.c.close()
             self.conn.close()
             self.Entry_Entry()
+
+
+        filename = "Entry.txt"
         if textFlag == 1: #changed
-            filename = "Entry.txt"
             file = open(filename, 'w')
             s0 = ("SERIALNO", currSerialNo)
             s1 = (self.names[5], header1)
@@ -823,39 +1275,40 @@ class UI():
 
 
         try: #changed
-            if self.ui.cb_VehicleEntry_print.isChecked():
+            if self.ui.cb_VehicleEntry_print.isChecked() and textFlag == 1:
                 self.Printout(filename)
         except:
             self.showErrormsg("","No data to print")
 
-    def Printout(self,status):
+    def Printout(self, status):
         from escpos import printer
         from datetime import datetime
 
+        os.system("sudo chmod 666 /dev/usb/lp0")  # raspi
         file = open(status, 'r')
         line = file.readlines()
 
         p = printer.File("/dev/usb/lp0")
 
-        p.set(align="CENTER", width=2)
+        p.set(align='center', bold = True,double_width=True)
         p.text("LCS Control pvt ltd \n\n")
-        p.set(align="CENTER", width=1)
+        p.set(align="center", bold=False)
         p.text("date: " + str(datetime.now().strftime("%d:%m:%y")) + "            time: " + str(
             datetime.now().strftime("%H:%M")) + "\n\n")
-        p.set(align="CENTER")
+        p.set(align="center")
         p.text(status.split(".")[0] + "\n")
         p.text("----------------------------------------------\n")
-        p.set(align="CENTER")
+        p.set(align="center")
         for i, l in enumerate(line):
             p.text(l.strip() + "\n")
         p.text("----------------------------------------------\n")
-        p.set(width=2)
+        p.set(bold = True,align='center',double_width=True)
 
         p.text("ThankYou! visit again!")
         p.cut()
         p.close()
         file.close()
-        os.remove(status)
+        #os.remove(status)
 
     def Entry_getGrossWeight(self):
         self.ui.pb_VehicleEntry_G_weight.setEnabled(False)
@@ -967,7 +1420,7 @@ class UI():
         self.c.close()
         self.conn.close()
 
-    # Functions used in Vehicle ReEntry page
+    # Functions used in Vehicle exit page
     def showVehicleReEntry(self):
         self.ui.stackedWidgetMain.setCurrentWidget(self.ui.VehicleExit)
         self.getLableNameFromDB()
@@ -979,6 +1432,108 @@ class UI():
         self.Exit_setInitialValues()
         self.Exit_addVehicleComboBox()
 
+    def showExitHeader2(self,event):
+        self.exitHeader2Flag = True
+        self.kb.setGeometry(0, 240, 1024, 350)
+        self.kb.text_input.setText(self.ui.le_VehicleReEntry_header2_supervisorName_3.text())
+        self.kb.text_input1.setText(self.ui.le_VehicleReEntry_header2_supervisorName_3.text())
+        self.kb.text_input2.setText(self.ui.le_VehicleReEntry_header2_supervisorName_3.text())
+        self.kb.flgKeyIsActivated = True
+        self.kb.set_receiver(self.kb.text_input)
+        self.kb.KeyboardSignal.connect(self.getExitHeader2)
+        if self.keyBoardFlag:
+            self.kb.show()
+
+    def getExitHeader2(self):
+        if self.exitHeader2Flag == True:
+            if self.kb.flgLettersPressed == True:
+                self.ui.le_VehicleReEntry_header2_supervisorName_3.setText(self.kb.text_input.text())
+            elif self.kb.flgNumbersPressed == True:
+                self.showErrormsg("","Only Letters")
+            elif self.kb.flgSymbolsPressed == True:
+                self.showErrormsg("","Only Letters")
+        self.exitHeader2Flag = False
+
+    def showExitHeader3(self,event):
+        self.exitHeader3Flag = True
+        self.Nkb.setGeometry(0, 240, 1024, 350)
+        self.Nkb.text_inputNum.setText(self.ui.le_VehicleEntry_header3_count.text())
+        self.Nkb.flgKeyIsActivated = True
+        self.Nkb.set_receiver(self.kb.text_input)
+        self.Nkb.KeyboardSignal.connect(self.getExitHeader3)
+        if self.keyBoardFlag:
+            self.Nkb.show()
+
+    def getExitHeader3(self):
+        if self.exitHeader3Flag == True:
+            self.ui.le_VehicleReEntry_header3_count_3.setText(self.Nkb.text_inputNum.text())
+        self.exitHeader3Flag = False
+
+    def showExitHeader4(self,event):
+        self.exitHeader4Flag = True
+        self.kb.setGeometry(0, 240, 1024, 350)
+        self.kb.text_input.setText(self.ui.le_VehicleReEntry_header4_msezDeliverNo_3.text())
+        self.kb.text_input1.setText(self.ui.le_VehicleReEntry_header4_msezDeliverNo_3.text())
+        self.kb.text_input2.setText(self.ui.le_VehicleReEntry_header4_msezDeliverNo_3.text())
+        self.kb.flgKeyIsActivated = True
+        self.kb.set_receiver(self.kb.text_input)
+        self.kb.KeyboardSignal.connect(self.getExitHeader4)
+        if self.keyBoardFlag:
+            self.kb.show()
+
+    def getExitHeader4(self):
+        if self.exitHeader4Flag == True:
+            if self.kb.flgLettersPressed == True:
+                self.ui.le_VehicleReEntry_header4_msezDeliverNo_3.setText(self.kb.text_input.text())
+            elif self.kb.flgNumbersPressed == True:
+                self.ui.le_VehicleReEntry_header4_msezDeliverNo_3.setText(self.kb.text_input1.text())
+            elif self.kb.flgSymbolsPressed == True:
+                self.ui.le_VehicleReEntry_header4_msezDeliverNo_3.setText(self.kb.text_input2.text())
+        self.exitHeader4Flag = False
+
+    def showExitHeader5(self,event):
+        self.exitHeader5Flag = True
+        self.kb.setGeometry(0, 240, 1024, 350)
+        self.kb.text_input.setText(self.ui.le_VehicleReEntry_header5_supplierChalanNo_3.text())
+        self.kb.text_input1.setText(self.ui.le_VehicleReEntry_header5_supplierChalanNo_3.text())
+        self.kb.text_input2.setText(self.ui.le_VehicleReEntry_header5_supplierChalanNo_3.text())
+        self.kb.flgKeyIsActivated = True
+        self.kb.set_receiver(self.kb.text_input)
+        self.kb.KeyboardSignal.connect(self.getExitHeader5)
+        if self.keyBoardFlag:
+            self.kb.show()
+
+    def getExitHeader5(self):
+        if self.exitHeader5Flag == True:
+            if self.kb.flgLettersPressed == True:
+                self.ui.le_VehicleReEntry_header5_supplierChalanNo_3.setText(self.kb.text_input.text())
+            elif self.kb.flgNumbersPressed == True:
+                self.ui.le_VehicleReEntry_header5_supplierChalanNo_3.setText(self.kb.text_input1.text())
+            elif self.kb.flgSymbolsPressed == True:
+                self.ui.le_VehicleReEntry_header5_supplierChalanNo_3.setText(self.kb.text_input2.text())
+        self.exitHeader5FlagFlag = False
+
+    def showExitAmount(self,event):
+        self.exitAmountFlag = True
+        self.kb.setGeometry(0, 240, 1024, 350)
+        self.kb.text_input.setText(self.ui.le_VehicleReEntry_amount_3.text())
+        self.kb.text_input1.setText(self.ui.le_VehicleReEntry_amount_3.text())
+        self.kb.text_input2.setText(self.ui.le_VehicleReEntry_amount_3.text())
+        self.kb.flgKeyIsActivated = True
+        self.kb.set_receiver(self.kb.text_input)
+        self.kb.KeyboardSignal.connect(self.getExitAmount)
+        if self.keyBoardFlag:
+            self.kb.show()
+
+    def getExitAmount(self):
+        if self.exitAmountFlag == True:
+            if self.kb.flgLettersPressed == True:
+                self.showErrormsg("","Only numbers")
+            elif self.kb.flgNumbersPressed == True:
+                self.ui.le_VehicleReEntry_amount_3.setText(self.kb.text_input1.text())
+            elif self.kb.flgSymbolsPressed == True:
+                self.showErrormsg("","Only numbers")
+        self.exitAmountFlag = False
     def Exit_addVehicleComboBox(self):
         self.conn = sqlite3.connect("WeighBridge.db")
         self.c = self.conn.cursor()
@@ -1077,7 +1632,7 @@ class UI():
         self.c = self.conn.cursor()
         try:
 
-            result = self.c.execute("SELECT * FROM T_Entry WHERE SerialNo=?",snum)
+            result = self.c.execute("SELECT * FROM T_Entry WHERE SerialNo=?",(snum,))
 
             for i,data in enumerate(result):
                 # print(data)
@@ -1180,6 +1735,7 @@ class UI():
             if reply == QMessageBox.Yes:  # changed
                 print("saved")
                 if saveFlag == 1:  # changed
+                    textFlag = 1
                     values = (
                     header1, header2, header3, header4, header5, code1, code2, code3, code4, code5, grosswt, grossunit, grosstime, grossdate,
                     tarewt, tareunit, taretime, taredate, netwt, amount, self.reportdate, self.reportTime, serialno)
@@ -1208,11 +1764,11 @@ class UI():
                         self.ui.lb_VehicleReEntry_header4_msezDeliverNo_3.setStyleSheet("color:red;")
                     if header5 == "":
                         self.ui.lb_VehicleReEntry_header5_supplierChalanNo_3.setStyleSheet("color:red;")
-                    if grosswt == "" and not grosswt.isdigit():
+                    if grosswt == "" or grosswt == "COM err":
                         self.ui.lb_VehicleReEntry_grossWeight_3.setStyleSheet("color:red;")
-                    if tarewt == "" and not tarewt.isdigit():
+                    if tarewt == "" or tarewt == "COM err":
                         self.ui.lb_VehicleReEntry_tareWeight_3.setStyleSheet("color:red;")
-                    if netwt == "":
+                    if netwt == "" or netwt   == "COM err":
                         self.ui.lb_VehicleReEntry_netWeight_3.setStyleSheet("color:red;")
                     self.showErrormsg("", "Enter all fields")
             else: #changed
@@ -1222,6 +1778,7 @@ class UI():
                 self.Exit_Entry()
         except:
             pass
+        filename = "Exit.txt"
         if textFlag == 1: #changed
             filename = "Exit.txt"
             file = open(filename,'w')
@@ -1251,7 +1808,7 @@ class UI():
             file.write(tabulate(lines,tablefmt="grid"))
             file.close()
 
-        if self.ui.cb_VehicleReEntry_Print.isChecked():
+        if self.ui.cb_VehicleReEntry_Print.isChecked() and textFlag == 1:
             self.Printout(filename)
     def Exit_getGrossWeight(self):
         self.ui.pb_VehicleReEntry_G_weight_3.setEnabled(False)
@@ -1300,6 +1857,7 @@ class UI():
     # Functions used in Parameter Settings page
     def showParameterSettings(self):
         self.ParameterSettingslws = LoginWindowcls()
+        self.ParameterSettingslws.keyBoardFlag = self.loginKeyBoard
         self.ParameterSettingslws.LoginUpdate.connect(self.ParameterSettingslogin)
 
         # print(self.adminList)
@@ -1317,6 +1875,445 @@ class UI():
         else:
             self.showErrormsg("", "User not authorized")
 
+    def showCode1KeyBoard(self,event):
+        self.code1Flag = True
+        self.kb.setGeometry(0, 240, 1024, 350)
+        self.kb.text_input.setText(self.ui.le_parameterMain_Code1.text())
+        self.kb.text_input1.setText(self.ui.le_parameterMain_Code1.text())
+        self.kb.text_input2.setText(self.ui.le_parameterMain_Code1.text())
+        self.kb.flgKeyIsActivated = True
+        self.kb.set_receiver(self.kb.text_input)
+        self.kb.KeyboardSignal.connect(self.getCode1)
+        if self.keyBoardFlag:
+            self.kb.show()
+
+    def getCode1(self):
+        if self.code1Flag == True:
+            if self.kb.flgLettersPressed == True:
+                self.ui.le_parameterMain_Code1.setText(self.kb.text_input.text())
+            elif self.kb.flgNumbersPressed == True:
+                self.showErrormsg("","Only Letters")
+            elif self.kb.flgSymbolsPressed == True:
+                self.showErrormsg("","Only Letters")
+        self.code1Flag = False
+
+    def showCode2KeyBoard(self,event):
+        self.code2Flag = True
+        self.kb.setGeometry(0, 240, 1024, 350)
+        self.kb.text_input.setText(self.ui.le_parameterMain_Code2.text())
+        self.kb.text_input1.setText(self.ui.le_parameterMain_Code2.text())
+        self.kb.text_input2.setText(self.ui.le_parameterMain_Code2.text())
+        self.kb.flgKeyIsActivated = True
+        self.kb.set_receiver(self.kb.text_input)
+        self.kb.KeyboardSignal.connect(self.getCode2)
+        if self.keyBoardFlag:
+            self.kb.show()
+
+    def getCode2(self):
+        if self.code2Flag == True:
+            if self.kb.flgLettersPressed == True:
+                self.ui.le_parameterMain_Code2.setText(self.kb.text_input.text())
+            elif self.kb.flgNumbersPressed == True:
+                self.showErrormsg("","Only Letters")
+            elif self.kb.flgSymbolsPressed == True:
+                self.showErrormsg("","Only Letters")
+        self.code2Flag = False
+
+    def showCode3KeyBoard(self,event):
+        self.code3Flag = True
+        self.kb.setGeometry(0, 240, 1024, 350)
+        self.kb.text_input.setText(self.ui.le_parameterMain_Code3.text())
+        self.kb.text_input1.setText(self.ui.le_parameterMain_Code3.text())
+        self.kb.text_input2.setText(self.ui.le_parameterMain_Code3.text())
+        self.kb.flgKeyIsActivated = True
+        self.kb.set_receiver(self.kb.text_input)
+        self.kb.KeyboardSignal.connect(self.getCode3)
+        if self.keyBoardFlag:
+            self.kb.show()
+
+    def getCode3(self):
+        if self.code1Flag == True:
+            if self.kb.flgLettersPressed == True:
+                self.ui.le_parameterMain_Code3.setText(self.kb.text_input.text())
+            elif self.kb.flgNumbersPressed == True:
+                self.showErrormsg("","Only Letters")
+            elif self.kb.flgSymbolsPressed == True:
+                self.showErrormsg("","Only Letters")
+        self.code3Flag = False
+
+    def showCode4KeyBoard(self,event):
+        self.code4Flag = True
+        self.kb.setGeometry(0, 240, 1024, 350)
+        self.kb.text_input.setText(self.ui.le_parameterMain_Code4.text())
+        self.kb.text_input1.setText(self.ui.le_parameterMain_Code4.text())
+        self.kb.text_input2.setText(self.ui.le_parameterMain_Code4.text())
+        self.kb.flgKeyIsActivated = True
+        self.kb.set_receiver(self.kb.text_input)
+        self.kb.KeyboardSignal.connect(self.getCode4)
+        if self.keyBoardFlag:
+            self.kb.show()
+
+    def getCode4(self):
+        if self.code1Flag == True:
+            if self.kb.flgLettersPressed == True:
+                self.ui.le_parameterMain_Code4.setText(self.kb.text_input.text())
+            elif self.kb.flgNumbersPressed == True:
+                self.showErrormsg("","Only Letters")
+            elif self.kb.flgSymbolsPressed == True:
+                self.showErrormsg("","Only Letters")
+        self.code4Flag = False
+
+    def showCode5KeyBoard(self,event):
+        self.code5Flag = True
+        self.kb.setGeometry(0, 240, 1024, 350)
+        self.kb.text_input.setText(self.ui.le_parameterMain_Code5.text())
+        self.kb.text_input1.setText(self.ui.le_parameterMain_Code5.text())
+        self.kb.text_input2.setText(self.ui.le_parameterMain_Code5.text())
+        self.kb.flgKeyIsActivated = True
+        self.kb.set_receiver(self.kb.text_input)
+        self.kb.KeyboardSignal.connect(self.getCode5)
+        if self.keyBoardFlag:
+            self.kb.show()
+
+    def getCode5(self):
+        if self.code5Flag == True:
+            if self.kb.flgLettersPressed == True:
+                self.ui.le_parameterMain_Code5.setText(self.kb.text_input.text())
+            elif self.kb.flgNumbersPressed == True:
+                self.showErrormsg("","Only Letters")
+            elif self.kb.flgSymbolsPressed == True:
+                self.showErrormsg("","Only Letters")
+        self.code5Flag = False
+
+    def showHeader1KeyBoard(self,event):
+        self.header1Flag = True
+        self.kb.setGeometry(0, 240, 1024, 350)
+        self.kb.text_input.setText(self.ui.le_parameterMain_Header1.text())
+        self.kb.text_input1.setText(self.ui.le_parameterMain_Header1.text())
+        self.kb.text_input2.setText(self.ui.le_parameterMain_Header1.text())
+        self.kb.flgKeyIsActivated = True
+        self.kb.set_receiver(self.kb.text_input)
+        self.kb.KeyboardSignal.connect(self.getHeader1)
+        if self.keyBoardFlag:
+            self.kb.show()
+
+    def getHeader1(self):
+        if self.header1Flag == True:
+            if self.kb.flgLettersPressed == True:
+                self.ui.le_parameterMain_Header1.setText(self.kb.text_input.text())
+            elif self.kb.flgNumbersPressed == True:
+                self.showErrormsg("","Only Letters")
+            elif self.kb.flgSymbolsPressed == True:
+                self.showErrormsg("","Only Letters")
+        self.header1Flag = False
+
+    def showHeader2KeyBoard(self,event):
+        self.header2Flag = True
+        self.kb.setGeometry(0, 240, 1024, 350)
+        self.kb.text_input.setText(self.ui.le_parameterMain_Header2.text())
+        self.kb.text_input1.setText(self.ui.le_parameterMain_Header2.text())
+        self.kb.text_input2.setText(self.ui.le_parameterMain_Header2.text())
+        self.kb.flgKeyIsActivated = True
+        self.kb.set_receiver(self.kb.text_input)
+        self.kb.KeyboardSignal.connect(self.getHeader2)
+        if self.keyBoardFlag:
+            self.kb.show()
+
+    def getHeader2(self):
+        if self.header2Flag == True:
+            if self.kb.flgLettersPressed == True:
+                self.ui.le_parameterMain_Header2.setText(self.kb.text_input.text())
+            elif self.kb.flgNumbersPressed == True:
+                self.showErrormsg("","Only Letters")
+            elif self.kb.flgSymbolsPressed == True:
+                self.showErrormsg("","Only Letters")
+        self.header2Flag = False
+
+    def showHeader3KeyBoard(self,event):
+        self.header3Fag = True
+        self.kb.setGeometry(0, 240, 1024, 350)
+        self.kb.text_input.setText(self.ui.le_parameterMain_Header3.text())
+        self.kb.text_input1.setText(self.ui.le_parameterMain_Header3.text())
+        self.kb.text_input2.setText(self.ui.le_parameterMain_Header3.text())
+        self.kb.flgKeyIsActivated = True
+        self.kb.set_receiver(self.kb.text_input)
+        self.kb.KeyboardSignal.connect(self.getHeader3)
+        if self.keyBoardFlag:
+            self.kb.show()
+
+    def getHeader3(self):
+        if self.header3Flag == True:
+            if self.kb.flgLettersPressed == True:
+                self.ui.le_parameterMain_Header3.setText(self.kb.text_input.text())
+            elif self.kb.flgNumbersPressed == True:
+                self.showErrormsg("","Only Letters")
+            elif self.kb.flgSymbolsPressed == True:
+                self.showErrormsg("","Only Letters")
+        self.header3Flag = False
+
+    def showHeader4KeyBoard(self,event):
+        self.header4Flag = True
+        self.kb.setGeometry(0, 240, 1024, 350)
+        self.kb.text_input.setText(self.ui.le_parameterMain_Header4.text())
+        self.kb.text_input1.setText(self.ui.le_parameterMain_Header4.text())
+        self.kb.text_input2.setText(self.ui.le_parameterMain_Header4.text())
+        self.kb.flgKeyIsActivated = True
+        self.kb.set_receiver(self.kb.text_input)
+        self.kb.KeyboardSignal.connect(self.getHeader4)
+        if self.keyBoardFlag:
+            self.kb.show()
+
+    def getHeader4(self):
+        if self.header4Flag == True:
+            if self.kb.flgLettersPressed == True:
+                self.ui.le_parameterMain_Header4.setText(self.kb.text_input.text())
+            elif self.kb.flgNumbersPressed == True:
+                self.showErrormsg("","Only Letters")
+            elif self.kb.flgSymbolsPressed == True:
+                self.showErrormsg("","Only Letters")
+        self.header4Flag = False
+
+    def showHeader5KeyBoard(self,event):
+        self.header5Flag = True
+        self.kb.setGeometry(0, 240, 1024, 350)
+        self.kb.text_input.setText(self.ui.le_parameterMain_Header5.text())
+        self.kb.text_input1.setText(self.ui.le_parameterMain_Header5.text())
+        self.kb.text_input2.setText(self.ui.le_parameterMain_Header5.text())
+        self.kb.flgKeyIsActivated = True
+        self.kb.set_receiver(self.kb.text_input)
+        self.kb.KeyboardSignal.connect(self.getHeader5)
+        if self.keyBoardFlag:
+            self.kb.show()
+
+    def getHeader5(self):
+        if self.header5Flag == True:
+            if self.kb.flgLettersPressed == True:
+                self.ui.le_parameterMain_Header5.setText(self.kb.text_input.text())
+            elif self.kb.flgNumbersPressed == True:
+                self.showErrormsg("","Only Letters")
+            elif self.kb.flgSymbolsPressed == True:
+                self.showErrormsg("","Only Letters")
+        self.header5Flag = False
+
+    def showCode1CodeKeyBoard(self,event):
+        self.Code1CodeFlag = True
+        self.kb.setGeometry(0, 240, 1024, 350)
+        self.kb.text_input.setText(self.ui.le_parameter_code_1.text())
+        self.kb.text_input1.setText(self.ui.le_parameter_code_1.text())
+        self.kb.text_input2.setText(self.ui.le_parameter_code_1.text())
+        self.kb.flgKeyIsActivated = True
+        self.kb.set_receiver(self.kb.text_input)
+        self.kb.KeyboardSignal.connect(self.Code1Code)
+        if self.keyBoardFlag:
+            self.kb.show()
+
+    def Code1Code(self):
+        if self.Code1CodeFlag == True:
+            if self.kb.flgLettersPressed == True:
+                self.ui.le_parameter_code_1.setText(self.kb.text_input.text())
+            elif self.kb.flgNumbersPressed == True:
+                self.ui.le_parameter_code_1.setText(self.kb.text_input.text())
+            elif self.kb.flgSymbolsPressed == True:
+                self.ui.le_parameter_code_1.setText(self.kb.text_input.text())
+        self.Code1CodeFlag = False
+
+    def showCode2CodeKeyBoard(self,event):
+        self.Code2CodeFlag = True
+        self.kb.setGeometry(0, 240, 1024, 350)
+        self.kb.text_input.setText(self.ui.le_parameter_code_3.text())
+        self.kb.text_input1.setText(self.ui.le_parameter_code_3.text())
+        self.kb.text_input2.setText(self.ui.le_parameter_code_3.text())
+        self.kb.flgKeyIsActivated = True
+        self.kb.set_receiver(self.kb.text_input)
+        self.kb.KeyboardSignal.connect(self.Code2Code)
+        if self.keyBoardFlag:
+            self.kb.show()
+
+    def Code2Code(self):
+        if self.Code2CodeFlag == True:
+            if self.kb.flgLettersPressed == True:
+                self.ui.le_parameter_code_3.setText(self.kb.text_input.text())
+            elif self.kb.flgNumbersPressed == True:
+                self.ui.le_parameter_code_3.setText(self.kb.text_input.text())
+            elif self.kb.flgSymbolsPressed == True:
+                self.ui.le_parameter_code_3.setText(self.kb.text_input.text())
+        self.Code2CodeFlag = False
+
+    def showCode3CodeKeyBoard(self,event):
+        self.Code3CodeFlag = True
+        self.kb.setGeometry(0, 240, 1024, 350)
+        self.kb.text_input.setText(self.ui.le_parameter_code_4.text())
+        self.kb.text_input1.setText(self.ui.le_parameter_code_4.text())
+        self.kb.text_input2.setText(self.ui.le_parameter_code_4.text())
+        self.kb.flgKeyIsActivated = True
+        self.kb.set_receiver(self.kb.text_input)
+        self.kb.KeyboardSignal.connect(self.Code3Code)
+        if self.keyBoardFlag:
+            self.kb.show()
+
+    def Code3Code(self):
+        if self.Code3CodeFlag == True:
+            if self.kb.flgLettersPressed == True:
+                self.ui.le_parameter_code_4.setText(self.kb.text_input.text())
+            elif self.kb.flgNumbersPressed == True:
+                self.ui.le_parameter_code_4.setText(self.kb.text_input.text())
+            elif self.kb.flgSymbolsPressed == True:
+                self.ui.le_parameter_code_4.setText(self.kb.text_input.text())
+        self.Code3CodeFlag = False
+
+    def showCode4CodeKeyBoard(self,event):
+        self.Code4CodeFlag = True
+        self.kb.setGeometry(0, 240, 1024, 350)
+        self.kb.text_input.setText(self.ui.le_parameter_code_5.text())
+        self.kb.text_input1.setText(self.ui.le_parameter_code_5.text())
+        self.kb.text_input2.setText(self.ui.le_parameter_code_5.text())
+        self.kb.flgKeyIsActivated = True
+        self.kb.set_receiver(self.kb.text_input)
+        self.kb.KeyboardSignal.connect(self.Code4Code)
+        if self.keyBoardFlag:
+            self.kb.show()
+
+    def Code4Code(self):
+        if self.Code4CodeFlag == True:
+            if self.kb.flgLettersPressed == True:
+                self.ui.le_parameter_code_5.setText(self.kb.text_input.text())
+            elif self.kb.flgNumbersPressed == True:
+                self.ui.le_parameter_code_5.setText(self.kb.text_input.text())
+            elif self.kb.flgSymbolsPressed == True:
+                self.ui.le_parameter_code_5.setText(self.kb.text_input.text())
+        self.Code4CodeFlag = False
+
+    def showCode5CodeKeyBoard(self,event):
+        self.Code5CodeFlag = True
+        self.kb.setGeometry(0, 240, 1024, 350)
+        self.kb.text_input.setText(self.ui.le_parameter_code_6.text())
+        self.kb.text_input1.setText(self.ui.le_parameter_code_6.text())
+        self.kb.text_input2.setText(self.ui.le_parameter_code_6.text())
+        self.kb.flgKeyIsActivated = True
+        self.kb.set_receiver(self.kb.text_input)
+        self.kb.KeyboardSignal.connect(self.Code5Code)
+        if self.keyBoardFlag:
+            self.kb.show()
+
+    def Code5Code(self):
+        if self.Code5CodeFlag == True:
+            if self.kb.flgLettersPressed == True:
+                self.ui.le_parameter_code_6.setText(self.kb.text_input.text())
+            elif self.kb.flgNumbersPressed == True:
+                self.ui.le_parameter_code_6.setText(self.kb.text_input.text())
+            elif self.kb.flgSymbolsPressed == True:
+                self.ui.le_parameter_code_6.setText(self.kb.text_input.text())
+        self.Code5CodeFlag = False
+
+    def showCode1NameKeyBoard(self,event):
+        self.Code1NameFlag = True
+        self.kb.setGeometry(0, 240, 1024, 350)
+        self.kb.text_input.setText(self.ui.le_parameter_name_1.text())
+        self.kb.text_input1.setText(self.ui.le_parameter_name_1.text())
+        self.kb.text_input2.setText(self.ui.le_parameter_name_1.text())
+        self.kb.flgKeyIsActivated = True
+        self.kb.set_receiver(self.kb.text_input)
+        self.kb.KeyboardSignal.connect(self.Code1Name)
+        if self.keyBoardFlag:
+            self.kb.show()
+
+    def Code1Name(self):
+        if self.Code1NameFlag == True:
+            if self.kb.flgLettersPressed == True:
+                self.ui.le_parameter_name_1.setText(self.kb.text_input.text())
+            elif self.kb.flgNumbersPressed == True:
+                self.ui.le_parameter_name_1.setText(self.kb.text_input.text())
+            elif self.kb.flgSymbolsPressed == True:
+                self.ui.le_parameter_name_1.setText(self.kb.text_input.text())
+        self.Code1NameFlag = False
+
+    def showCode2NameKeyBoard(self,event):
+        self.Code2NameFlag = True
+        self.kb.setGeometry(0, 240, 1024, 350)
+        self.kb.text_input.setText(self.ui.le_parameter_name_3.text())
+        self.kb.text_input1.setText(self.ui.le_parameter_name_3.text())
+        self.kb.text_input2.setText(self.ui.le_parameter_name_3.text())
+        self.kb.flgKeyIsActivated = True
+        self.kb.set_receiver(self.kb.text_input)
+        self.kb.KeyboardSignal.connect(self.Code2Name)
+        if self.keyBoardFlag:
+            self.kb.show()
+
+    def Code2Name(self):
+        if self.Code2NameFlag == True:
+            if self.kb.flgLettersPressed == True:
+                self.ui.le_parameter_name_3.setText(self.kb.text_input.text())
+            elif self.kb.flgNumbersPressed == True:
+                self.ui.le_parameter_name_3.setText(self.kb.text_input.text())
+            elif self.kb.flgSymbolsPressed == True:
+                self.ui.le_parameter_name_3.setText(self.kb.text_input.text())
+        self.Code2NameFlag = False
+
+    def showCode3NameKeyBoard(self,event):
+        self.Code3NameFlag = True
+        self.kb.setGeometry(0, 240, 1024, 350)
+        self.kb.text_input.setText(self.ui.le_parameter_name_4.text())
+        self.kb.text_input1.setText(self.ui.le_parameter_name_4.text())
+        self.kb.text_input2.setText(self.ui.le_parameter_name_4.text())
+        self.kb.flgKeyIsActivated = True
+        self.kb.set_receiver(self.kb.text_input)
+        self.kb.KeyboardSignal.connect(self.Code3Name)
+        if self.keyBoardFlag:
+            self.kb.show()
+
+    def Code3Name(self):
+        if self.Code3NameFlag == True:
+            if self.kb.flgLettersPressed == True:
+                self.ui.le_parameter_name_4.setText(self.kb.text_input.text())
+            elif self.kb.flgNumbersPressed == True:
+                self.ui.le_parameter_name_4.setText(self.kb.text_input.text())
+            elif self.kb.flgSymbolsPressed == True:
+                self.ui.le_parameter_name_4.setText(self.kb.text_input.text())
+        self.Code3NameFlag = False
+
+    def showCode4NameKeyBoard(self,event):
+        self.Code4NameFlag = True
+        self.kb.setGeometry(0, 240, 1024, 350)
+        self.kb.text_input.setText(self.ui.le_parameter_name_5.text())
+        self.kb.text_input1.setText(self.ui.le_parameter_name_5.text())
+        self.kb.text_input2.setText(self.ui.le_parameter_name_5.text())
+        self.kb.flgKeyIsActivated = True
+        self.kb.set_receiver(self.kb.text_input)
+        self.kb.KeyboardSignal.connect(self.Code4Name)
+        if self.keyBoardFlag:
+            self.kb.show()
+
+    def Code4Name(self):
+        if self.Code4NameFlag == True:
+            if self.kb.flgLettersPressed == True:
+                self.ui.le_parameter_name_5.setText(self.kb.text_input.text())
+            elif self.kb.flgNumbersPressed == True:
+                self.ui.le_parameter_name_5.setText(self.kb.text_input.text())
+            elif self.kb.flgSymbolsPressed == True:
+                self.ui.le_parameter_name_5.setText(self.kb.text_input.text())
+        self.Code4NameFlag = False
+
+    def showCode5NameKeyBoard(self,event):
+        self.Code5NameFlag = True
+        self.kb.setGeometry(0, 240, 1024, 350)
+        self.kb.text_input.setText(self.ui.le_parameter_name_6.text())
+        self.kb.text_input1.setText(self.ui.le_parameter_name_6.text())
+        self.kb.text_input2.setText(self.ui.le_parameter_name_6.text())
+        self.kb.flgKeyIsActivated = True
+        self.kb.set_receiver(self.kb.text_input)
+        self.kb.KeyboardSignal.connect(self.Code5Name)
+        if self.keyBoardFlag:
+            self.kb.show()
+
+    def Code5Name(self):
+        if self.Code5NameFlag == True:
+            if self.kb.flgLettersPressed == True:
+                self.ui.le_parameter_name_6.setText(self.kb.text_input.text())
+            elif self.kb.flgNumbersPressed == True:
+                self.ui.le_parameter_name_6.setText(self.kb.text_input.text())
+            elif self.kb.flgSymbolsPressed == True:
+                self.ui.le_parameter_name_6.setText(self.kb.text_input.text())
+        self.Code5NameFlag = False
     def CodesLeDefault(self):
         self.ui.le_parameter_code_1.setEnabled(False)
         self.ui.le_parameter_name_1.setEnabled(False)
@@ -1399,17 +2396,17 @@ class UI():
         self.ui.tableWidget_6.selectRow(0)
         self.on_Code5TableSelectionChanged()
     def setRead(self):
-        self.ui.le_parameterMain_Code1.setReadOnly(True)
-        self.ui.le_parameterMain_Code2.setReadOnly(True)
-        self.ui.le_parameterMain_Code3.setReadOnly(True)
-        self.ui.le_parameterMain_Code4.setReadOnly(True)
-        self.ui.le_parameterMain_Code5.setReadOnly(True)
+        self.ui.le_parameterMain_Code1.setEnabled(False)
+        self.ui.le_parameterMain_Code2.setEnabled(False)
+        self.ui.le_parameterMain_Code3.setEnabled(False)
+        self.ui.le_parameterMain_Code4.setEnabled(False)
+        self.ui.le_parameterMain_Code5.setEnabled(False)
 
-        self.ui.le_parameterMain_Header1.setReadOnly(True)
-        self.ui.le_parameterMain_Header2.setReadOnly(True)
-        self.ui.le_parameterMain_Header3.setReadOnly(True)
-        self.ui.le_parameterMain_Header4.setReadOnly(True)
-        self.ui.le_parameterMain_Header5.setReadOnly(True)
+        self.ui.le_parameterMain_Header1.setEnabled(False)
+        self.ui.le_parameterMain_Header2.setEnabled(False)
+        self.ui.le_parameterMain_Header3.setEnabled(False)
+        self.ui.le_parameterMain_Header4.setEnabled(False)
+        self.ui.le_parameterMain_Header5.setEnabled(False)
 
         self.ui.cb_parameter_VehicleEntry_Code2.setCheckable(False)
         self.ui.cb_parameter_VehicleEntry_Code3.setCheckable(False)
@@ -1437,17 +2434,17 @@ class UI():
         self.ui.rb_parameter_kg.setCheckable(False)
         self.ui.rb_parameter_Tonne.setCheckable(False)
     def setWrite(self):
-        self.ui.le_parameterMain_Code1.setReadOnly(False)
-        self.ui.le_parameterMain_Code2.setReadOnly(False)
-        self.ui.le_parameterMain_Code3.setReadOnly(False)
-        self.ui.le_parameterMain_Code4.setReadOnly(False)
-        self.ui.le_parameterMain_Code5.setReadOnly(False)
+        self.ui.le_parameterMain_Code1.setEnabled(True)
+        self.ui.le_parameterMain_Code2.setEnabled(True)
+        self.ui.le_parameterMain_Code3.setEnabled(True)
+        self.ui.le_parameterMain_Code4.setEnabled(True)
+        self.ui.le_parameterMain_Code5.setEnabled(True)
 
-        self.ui.le_parameterMain_Header1.setReadOnly(False)
-        self.ui.le_parameterMain_Header2.setReadOnly(False)
-        self.ui.le_parameterMain_Header3.setReadOnly(False)
-        self.ui.le_parameterMain_Header4.setReadOnly(False)
-        self.ui.le_parameterMain_Header5.setReadOnly(False)
+        self.ui.le_parameterMain_Header1.setEnabled(True)
+        self.ui.le_parameterMain_Header2.setEnabled(True)
+        self.ui.le_parameterMain_Header3.setEnabled(True)
+        self.ui.le_parameterMain_Header4.setEnabled(True)
+        self.ui.le_parameterMain_Header5.setEnabled(True)
 
         self.ui.cb_parameter_VehicleEntry_Code2.setCheckable(True)
         self.ui.cb_parameter_VehicleEntry_Code3.setCheckable(True)
@@ -1476,14 +2473,20 @@ class UI():
         self.ui.rb_parameter_Tonne.setCheckable(True)
 
     def ParameterEdit(self):
-
+        self.parameterEditFlag = True
+        self.ui.pb_Parameter_Edit.setEnabled(False)
         self.setWrite()
         self.setCurrentCheckBoxValues()
         self.ui.pb_Parameter_Save.setEnabled(True)
         self.ui.pb_Parameter_Cancel.setEnabled(True)
     def ParameterCancel(self):
-        self.setRead()
-        self.ui.pb_Parameter_Save.setEnabled(False)
+        reply = QMessageBox.question(None, "Cancel", "Are you sure?", QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+        if reply == QMessageBox.Yes:
+            self.setRead()
+            self.ui.pb_Parameter_Cancel.setEnabled(False)
+            self.ui.pb_Parameter_Save.setEnabled(False)
+            self.ui.pb_Parameter_Edit.setEnabled(True)
+
 
     def setLePlaceHolderValues(self):
         self.conn = sqlite3.connect('WeighBridge.db')
@@ -1564,7 +2567,7 @@ class UI():
         values = []
         for st in result:
             values.append(st[0])
-        print(values)
+        # print(values)
         if values[0] == "1":
             self.ui.cb_parameter_Amount.setChecked(True)
         else:
@@ -1584,52 +2587,56 @@ class UI():
 
         self.c.close()
         self.conn.close()
-    def CodeAndHeaderSettings(self):
-        self.ui.pb_Parameter_Save.setEnabled(False)
-        self.conn = sqlite3.connect('WeighBridge.db')
-        self.c = self.conn.cursor()
-        self.EntryExitCheckbox()
-        code1 = self.ui.le_parameterMain_Code1.text()
-        code2 = self.ui.le_parameterMain_Code2.text()
-        code3 = self.ui.le_parameterMain_Code3.text()
-        code4 = self.ui.le_parameterMain_Code4.text()
-        code5 = self.ui.le_parameterMain_Code5.text()
+    def ParameterSave(self):
+        reply = QMessageBox.question(None, "Save", "Are you sure?", QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+        if reply == QMessageBox.Yes:
+            self.ui.pb_Parameter_Edit.setEnabled(True)
+            self.ui.pb_Parameter_Save.setEnabled(False)
+            self.ui.pb_Parameter_Cancel.setEnabled(False)
+            self.conn = sqlite3.connect('WeighBridge.db')
+            self.c = self.conn.cursor()
+            self.EntryExitCheckbox()
+            code1 = self.ui.le_parameterMain_Code1.text()
+            code2 = self.ui.le_parameterMain_Code2.text()
+            code3 = self.ui.le_parameterMain_Code3.text()
+            code4 = self.ui.le_parameterMain_Code4.text()
+            code5 = self.ui.le_parameterMain_Code5.text()
 
-        headers = {
-        "header1" : self.ui.le_parameterMain_Header1.text(),
-        "header2" : self.ui.le_parameterMain_Header2.text(),
-        "header3" : self.ui.le_parameterMain_Header3.text(),
-        "header4" : self.ui.le_parameterMain_Header4.text(),
-        "header5" : self.ui.le_parameterMain_Header5.text()
-        }
+            headers = {
+            "header1" : self.ui.le_parameterMain_Header1.text(),
+            "header2" : self.ui.le_parameterMain_Header2.text(),
+            "header3" : self.ui.le_parameterMain_Header3.text(),
+            "header4" : self.ui.le_parameterMain_Header4.text(),
+            "header5" : self.ui.le_parameterMain_Header5.text()
+            }
 
 
-        codes = {"code1":code1, "code2":code2, "code3":code3, "code4":code4, "code5":code5}
+            codes = {"code1":code1, "code2":code2, "code3":code3, "code4":code4, "code5":code5}
 
-        for i in range(1,6):
-            cd = f"code{i}"
-            if len(codes[cd])!= 0:
-                # print(codes[cd])
-                self.c.execute("UPDATE T_CodeAndHeader SET Name=?, EN_ED=?, EX_ED=? WHERE Type=?",(codes[cd].upper(),self.en_ed[cd],self.ex_ed[cd],str(cd)))
-                self.conn.commit()
-            else:
-                self.c.execute("UPDATE T_CodeAndHeader SET EN_ED=?, EX_ED=? WHERE Type=?",
-                               ( self.en_ed[cd], self.ex_ed[cd], str(cd)))
-                self.conn.commit()
-        for j in range(1,6):
-            hd = f"header{j}"
-            if len(headers[hd])!= 0:
-                self.c.execute("UPDATE T_CodeAndHeader SET Name=?, EN_ED=?, EX_ED=? WHERE Type=?",(headers[hd].upper(),self.en_hd_ed[hd],self.ex_hd_ed[hd],str(hd)))
-                self.conn.commit()
-            else:
-                self.c.execute("UPDATE T_CodeAndHeader SET EN_ED=?, EX_ED=? WHERE Type=?",
-                               (self.en_hd_ed[hd], self.ex_hd_ed[hd], str(hd)))
-                self.conn.commit()
-        self.c.close()
-        self.conn.close()
-        self.ParameterOtherSettings()
-        self.setRead()
-        self.showErrormsg("","Updated")
+            for i in range(1,6):
+                cd = f"code{i}"
+                if len(codes[cd])!= 0:
+                    # print(codes[cd])
+                    self.c.execute("UPDATE T_CodeAndHeader SET Name=?, EN_ED=?, EX_ED=? WHERE Type=?",(codes[cd].upper(),self.en_ed[cd],self.ex_ed[cd],str(cd)))
+                    self.conn.commit()
+                else:
+                    self.c.execute("UPDATE T_CodeAndHeader SET EN_ED=?, EX_ED=? WHERE Type=?",
+                                   ( self.en_ed[cd], self.ex_ed[cd], str(cd)))
+                    self.conn.commit()
+            for j in range(1,6):
+                hd = f"header{j}"
+                if len(headers[hd])!= 0:
+                    self.c.execute("UPDATE T_CodeAndHeader SET Name=?, EN_ED=?, EX_ED=? WHERE Type=?",(headers[hd].upper(),self.en_hd_ed[hd],self.ex_hd_ed[hd],str(hd)))
+                    self.conn.commit()
+                else:
+                    self.c.execute("UPDATE T_CodeAndHeader SET EN_ED=?, EX_ED=? WHERE Type=?",
+                                   (self.en_hd_ed[hd], self.ex_hd_ed[hd], str(hd)))
+                    self.conn.commit()
+            self.c.close()
+            self.conn.close()
+            self.ParameterOtherSettings()
+            self.setRead()
+            self.showErrormsg("","Updated")
 
 
     def ParameterOtherSettings(self):
@@ -1696,28 +2703,36 @@ class UI():
 
 
     def Code1Cancel(self):
-        self.CodesLeDefault()
-        self.setCancelSaveAddDelete()
-        self.ui.pb_parameter_create_1.setEnabled(True)
-        self.ui.pb_parameter_create_1.setEnabled(True)
+        reply = QMessageBox.question(None, "Cancel", "Are you sure?", QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+        if reply == QMessageBox.Yes:
+            self.ui.pb_parameter_edit_1.setEnabled(True)
+            self.setCancelSaveAddDelete()
+            self.CodesLeDefault()
+            self.ui.le_parameter_code_1.clear()
+            self.ui.le_parameter_name_1.clear()
+            self.ui.pb_parameter_create_1.setEnabled(True)
+            self.ui.pb_parameter_create_1.setEnabled(True)
+
 
     def Code1Save(self):
-        self.setCancelSaveAddDelete()
-        self.ui.pb_parameter_edit_1.setEnabled(True)
-        self.conn = sqlite3.connect('WeighBridge.db')
-        self.c = self.conn.cursor()
-        code = self.ui.le_parameter_code_1.text()
-        name = self.ui.le_parameter_name_1.text()
-        self.c.execute("UPDATE T_Code1 SET Code=?,Name=? WHERE Code=?",(code,name,self.prevCode1code))
-        self.conn.commit()
-        ## Left Here
-        self.c.close()
-        self.conn.close()
+        reply = QMessageBox.question(None, "Save", "Are you sure?", QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+        if reply == QMessageBox.Yes:
+            self.setCancelSaveAddDelete()
+            self.ui.pb_parameter_edit_1.setEnabled(True)
+            self.conn = sqlite3.connect('WeighBridge.db')
+            self.c = self.conn.cursor()
+            code = self.ui.le_parameter_code_1.text()
+            name = self.ui.le_parameter_name_1.text()
+            self.c.execute("UPDATE T_Code1 SET Code=?,Name=? WHERE Code=?",(code,name,self.prevCode1code))
+            self.conn.commit()
+            ## Left Here
+            self.c.close()
+            self.conn.close()
 
-        row = self.ui.tableWidget_1.currentRow()
+            row = self.ui.tableWidget_1.currentRow()
 
-        self.ui.tableWidget_1.setItem(row,0,QtWidgets.QTableWidgetItem(str(code)))
-        self.ui.tableWidget_1.setItem(row, 1, QtWidgets.QTableWidgetItem(str(name)))
+            self.ui.tableWidget_1.setItem(row,0,QtWidgets.QTableWidgetItem(str(code)))
+            self.ui.tableWidget_1.setItem(row, 1, QtWidgets.QTableWidgetItem(str(name)))
 
     def on_Code1TableSelectionChanged(self):
         row = self.ui.tableWidget_1.currentRow()  # Index of Row
@@ -1730,7 +2745,10 @@ class UI():
         self.ui.le_parameter_code_1.setText(self.Code1code)
         self.ui.le_parameter_name_1.setText(Code1name)
         self.ui.pb_parameter_edit_1.setEnabled(True)
-        self.Code1Cancel()
+        self.CodesLeDefault()
+        self.setCancelSaveAddDelete()
+        self.ui.pb_parameter_create_1.setEnabled(True)
+        self.ui.pb_parameter_create_1.setEnabled(True)
 
 
     def insertIntoCod1Table(self):
@@ -1806,28 +2824,35 @@ class UI():
         self.prevCode2code = self.ui.le_parameter_code_3.text()
 
     def Code2Cancel(self):
-        self.CodesLeDefault()
-        self.setCancelSaveAddDelete()
-        self.ui.pb_parameter_create_3.setEnabled(True)
-        self.ui.pb_parameter_create_3.setEnabled(True)
+        reply = QMessageBox.question(None, "Cancel", "Are you sure?", QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+        if reply == QMessageBox.Yes:
+            self.ui.pb_parameter_edit_3.setEnabled(True)
+            self.ui.le_parameter_code_3.clear()
+            self.ui.le_parameter_name_3.clear()
+            self.CodesLeDefault()
+            self.setCancelSaveAddDelete()
+            self.ui.pb_parameter_create_3.setEnabled(True)
+            self.ui.pb_parameter_create_3.setEnabled(True)
 
     def Code2Save(self):
-        self.setCancelSaveAddDelete()
-        self.ui.pb_parameter_edit_3.setEnabled(True)
-        self.conn = sqlite3.connect('WeighBridge.db')
-        self.c = self.conn.cursor()
-        code = self.ui.le_parameter_code_3.text()
-        name = self.ui.le_parameter_name_3.text()
-        self.c.execute("UPDATE T_Code2 SET Code=?,Name=? WHERE Code=?", (code, name, self.prevCode2code))
-        self.conn.commit()
-        ## Left Here
-        self.c.close()
-        self.conn.close()
+        reply = QMessageBox.question(None, "Save", "Are you sure?", QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+        if reply == QMessageBox.Yes:
+            self.setCancelSaveAddDelete()
+            self.ui.pb_parameter_edit_3.setEnabled(True)
+            self.conn = sqlite3.connect('WeighBridge.db')
+            self.c = self.conn.cursor()
+            code = self.ui.le_parameter_code_3.text()
+            name = self.ui.le_parameter_name_3.text()
+            self.c.execute("UPDATE T_Code2 SET Code=?,Name=? WHERE Code=?", (code, name, self.prevCode2code))
+            self.conn.commit()
+            ## Left Here
+            self.c.close()
+            self.conn.close()
 
-        row = self.ui.tableWidget_3.currentRow()
+            row = self.ui.tableWidget_3.currentRow()
 
-        self.ui.tableWidget_3.setItem(row, 0, QtWidgets.QTableWidgetItem(str(code)))
-        self.ui.tableWidget_3.setItem(row, 1, QtWidgets.QTableWidgetItem(str(name)))
+            self.ui.tableWidget_3.setItem(row, 0, QtWidgets.QTableWidgetItem(str(code)))
+            self.ui.tableWidget_3.setItem(row, 1, QtWidgets.QTableWidgetItem(str(name)))
 
     def on_Code2TableSelectionChanged(self):
         row = self.ui.tableWidget_3.currentRow()  # Index of Row
@@ -1838,7 +2863,10 @@ class UI():
         self.ui.le_parameter_code_3.setText(self.Code2code)
         self.ui.le_parameter_name_3.setText(Code2name)
         self.ui.pb_parameter_edit_3.setEnabled(True)
-        self.Code2Cancel()
+        self.CodesLeDefault()
+        self.setCancelSaveAddDelete()
+        self.ui.pb_parameter_create_3.setEnabled(True)
+        self.ui.pb_parameter_create_3.setEnabled(True)
 
     def insertIntoCod2Table(self):
         if self.ui.tableWidget_3.rowCount() == 0:
@@ -1913,27 +2941,35 @@ class UI():
         self.prevCode3code = self.ui.le_parameter_code_4.text()
 
     def Code3Cancel(self):
-        self.CodesLeDefault()
-        self.setCancelSaveAddDelete()
-        self.ui.pb_parameter_create_4.setEnabled(True)
+        reply = QMessageBox.question(None, "Cancel", "Are you sure?", QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+        if reply == QMessageBox.Yes:
+            self.ui.pb_parameter_edit_4.setEnabled(True)
+            self.ui.le_parameter_code_4.clear()
+            self.ui.le_parameter_name_4.clear()
+            self.CodesLeDefault()
+            self.setCancelSaveAddDelete()
+            self.ui.pb_parameter_create_4.setEnabled(True)
 
     def Code3Save(self):
-        self.setCancelSaveAddDelete()
-        self.ui.pb_parameter_edit_4.setEnabled(True)
-        self.conn = sqlite3.connect('WeighBridge.db')
-        self.c = self.conn.cursor()
-        code = self.ui.le_parameter_code_4.text()
-        name = self.ui.le_parameter_name_4.text()
-        self.c.execute("UPDATE T_Code3 SET Code=?,Name=? WHERE Code=?", (code, name, self.prevCode3code))
-        self.conn.commit()
-        ## Left Here
-        self.c.close()
-        self.conn.close()
+        reply = QMessageBox.question(None, "Save", "Are you sure?", QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+        if reply == QMessageBox.Yes:
 
-        row = self.ui.tableWidget_4.currentRow()
+            self.setCancelSaveAddDelete()
+            self.ui.pb_parameter_edit_4.setEnabled(True)
+            self.conn = sqlite3.connect('WeighBridge.db')
+            self.c = self.conn.cursor()
+            code = self.ui.le_parameter_code_4.text()
+            name = self.ui.le_parameter_name_4.text()
+            self.c.execute("UPDATE T_Code3 SET Code=?,Name=? WHERE Code=?", (code, name, self.prevCode3code))
+            self.conn.commit()
+            ## Left Here
+            self.c.close()
+            self.conn.close()
 
-        self.ui.tableWidget_4.setItem(row, 0, QtWidgets.QTableWidgetItem(str(code)))
-        self.ui.tableWidget_4.setItem(row, 1, QtWidgets.QTableWidgetItem(str(name)))
+            row = self.ui.tableWidget_4.currentRow()
+
+            self.ui.tableWidget_4.setItem(row, 0, QtWidgets.QTableWidgetItem(str(code)))
+            self.ui.tableWidget_4.setItem(row, 1, QtWidgets.QTableWidgetItem(str(name)))
 
     def on_Code3TableSelectionChanged(self):
 
@@ -1946,7 +2982,9 @@ class UI():
         self.ui.le_parameter_code_4.setText(self.Code3code)
         self.ui.le_parameter_name_4.setText(Code3name)
         self.ui.pb_parameter_edit_4.setEnabled(True)
-        self.Code3Cancel()
+        self.CodesLeDefault()
+        self.setCancelSaveAddDelete()
+        self.ui.pb_parameter_create_4.setEnabled(True)
 
     def insertIntoCod3Table(self):
         if self.ui.tableWidget_4.rowCount() == 0:
@@ -2025,27 +3063,34 @@ class UI():
         self.prevCode4code = self.ui.le_parameter_code_5.text()
 
     def Code4Cancel(self):
-        self.CodesLeDefault()
-        self.setCancelSaveAddDelete()
-        self.ui.pb_parameter_create_5.setEnabled(True)
+        reply = QMessageBox.question(None, "Cancel", "Are you sure?", QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+        if reply == QMessageBox.Yes:
+            self.ui.pb_parameter_edit_5.setEnabled(True)
+            self.ui.le_parameter_code_5.clear()
+            self.ui.le_parameter_name_5.clear()
+            self.CodesLeDefault()
+            self.setCancelSaveAddDelete()
+            self.ui.pb_parameter_create_5.setEnabled(True)
 
     def Code4Save(self):
-        self.setCancelSaveAddDelete()
-        self.ui.pb_parameter_edit_5.setEnabled(True)
-        self.conn = sqlite3.connect('WeighBridge.db')
-        self.c = self.conn.cursor()
-        code = self.ui.le_parameter_code_5.text()
-        name = self.ui.le_parameter_name_5.text()
-        self.c.execute("UPDATE T_Code4 SET Code=?,Name=? WHERE Code=?", (code, name, self.prevCode4code))
-        self.conn.commit()
-        ## Left Here
-        self.c.close()
-        self.conn.close()
+        reply = QMessageBox.question(None, "Cancel", "Are you sure?", QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+        if reply == QMessageBox.Yes:
+            self.setCancelSaveAddDelete()
+            self.ui.pb_parameter_edit_5.setEnabled(True)
+            self.conn = sqlite3.connect('WeighBridge.db')
+            self.c = self.conn.cursor()
+            code = self.ui.le_parameter_code_5.text()
+            name = self.ui.le_parameter_name_5.text()
+            self.c.execute("UPDATE T_Code4 SET Code=?,Name=? WHERE Code=?", (code, name, self.prevCode4code))
+            self.conn.commit()
+            ## Left Here
+            self.c.close()
+            self.conn.close()
 
-        row = self.ui.tableWidget_5.currentRow()
+            row = self.ui.tableWidget_5.currentRow()
 
-        self.ui.tableWidget_5.setItem(row, 0, QtWidgets.QTableWidgetItem(str(code)))
-        self.ui.tableWidget_5.setItem(row, 1, QtWidgets.QTableWidgetItem(str(name)))
+            self.ui.tableWidget_5.setItem(row, 0, QtWidgets.QTableWidgetItem(str(code)))
+            self.ui.tableWidget_5.setItem(row, 1, QtWidgets.QTableWidgetItem(str(name)))
 
     def on_Code4TableSelectionChanged(self):
 
@@ -2058,7 +3103,9 @@ class UI():
         self.ui.le_parameter_code_5.setText(self.Code4code)
         self.ui.le_parameter_name_5.setText(Code4name)
         self.ui.pb_parameter_edit_5.setEnabled(True)
-        self.Code4Cancel()
+        self.CodesLeDefault()
+        self.setCancelSaveAddDelete()
+        self.ui.pb_parameter_create_5.setEnabled(True)
 
     def insertIntoCod4Table(self):
         if self.ui.tableWidget_5.rowCount() == 0:
@@ -2135,27 +3182,35 @@ class UI():
         self.prevCode5code = self.ui.le_parameter_code_6.text()
 
     def Code5Cancel(self):
-        self.CodesLeDefault()
-        self.setCancelSaveAddDelete()
-        self.ui.pb_parameter_create_6.setEnabled(True)
+        reply = QMessageBox.question(None, "Cancel", "Are you sure?", QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+        if reply == QMessageBox.Yes:
+            self.ui.pb_parameter_edit_6.setEnabled(True)
+            self.ui.le_parameter_code_6.clear()
+            self.ui.le_parameter_name_6.clear()
+            self.CodesLeDefault()
+            self.setCancelSaveAddDelete()
+            self.ui.pb_parameter_create_6.setEnabled(True)
 
     def Code5Save(self):
-        self.setCancelSaveAddDelete()
-        self.ui.pb_parameter_edit_6.setEnabled(True)
-        self.conn = sqlite3.connect('WeighBridge.db')
-        self.c = self.conn.cursor()
-        code = self.ui.le_parameter_code_6.text()
-        name = self.ui.le_parameter_name_6.text()
-        self.c.execute("UPDATE T_Code5 SET Code=?,Name=? WHERE Code=?", (code, name, self.prevCode5code))
-        self.conn.commit()
-        ## Left Here
-        self.c.close()
-        self.conn.close()
+        reply = QMessageBox.question(None, "Cancel", "Are you sure?", QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+        if reply == QMessageBox.Yes:
 
-        row = self.ui.tableWidget_6.currentRow()
+            self.setCancelSaveAddDelete()
+            self.ui.pb_parameter_edit_6.setEnabled(True)
+            self.conn = sqlite3.connect('WeighBridge.db')
+            self.c = self.conn.cursor()
+            code = self.ui.le_parameter_code_6.text()
+            name = self.ui.le_parameter_name_6.text()
+            self.c.execute("UPDATE T_Code5 SET Code=?,Name=? WHERE Code=?", (code, name, self.prevCode5code))
+            self.conn.commit()
+            ## Left Here
+            self.c.close()
+            self.conn.close()
 
-        self.ui.tableWidget_6.setItem(row, 0, QtWidgets.QTableWidgetItem(str(code)))
-        self.ui.tableWidget_6.setItem(row, 1, QtWidgets.QTableWidgetItem(str(name)))
+            row = self.ui.tableWidget_6.currentRow()
+
+            self.ui.tableWidget_6.setItem(row, 0, QtWidgets.QTableWidgetItem(str(code)))
+            self.ui.tableWidget_6.setItem(row, 1, QtWidgets.QTableWidgetItem(str(name)))
 
     def on_Code5TableSelectionChanged(self):
 
@@ -2168,7 +3223,9 @@ class UI():
         self.ui.le_parameter_code_6.setText(self.Code5code)
         self.ui.le_parameter_name_6.setText(Code5name)
         self.ui.pb_parameter_edit_6.setEnabled(True)
-        self.Code5Cancel()
+        self.CodesLeDefault()
+        self.setCancelSaveAddDelete()
+        self.ui.pb_parameter_create_6.setEnabled(True)
 
     def insertIntoCod5Table(self):
         if self.ui.tableWidget_6.rowCount() == 0:
@@ -2241,6 +3298,7 @@ class UI():
 
 
     def showSettingsMainPage(self):
+        self.ui.pb_settings_search.setEnabled(True)
         self.ui.stackedWidgetSettings.setCurrentWidget(self.ui.settingsMainPage)
     def showCommPortSettings(self):
         self.ui.stackedWidgetSettings.setCurrentWidget(self.ui.CommPortSettings)
@@ -2268,26 +3326,32 @@ class UI():
 
           # CommPort  Settings Page
     def findPorts(self):
-        self.ui.pb_settings_Comm_save.setEnabled(True)
-        self.ui.pb_settings_search.setEnabled(False)
-        self.pts = serial.tools.list_ports.comports()
-        print("ok")
-        self.ports = []
-        #portss = ['com1','com2','com3']
+        try:
+            self.ui.pb_settings_Comm_save.setEnabled(True)
+            self.ui.pb_settings_search.setEnabled(False)
+            self.pts = serial.tools.list_ports.comports()
+            print("ok")
+            self.ports = []
+            #portss = ['com1','com2','com3']
 
 
-        NumOfPorts = len(self.pts)
-        for p in self.pts:
+            NumOfPorts = len(self.pts)
+            for p in self.pts:
 
-            p = str(p)
-            p = p.split(" ")
-            port = p[0]
-            # for pi
-            # p = p.split("- ")
-            # port = p[0]
-            # port = port.split(" ")
-            self.ports.append(port)
-        self.ui.lb_settings_CommPortDisplay.setText(self.ports[0])
+                p = str(p)
+                # for windows
+                p = p.split(" ")
+                port = p[0]
+                # for pi
+                # p = p.split("- ")
+                # port = p[0]
+                # port = port.split(" ")
+                self.ports.append(port)
+            self.ui.lb_settings_CommPortDisplay.setText(self.ports[0])
+        except:
+            self.ui.pb_settings_search.setEnabled(True)
+            self.ui.pb_settings_Comm_save.setEnabled(False)
+            self.showErrormsg("","No comports detected")
         #self.s = self.ui.combo_settings_CommPortDisplay.setCurrentText()
     def getValuesFromDB(self):
         conn = sqlite3.connect("WeighBridge.db")
@@ -2562,7 +3626,7 @@ class UI():
         # self.cursor = self.conn.cursor()
 
             ### Header Settings
-    def setMainPageLogo(self):
+    def setMainPageLogo(self):   ## to delete
         self.conn = sqlite3.connect('WeighBridge.db')
         self.c = self.conn.cursor()
         result = self.c.execute("SELECT LogoName FROM T_LogoImage")
@@ -2574,7 +3638,7 @@ class UI():
         self.c.close()
         self.conn.close()
 
-    def setMainPageHeaders(self):
+    def setMainPageHeaders(self):   ## to delete
         self.conn = sqlite3.connect('WeighBridge.db')
         self.c = self.conn.cursor()
         headers = []
@@ -2587,7 +3651,7 @@ class UI():
         # self.ui.lb_header3.setText(headers[2])
         self.c.close()
         self.conn.close()
-    def browseLogoImage(self):
+    def browseLogoImage(self):   ## to delete
         self.conn = sqlite3.connect('WeighBridge.db')
         self.c = self.conn.cursor()
 
@@ -2601,17 +3665,17 @@ class UI():
         self.conn.commit()
         self.c.close()
         self.conn.close()
-    def HeaderEdit(self):
+    def HeaderEdit(self):   ## to delete
         self.ui.le_settings_title1.setReadOnly(False)
         self.ui.le_settings_title2.setReadOnly(False)
         self.ui.le_settings_title3.setReadOnly(False)
 
-    def HeaderCancel(self):
+    def HeaderCancel(self):   ## to delete
         self.ui.le_settings_title1.setReadOnly(True)
         self.ui.le_settings_title2.setReadOnly(True)
         self.ui.le_settings_title3.setReadOnly(True)
 
-    def HeaderSave(self):
+    def HeaderSave(self):   ## to delete
         self.conn = sqlite3.connect('WeighBridge.db')
         self.c = self.conn.cursor()
 
@@ -2650,6 +3714,8 @@ class UI():
 
             self.ui.pb_report_pdf.setEnabled(False)
             self.ui.report_tableWidget.clear()
+            self.ui.report_tableWidget.setRowCount(0)
+            self.ui.report_tableWidget.setColumnCount(0)
             self.OverallReportFlag = 0
         else:
             self.showErrormsg("", "User not authorized")
@@ -2785,12 +3851,25 @@ class UI():
 
         self.c.close()
         self.conn.close()
+    def showDailyCalendar(self):
+        self.ui.calendarWidget_daily.show()
+        self.ui.calendarWidget_montly_from.hide()
+        self.ui.calendarWidget_monthly_to.hide()
+
+    def getReportDailyDate(self):
+        self.date = ""
+
+        self.date = self.ui.calendarWidget_daily.selectedDate().toPyDate().strftime("%d-%m-%y")
+        self.ui.pb_report_calendar.setText(str(self.date))
+
     def DailyReport(self):
         # date = self.ui.report_DateEdit.date().toPyDate("%d%m%y")
+        self.ui.calendarWidget_daily.hide()
         inflag = False
         self.ui.report_tableWidget.clear()
-        date = self.ui.report_DateEdit.date().toPyDate().strftime("%d-%m-%y")
-
+        # date = self.ui.report_DateEdit.date().toPyDate().strftime("%d-%m-%y")
+        date = self.date
+        print(date)
         self.conn = sqlite3.connect("WeighBridge.db")
         self.c = self.conn.cursor()
         self.pdfTableData = []
@@ -2836,14 +3915,33 @@ class UI():
 
         self.c.close()
         self.conn.close()
-
+    def showMonthlyFromCalendar(self):
+        self.ui.calendarWidget_montly_from.show()
+        self.ui.calendarWidget_monthly_to.hide()
+        self.ui.calendarWidget_daily.hide()
+    def getMonthlyFromDate(self):
+        self.fromdate = ""
+        self.fromdate = self.ui.calendarWidget_montly_from.selectedDate().toPyDate().strftime("%d-%m-%y")
+        self.ui.pb_report_fromcalendar.setText(str(self.fromdate))
+    def showMonthlyToCalendar(self):
+        self.ui.calendarWidget_monthly_to.show()
+        self.ui.calendarWidget_montly_from.hide()
+        self.ui.calendarWidget_daily.hide()
+    def getMonthlyToDate(self):
+        self.todate = ""
+        self.todate = self.ui.calendarWidget_monthly_to.selectedDate().toPyDate().strftime("%d-%m-%y")
+        self.ui.pb_report_tocalendar.setText(str(self.todate))
     def MonthlyReport(self):
+        self.ui.calendarWidget_montly_from.hide()
+        self.ui.calendarWidget_monthly_to.hide()
         inflag = False
         self.ui.report_tableWidget.clear()
         conn = sqlite3.connect("WeighBridge.db")
         c = conn.cursor()
-        sd = self.ui.report_FromDate.date().toPyDate().strftime("%d-%m-%y")
-        ed = self.ui.report_ToDate.date().toPyDate().strftime("%d-%m-%y")
+        # sd = self.ui.report_FromDate.date().toPyDate().strftime("%d-%m-%y")
+        # ed = self.ui.report_ToDate.date().toPyDate().strftime("%d-%m-%y")
+        sd = self.fromdate
+        ed = self.todate
         sortusing = self.value
         sortname = self.ui.combo_report_selection.currentText()
         sd = list(map(int, sd.split('-')))
@@ -3187,6 +4285,22 @@ class Serial(QThread):
 
     WeightUpdate = pyqtSignal(str)
 
+    def findcom(self):
+
+        self.pts = serial.tools.list_ports.comports()
+        for p in self.pts:
+            p = str(p)
+            # for windows
+            p = p.split(" ")
+            port = p[0]
+            # for pi
+            # p = p.split("- ")
+            # port = p[0]
+            # port = port.split(" ")
+            return port
+
+
+
     def decode(self, x):
         try:
             i = 0
@@ -3211,24 +4325,20 @@ class Serial(QThread):
             pass
 
     def run(self):
-        conn = sqlite3.connect("WeighBridge.db")
-        c = conn.cursor()
-        result = c.execute("SELECT Comm,BaudRate FROM T_CommSettings")
-        for i, data in enumerate(result):
-            comm = str(data[0]).upper()
-            bdrate = int(data[1])
-        c.close()
-        conn.close()
-
+        db = sqlite3.connect("WeighBridge.db").cursor().execute("select BaudRate from T_commsettings")
+        for baud in db:
+            self.baud = baud[0]
+        comm = self.findcom()
         try:
-
-            ip = serial.Serial(port=comm, baudrate=bdrate, bytesize=8, parity=serial.PARITY_NONE,
+            if comm == None:
+                raise Exception
+            self.WeightUpdate.emit("Connecting...")
+            ip = serial.Serial(port=comm, baudrate=self.baud, bytesize=8, parity=serial.PARITY_NONE,
                                stopbits=serial.STOPBITS_ONE)
-            print(comm)
+
 
             while ip.isOpen():
                 l = str(ip.read(13))
-                print(l)
                 val = l[2:15]
                 # print(val)
                 x = val[4:11]
@@ -3252,10 +4362,21 @@ class Serial(QThread):
                     self.WeightUpdate.emit(str(weight))
 
         except:
-            self.WeightUpdate.emit("COM\ndisconnected")  # give pop up window or set weight lable to connect comm
+
+            self.WeightUpdate.emit("COM err")  # give pop up window or set weight lable to connect comm
             time.sleep(1)
             self.run()
 
+class Keyboard(QThread):
+    def _init_(self):
+        super(Keyboard, self)._init_()
+
+    keyupdate = pyqtSignal(str)
+
+    def run(self):
+        while True:
+            self.keyupdate.emit(keyboard.read_key())
+            # self.keyupdate.emit("ds")
 
 
 if __name__ == '__main__':

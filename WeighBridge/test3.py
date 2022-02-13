@@ -241,5 +241,21 @@ from datetime import datetime
 # b="12"
 # if not (a or b):
 #     print("ss")
-a = "123"
-print(a.isdigit())
+conn = sqlite3.connect("WeighBridge.db")
+c = conn.cursor()
+c.execute("""CREATE TABLE IF NOT EXISTS "T_Code1" (
+	"Code"	TEXT,
+	"Name"	TEXT
+);""")
+# c.execute("""SELECT EXISTS (SELECT * FROM T_Code1 WHERE Code="C1")
+#             BEGIN
+#              UPDATE T_Code1 SET Code="C1",Name="new" WHERE Code="C1"
+#             END
+#             ELSE
+#             BEGIN
+#              INSERT INTO T_Code1 (Code,Name) VALUES ("c1","CODESS")
+#             END;""")
+r = c.execute("""SELECT EXISTS(SELECT * FROM T_Code1 WHERE Code=?);""",("s1",))
+
+for i in r:
+    print(i)

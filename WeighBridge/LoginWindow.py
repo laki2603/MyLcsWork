@@ -83,7 +83,7 @@ class Ui_MainWindow(object):
 "font: bold 16px;")
         self.le_passWord.setObjectName("le_passWord")
         self.pb_login = QtWidgets.QPushButton(self.centralwidget)
-        self.pb_login.setGeometry(QtCore.QRect(430, 440, 141, 61))
+        self.pb_login.setGeometry(QtCore.QRect(330, 450, 141, 61))
         font = QtGui.QFont()
         font.setPointSize(-1)
         font.setBold(True)
@@ -107,12 +107,28 @@ class Ui_MainWindow(object):
         self.label.setText("")
         self.label.setPixmap(QtGui.QPixmap("WeighBridgeScreens/weigh bridge screen/log-in.png"))
         self.label.setObjectName("label")
+        self.pb_close = QtWidgets.QPushButton(self.centralwidget)
+        self.pb_close.setGeometry(QtCore.QRect(540, 450, 161, 61))
+        self.pb_close.setStyleSheet("\n"
+"boder-style: outset;\n"
+"border-wiidth: 2px;\n"
+"border-radius: 12px;\n"
+"border-color: black;\n"
+"font: bold 16px;\n"
+"")
+        self.pb_close.setText("")
+        icon1 = QtGui.QIcon()
+        icon1.addPixmap(QtGui.QPixmap("WeighBridgeScreens/Button/close.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pb_close.setIcon(icon1)
+        self.pb_close.setIconSize(QtCore.QSize(141, 141))
+        self.pb_close.setObjectName("pb_close")
         self.label.raise_()
         self.lb_userName.raise_()
         self.le_userName.raise_()
         self.lb_passWord.raise_()
         self.le_passWord.raise_()
         self.pb_login.raise_()
+        self.pb_close.raise_()
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)

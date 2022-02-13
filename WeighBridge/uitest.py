@@ -29,7 +29,7 @@ class Ui_MainWindow(object):
         self.lb_HomeBackGround.setPixmap(QtGui.QPixmap("WeighBridgeScreens/weigh bridge screen/main.png"))
         self.lb_HomeBackGround.setObjectName("lb_HomeBackGround")
         self.pb_home_VehicleEntry = QtWidgets.QPushButton(self.Home)
-        self.pb_home_VehicleEntry.setGeometry(QtCore.QRect(20, 480, 121, 101))
+        self.pb_home_VehicleEntry.setGeometry(QtCore.QRect(110, 480, 121, 101))
         self.pb_home_VehicleEntry.setStyleSheet("\n"
 "boder-style: outset;\n"
 "border-wiidth: 2px;\n"
@@ -45,7 +45,7 @@ class Ui_MainWindow(object):
         self.pb_home_VehicleEntry.setIconSize(QtCore.QSize(131, 121))
         self.pb_home_VehicleEntry.setObjectName("pb_home_VehicleEntry")
         self.pb_home_VehicleReEntry = QtWidgets.QPushButton(self.Home)
-        self.pb_home_VehicleReEntry.setGeometry(QtCore.QRect(200, 480, 121, 101))
+        self.pb_home_VehicleReEntry.setGeometry(QtCore.QRect(290, 480, 121, 101))
         self.pb_home_VehicleReEntry.setStyleSheet("\n"
 "boder-style: outset;\n"
 "border-wiidth: 2px;\n"
@@ -60,7 +60,7 @@ class Ui_MainWindow(object):
         self.pb_home_VehicleReEntry.setIconSize(QtCore.QSize(131, 121))
         self.pb_home_VehicleReEntry.setObjectName("pb_home_VehicleReEntry")
         self.pb_home_ParameterSettings = QtWidgets.QPushButton(self.Home)
-        self.pb_home_ParameterSettings.setGeometry(QtCore.QRect(530, 480, 121, 101))
+        self.pb_home_ParameterSettings.setGeometry(QtCore.QRect(620, 480, 121, 101))
         self.pb_home_ParameterSettings.setStyleSheet("\n"
 "boder-style: outset;\n"
 "border-wiidth: 2px;\n"
@@ -75,7 +75,7 @@ class Ui_MainWindow(object):
         self.pb_home_ParameterSettings.setIconSize(QtCore.QSize(131, 121))
         self.pb_home_ParameterSettings.setObjectName("pb_home_ParameterSettings")
         self.pb_home_Settings = QtWidgets.QPushButton(self.Home)
-        self.pb_home_Settings.setGeometry(QtCore.QRect(360, 480, 121, 101))
+        self.pb_home_Settings.setGeometry(QtCore.QRect(450, 480, 121, 101))
         self.pb_home_Settings.setStyleSheet("\n"
 "boder-style: outset;\n"
 "border-wiidth: 2px;\n"
@@ -91,7 +91,7 @@ class Ui_MainWindow(object):
         self.pb_home_Settings.setIconSize(QtCore.QSize(131, 121))
         self.pb_home_Settings.setObjectName("pb_home_Settings")
         self.pb_home_report = QtWidgets.QPushButton(self.Home)
-        self.pb_home_report.setGeometry(QtCore.QRect(700, 480, 121, 101))
+        self.pb_home_report.setGeometry(QtCore.QRect(790, 480, 121, 101))
         self.pb_home_report.setStyleSheet("\n"
 "boder-style: outset;\n"
 "border-wiidth: 2px;\n"
@@ -105,21 +105,6 @@ class Ui_MainWindow(object):
         self.pb_home_report.setIcon(icon4)
         self.pb_home_report.setIconSize(QtCore.QSize(131, 122))
         self.pb_home_report.setObjectName("pb_home_report")
-        self.pb_home_Exit = QtWidgets.QPushButton(self.Home)
-        self.pb_home_Exit.setGeometry(QtCore.QRect(870, 480, 121, 101))
-        self.pb_home_Exit.setStyleSheet("\n"
-"boder-style: outset;\n"
-"border-wiidth: 2px;\n"
-"border-radius: 5px;\n"
-"border-color: black;\n"
-"font: bold 16px;\n"
-"")
-        self.pb_home_Exit.setText("")
-        icon5 = QtGui.QIcon()
-        icon5.addPixmap(QtGui.QPixmap("WeighBridgeScreens/Button/exit.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.pb_home_Exit.setIcon(icon5)
-        self.pb_home_Exit.setIconSize(QtCore.QSize(131, 121))
-        self.pb_home_Exit.setObjectName("pb_home_Exit")
         self.pb_home_tare = QtWidgets.QPushButton(self.Home)
         self.pb_home_tare.setGeometry(QtCore.QRect(60, 120, 93, 91))
         self.pb_home_tare.setStyleSheet("background-color: rgb(71, 98, 186);\n"
@@ -153,7 +138,7 @@ class Ui_MainWindow(object):
         self.lb_home_WeightDisplay.setWordWrap(False)
         self.lb_home_WeightDisplay.setObjectName("lb_home_WeightDisplay")
         self.tw_Home_Entry = QtWidgets.QTableWidget(self.Home)
-        self.tw_Home_Entry.setGeometry(QtCore.QRect(30, 260, 941, 192))
+        self.tw_Home_Entry.setGeometry(QtCore.QRect(30, 291, 941, 161))
         self.tw_Home_Entry.setFrameShape(QtWidgets.QFrame.Box)
         self.tw_Home_Entry.setObjectName("tw_Home_Entry")
         self.tw_Home_Entry.setColumnCount(0)
@@ -172,7 +157,7 @@ class Ui_MainWindow(object):
         font.setPointSize(12)
         self.lb_DateDisplay.setFont(font)
         self.lb_DateDisplay.setAutoFillBackground(False)
-        self.lb_DateDisplay.setFrameShape(QtWidgets.QFrame.Box)
+        self.lb_DateDisplay.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.lb_DateDisplay.setAlignment(QtCore.Qt.AlignCenter)
         self.lb_DateDisplay.setObjectName("lb_DateDisplay")
         self.lb_TimeDisplay = QtWidgets.QLabel(self.Home)
@@ -181,9 +166,19 @@ class Ui_MainWindow(object):
         font.setPointSize(12)
         self.lb_TimeDisplay.setFont(font)
         self.lb_TimeDisplay.setAutoFillBackground(False)
-        self.lb_TimeDisplay.setFrameShape(QtWidgets.QFrame.Box)
+        self.lb_TimeDisplay.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.lb_TimeDisplay.setAlignment(QtCore.Qt.AlignCenter)
         self.lb_TimeDisplay.setObjectName("lb_TimeDisplay")
+        self.cb_virtualKeyBoard = QtWidgets.QCheckBox(self.Home)
+        self.cb_virtualKeyBoard.setGeometry(QtCore.QRect(30, 250, 171, 31))
+        self.cb_virtualKeyBoard.setStyleSheet("color:white;\n"
+"boder-style: outset;\n"
+"border-wiidth: 2px;\n"
+"border-radius: 20px;\n"
+"border-color: black;\n"
+"font:  20px;\n"
+"")
+        self.cb_virtualKeyBoard.setObjectName("cb_virtualKeyBoard")
         self.stackedWidgetMain.addWidget(self.Home)
         self.ParameterSettings = QtWidgets.QWidget()
         self.ParameterSettings.setObjectName("ParameterSettings")
@@ -194,7 +189,7 @@ class Ui_MainWindow(object):
         self.lb_Parameter_Background.setPixmap(QtGui.QPixmap("WeighBridgeScreens/weigh bridge screen/parameter.png"))
         self.lb_Parameter_Background.setObjectName("lb_Parameter_Background")
         self.pb_Parameter_Edit = QtWidgets.QPushButton(self.ParameterSettings)
-        self.pb_Parameter_Edit.setGeometry(QtCore.QRect(80, 520, 151, 51))
+        self.pb_Parameter_Edit.setGeometry(QtCore.QRect(80, 520, 171, 61))
         self.pb_Parameter_Edit.setStyleSheet("\n"
 "color:white;\n"
 "boder-style: outset;\n"
@@ -204,10 +199,10 @@ class Ui_MainWindow(object):
 "font: bold 16px;\n"
 "")
         self.pb_Parameter_Edit.setText("")
-        icon6 = QtGui.QIcon()
-        icon6.addPixmap(QtGui.QPixmap("WeighBridgeScreens/Button/edit.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.pb_Parameter_Edit.setIcon(icon6)
-        self.pb_Parameter_Edit.setIconSize(QtCore.QSize(137, 100))
+        icon5 = QtGui.QIcon()
+        icon5.addPixmap(QtGui.QPixmap("WeighBridgeScreens/Button/edit.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pb_Parameter_Edit.setIcon(icon5)
+        self.pb_Parameter_Edit.setIconSize(QtCore.QSize(170, 100))
         self.pb_Parameter_Edit.setAutoDefault(False)
         self.pb_Parameter_Edit.setDefault(False)
         self.pb_Parameter_Edit.setFlat(False)
@@ -427,7 +422,7 @@ class Ui_MainWindow(object):
         self.rb_parameter_Tonne.setObjectName("rb_parameter_Tonne")
         self.lb_parameter_amount = QtWidgets.QLabel(self.groupBox_3)
         self.lb_parameter_amount.setEnabled(True)
-        self.lb_parameter_amount.setGeometry(QtCore.QRect(20, 40, 69, 16))
+        self.lb_parameter_amount.setGeometry(QtCore.QRect(20, 30, 69, 16))
         self.lb_parameter_amount.setAutoFillBackground(False)
         self.lb_parameter_amount.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.lb_parameter_amount.setObjectName("lb_parameter_amount")
@@ -650,7 +645,7 @@ class Ui_MainWindow(object):
         self.le_parameter_name_1.setText("")
         self.le_parameter_name_1.setObjectName("le_parameter_name_1")
         self.pb_parameter_create_1 = QtWidgets.QPushButton(self.Code1Details)
-        self.pb_parameter_create_1.setGeometry(QtCore.QRect(430, 240, 101, 41))
+        self.pb_parameter_create_1.setGeometry(QtCore.QRect(363, 240, 121, 41))
         self.pb_parameter_create_1.setStyleSheet("\n"
 "color:white;\n"
 "boder-style: outset;\n"
@@ -660,13 +655,13 @@ class Ui_MainWindow(object):
 "font: bold 16px;\n"
 "")
         self.pb_parameter_create_1.setText("")
-        icon7 = QtGui.QIcon()
-        icon7.addPixmap(QtGui.QPixmap("WeighBridgeScreens/Button/create.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.pb_parameter_create_1.setIcon(icon7)
-        self.pb_parameter_create_1.setIconSize(QtCore.QSize(103, 30))
+        icon6 = QtGui.QIcon()
+        icon6.addPixmap(QtGui.QPixmap("WeighBridgeScreens/Button/create.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pb_parameter_create_1.setIcon(icon6)
+        self.pb_parameter_create_1.setIconSize(QtCore.QSize(120, 45))
         self.pb_parameter_create_1.setObjectName("pb_parameter_create_1")
         self.pb_parameter_delete_1 = QtWidgets.QPushButton(self.Code1Details)
-        self.pb_parameter_delete_1.setGeometry(QtCore.QRect(540, 240, 91, 41))
+        self.pb_parameter_delete_1.setGeometry(QtCore.QRect(487, 240, 121, 41))
         self.pb_parameter_delete_1.setStyleSheet("\n"
 "color:white;\n"
 "boder-style: outset;\n"
@@ -676,13 +671,13 @@ class Ui_MainWindow(object):
 "font: bold 16px;\n"
 "")
         self.pb_parameter_delete_1.setText("")
-        icon8 = QtGui.QIcon()
-        icon8.addPixmap(QtGui.QPixmap("WeighBridgeScreens/Button/delete.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.pb_parameter_delete_1.setIcon(icon8)
-        self.pb_parameter_delete_1.setIconSize(QtCore.QSize(104, 30))
+        icon7 = QtGui.QIcon()
+        icon7.addPixmap(QtGui.QPixmap("WeighBridgeScreens/Button/delete.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pb_parameter_delete_1.setIcon(icon7)
+        self.pb_parameter_delete_1.setIconSize(QtCore.QSize(120, 45))
         self.pb_parameter_delete_1.setObjectName("pb_parameter_delete_1")
         self.pb_parameter_save_1 = QtWidgets.QPushButton(self.Code1Details)
-        self.pb_parameter_save_1.setGeometry(QtCore.QRect(760, 240, 91, 41))
+        self.pb_parameter_save_1.setGeometry(QtCore.QRect(738, 240, 121, 41))
         self.pb_parameter_save_1.setStyleSheet("\n"
 "color:white;\n"
 "boder-style: outset;\n"
@@ -692,13 +687,13 @@ class Ui_MainWindow(object):
 "font: bold 16px;\n"
 "")
         self.pb_parameter_save_1.setText("")
-        icon9 = QtGui.QIcon()
-        icon9.addPixmap(QtGui.QPixmap("WeighBridgeScreens/Button/save.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.pb_parameter_save_1.setIcon(icon9)
-        self.pb_parameter_save_1.setIconSize(QtCore.QSize(103, 30))
+        icon8 = QtGui.QIcon()
+        icon8.addPixmap(QtGui.QPixmap("WeighBridgeScreens/Button/save.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pb_parameter_save_1.setIcon(icon8)
+        self.pb_parameter_save_1.setIconSize(QtCore.QSize(120, 45))
         self.pb_parameter_save_1.setObjectName("pb_parameter_save_1")
         self.pb_parameter_edit_1 = QtWidgets.QPushButton(self.Code1Details)
-        self.pb_parameter_edit_1.setGeometry(QtCore.QRect(650, 240, 91, 41))
+        self.pb_parameter_edit_1.setGeometry(QtCore.QRect(613, 240, 121, 41))
         self.pb_parameter_edit_1.setStyleSheet("\n"
 "color:white;\n"
 "boder-style: outset;\n"
@@ -708,11 +703,11 @@ class Ui_MainWindow(object):
 "font: bold 16px;\n"
 "")
         self.pb_parameter_edit_1.setText("")
-        self.pb_parameter_edit_1.setIcon(icon6)
-        self.pb_parameter_edit_1.setIconSize(QtCore.QSize(103, 30))
+        self.pb_parameter_edit_1.setIcon(icon5)
+        self.pb_parameter_edit_1.setIconSize(QtCore.QSize(120, 45))
         self.pb_parameter_edit_1.setObjectName("pb_parameter_edit_1")
         self.pb_parameter_cancel_1 = QtWidgets.QPushButton(self.Code1Details)
-        self.pb_parameter_cancel_1.setGeometry(QtCore.QRect(870, 240, 91, 41))
+        self.pb_parameter_cancel_1.setGeometry(QtCore.QRect(863, 240, 121, 41))
         self.pb_parameter_cancel_1.setStyleSheet("\n"
 "boder-style: outset;\n"
 "border-wiidth: 2px;\n"
@@ -721,13 +716,13 @@ class Ui_MainWindow(object):
 "font: bold 16px;\n"
 "")
         self.pb_parameter_cancel_1.setText("")
-        icon10 = QtGui.QIcon()
-        icon10.addPixmap(QtGui.QPixmap("WeighBridgeScreens/Button/cancel.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.pb_parameter_cancel_1.setIcon(icon10)
-        self.pb_parameter_cancel_1.setIconSize(QtCore.QSize(103, 30))
+        icon9 = QtGui.QIcon()
+        icon9.addPixmap(QtGui.QPixmap("WeighBridgeScreens/Button/cancel.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pb_parameter_cancel_1.setIcon(icon9)
+        self.pb_parameter_cancel_1.setIconSize(QtCore.QSize(120, 45))
         self.pb_parameter_cancel_1.setObjectName("pb_parameter_cancel_1")
         self.pb_parameter_close_1 = QtWidgets.QPushButton(self.Code1Details)
-        self.pb_parameter_close_1.setGeometry(QtCore.QRect(650, 290, 101, 41))
+        self.pb_parameter_close_1.setGeometry(QtCore.QRect(740, 290, 121, 41))
         self.pb_parameter_close_1.setStyleSheet("\n"
 "color:white;\n"
 "boder-style: outset;\n"
@@ -737,13 +732,13 @@ class Ui_MainWindow(object):
 "font: bold 16px;\n"
 "")
         self.pb_parameter_close_1.setText("")
-        icon11 = QtGui.QIcon()
-        icon11.addPixmap(QtGui.QPixmap("WeighBridgeScreens/Button/close.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.pb_parameter_close_1.setIcon(icon11)
-        self.pb_parameter_close_1.setIconSize(QtCore.QSize(103, 30))
+        icon10 = QtGui.QIcon()
+        icon10.addPixmap(QtGui.QPixmap("WeighBridgeScreens/Button/close.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pb_parameter_close_1.setIcon(icon10)
+        self.pb_parameter_close_1.setIconSize(QtCore.QSize(120, 45))
         self.pb_parameter_close_1.setObjectName("pb_parameter_close_1")
         self.pb_parameter_print_1 = QtWidgets.QPushButton(self.Code1Details)
-        self.pb_parameter_print_1.setGeometry(QtCore.QRect(540, 290, 101, 41))
+        self.pb_parameter_print_1.setGeometry(QtCore.QRect(613, 290, 121, 41))
         self.pb_parameter_print_1.setStyleSheet("\n"
 "color:white;\n"
 "boder-style: outset;\n"
@@ -753,13 +748,13 @@ class Ui_MainWindow(object):
 "font: bold 16px;\n"
 "")
         self.pb_parameter_print_1.setText("")
-        icon12 = QtGui.QIcon()
-        icon12.addPixmap(QtGui.QPixmap("WeighBridgeScreens/Button/print.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.pb_parameter_print_1.setIcon(icon12)
-        self.pb_parameter_print_1.setIconSize(QtCore.QSize(103, 30))
+        icon11 = QtGui.QIcon()
+        icon11.addPixmap(QtGui.QPixmap("WeighBridgeScreens/Button/print.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pb_parameter_print_1.setIcon(icon11)
+        self.pb_parameter_print_1.setIconSize(QtCore.QSize(120, 45))
         self.pb_parameter_print_1.setObjectName("pb_parameter_print_1")
         self.pb_parameter_add = QtWidgets.QPushButton(self.Code1Details)
-        self.pb_parameter_add.setGeometry(QtCore.QRect(430, 290, 91, 28))
+        self.pb_parameter_add.setGeometry(QtCore.QRect(483, 290, 111, 41))
         self.pb_parameter_add.setStyleSheet("background-color: rgb(71, 98, 186);\n"
 "color:white;\n"
 "boder-style: outset;\n"
@@ -768,6 +763,7 @@ class Ui_MainWindow(object):
 "border-color: black;\n"
 "font: bold 16px;\n"
 "")
+        self.pb_parameter_add.setIconSize(QtCore.QSize(120, 45))
         self.pb_parameter_add.setObjectName("pb_parameter_add")
         self.stackedWidgetParameterSettings.addWidget(self.Code1Details)
         self.Code2Details = QtWidgets.QWidget()
@@ -789,7 +785,7 @@ class Ui_MainWindow(object):
         self.le_parameter_code_3.setGeometry(QtCore.QRect(590, 110, 201, 31))
         self.le_parameter_code_3.setObjectName("le_parameter_code_3")
         self.pb_parameter_print_3 = QtWidgets.QPushButton(self.Code2Details)
-        self.pb_parameter_print_3.setGeometry(QtCore.QRect(510, 310, 101, 41))
+        self.pb_parameter_print_3.setGeometry(QtCore.QRect(610, 310, 121, 41))
         self.pb_parameter_print_3.setStyleSheet("\n"
 "boder-style: outset;\n"
 "border-wiidth: 2px;\n"
@@ -798,11 +794,11 @@ class Ui_MainWindow(object):
 "font: bold 16px;\n"
 "")
         self.pb_parameter_print_3.setText("")
-        self.pb_parameter_print_3.setIcon(icon12)
-        self.pb_parameter_print_3.setIconSize(QtCore.QSize(103, 30))
+        self.pb_parameter_print_3.setIcon(icon11)
+        self.pb_parameter_print_3.setIconSize(QtCore.QSize(120, 45))
         self.pb_parameter_print_3.setObjectName("pb_parameter_print_3")
         self.pb_parameter_delete_3 = QtWidgets.QPushButton(self.Code2Details)
-        self.pb_parameter_delete_3.setGeometry(QtCore.QRect(510, 257, 101, 41))
+        self.pb_parameter_delete_3.setGeometry(QtCore.QRect(484, 257, 121, 41))
         self.pb_parameter_delete_3.setStyleSheet("\n"
 "color:white;\n"
 "boder-style: outset;\n"
@@ -812,11 +808,11 @@ class Ui_MainWindow(object):
 "font: bold 16px;\n"
 "")
         self.pb_parameter_delete_3.setText("")
-        self.pb_parameter_delete_3.setIcon(icon8)
-        self.pb_parameter_delete_3.setIconSize(QtCore.QSize(103, 30))
+        self.pb_parameter_delete_3.setIcon(icon7)
+        self.pb_parameter_delete_3.setIconSize(QtCore.QSize(120, 45))
         self.pb_parameter_delete_3.setObjectName("pb_parameter_delete_3")
         self.pb_parameter_close_3 = QtWidgets.QPushButton(self.Code2Details)
-        self.pb_parameter_close_3.setGeometry(QtCore.QRect(620, 310, 101, 41))
+        self.pb_parameter_close_3.setGeometry(QtCore.QRect(735, 310, 121, 41))
         self.pb_parameter_close_3.setStyleSheet("\n"
 "boder-style: outset;\n"
 "border-wiidth: 2px;\n"
@@ -825,8 +821,8 @@ class Ui_MainWindow(object):
 "font: bold 16px;\n"
 "")
         self.pb_parameter_close_3.setText("")
-        self.pb_parameter_close_3.setIcon(icon11)
-        self.pb_parameter_close_3.setIconSize(QtCore.QSize(103, 30))
+        self.pb_parameter_close_3.setIcon(icon10)
+        self.pb_parameter_close_3.setIconSize(QtCore.QSize(120, 45))
         self.pb_parameter_close_3.setObjectName("pb_parameter_close_3")
         self.lb_parameter_code_3 = QtWidgets.QLabel(self.Code2Details)
         self.lb_parameter_code_3.setGeometry(QtCore.QRect(470, 110, 101, 31))
@@ -841,7 +837,7 @@ class Ui_MainWindow(object):
         self.le_parameter_name_3.setText("")
         self.le_parameter_name_3.setObjectName("le_parameter_name_3")
         self.pb_parameter_create_3 = QtWidgets.QPushButton(self.Code2Details)
-        self.pb_parameter_create_3.setGeometry(QtCore.QRect(400, 257, 101, 41))
+        self.pb_parameter_create_3.setGeometry(QtCore.QRect(360, 257, 121, 41))
         self.pb_parameter_create_3.setStyleSheet("\n"
 "color:white;\n"
 "boder-style: outset;\n"
@@ -851,11 +847,11 @@ class Ui_MainWindow(object):
 "font: bold 16px;\n"
 "")
         self.pb_parameter_create_3.setText("")
-        self.pb_parameter_create_3.setIcon(icon7)
-        self.pb_parameter_create_3.setIconSize(QtCore.QSize(103, 30))
+        self.pb_parameter_create_3.setIcon(icon6)
+        self.pb_parameter_create_3.setIconSize(QtCore.QSize(120, 45))
         self.pb_parameter_create_3.setObjectName("pb_parameter_create_3")
         self.pb_parameter_cancel_3 = QtWidgets.QPushButton(self.Code2Details)
-        self.pb_parameter_cancel_3.setGeometry(QtCore.QRect(840, 257, 101, 41))
+        self.pb_parameter_cancel_3.setGeometry(QtCore.QRect(858, 257, 121, 41))
         self.pb_parameter_cancel_3.setStyleSheet("\n"
 "boder-style: outset;\n"
 "border-wiidth: 2px;\n"
@@ -864,11 +860,11 @@ class Ui_MainWindow(object):
 "font: bold 16px;\n"
 "")
         self.pb_parameter_cancel_3.setText("")
-        self.pb_parameter_cancel_3.setIcon(icon10)
-        self.pb_parameter_cancel_3.setIconSize(QtCore.QSize(103, 30))
+        self.pb_parameter_cancel_3.setIcon(icon9)
+        self.pb_parameter_cancel_3.setIconSize(QtCore.QSize(120, 45))
         self.pb_parameter_cancel_3.setObjectName("pb_parameter_cancel_3")
         self.pb_parameter_save_3 = QtWidgets.QPushButton(self.Code2Details)
-        self.pb_parameter_save_3.setGeometry(QtCore.QRect(730, 257, 101, 41))
+        self.pb_parameter_save_3.setGeometry(QtCore.QRect(733, 257, 121, 41))
         self.pb_parameter_save_3.setStyleSheet("\n"
 "boder-style: outset;\n"
 "border-wiidth: 2px;\n"
@@ -877,8 +873,8 @@ class Ui_MainWindow(object):
 "font: bold 16px;\n"
 "")
         self.pb_parameter_save_3.setText("")
-        self.pb_parameter_save_3.setIcon(icon9)
-        self.pb_parameter_save_3.setIconSize(QtCore.QSize(103, 30))
+        self.pb_parameter_save_3.setIcon(icon8)
+        self.pb_parameter_save_3.setIconSize(QtCore.QSize(120, 45))
         self.pb_parameter_save_3.setObjectName("pb_parameter_save_3")
         self.tableWidget_3 = QtWidgets.QTableWidget(self.Code2Details)
         self.tableWidget_3.setGeometry(QtCore.QRect(30, 50, 321, 311))
@@ -890,7 +886,7 @@ class Ui_MainWindow(object):
         item = QtWidgets.QTableWidgetItem()
         self.tableWidget_3.setHorizontalHeaderItem(1, item)
         self.pb_parameter_edit_3 = QtWidgets.QPushButton(self.Code2Details)
-        self.pb_parameter_edit_3.setGeometry(QtCore.QRect(620, 257, 101, 41))
+        self.pb_parameter_edit_3.setGeometry(QtCore.QRect(609, 257, 121, 41))
         self.pb_parameter_edit_3.setStyleSheet("\n"
 "boder-style: outset;\n"
 "border-wiidth: 2px;\n"
@@ -899,11 +895,11 @@ class Ui_MainWindow(object):
 "font: bold 16px;\n"
 "")
         self.pb_parameter_edit_3.setText("")
-        self.pb_parameter_edit_3.setIcon(icon6)
-        self.pb_parameter_edit_3.setIconSize(QtCore.QSize(103, 30))
+        self.pb_parameter_edit_3.setIcon(icon5)
+        self.pb_parameter_edit_3.setIconSize(QtCore.QSize(120, 45))
         self.pb_parameter_edit_3.setObjectName("pb_parameter_edit_3")
         self.pb_parameter_add_3 = QtWidgets.QPushButton(self.Code2Details)
-        self.pb_parameter_add_3.setGeometry(QtCore.QRect(400, 310, 93, 28))
+        self.pb_parameter_add_3.setGeometry(QtCore.QRect(510, 310, 93, 28))
         self.pb_parameter_add_3.setStyleSheet("background-color: rgb(71, 98, 186);\n"
 "color:white;\n"
 "boder-style: outset;\n"
@@ -912,6 +908,7 @@ class Ui_MainWindow(object):
 "border-color: black;\n"
 "font: bold 16px;\n"
 "")
+        self.pb_parameter_add_3.setIconSize(QtCore.QSize(120, 45))
         self.pb_parameter_add_3.setObjectName("pb_parameter_add_3")
         self.stackedWidgetParameterSettings.addWidget(self.Code2Details)
         self.Code3Details = QtWidgets.QWidget()
@@ -922,7 +919,7 @@ class Ui_MainWindow(object):
         self.label_5.setText("")
         self.label_5.setObjectName("label_5")
         self.pb_parameter_edit_4 = QtWidgets.QPushButton(self.Code3Details)
-        self.pb_parameter_edit_4.setGeometry(QtCore.QRect(650, 257, 101, 41))
+        self.pb_parameter_edit_4.setGeometry(QtCore.QRect(615, 257, 121, 41))
         self.pb_parameter_edit_4.setStyleSheet("\n"
 "boder-style: outset;\n"
 "border-wiidth: 2px;\n"
@@ -931,11 +928,11 @@ class Ui_MainWindow(object):
 "font: bold 16px;\n"
 "")
         self.pb_parameter_edit_4.setText("")
-        self.pb_parameter_edit_4.setIcon(icon6)
-        self.pb_parameter_edit_4.setIconSize(QtCore.QSize(103, 30))
+        self.pb_parameter_edit_4.setIcon(icon5)
+        self.pb_parameter_edit_4.setIconSize(QtCore.QSize(120, 45))
         self.pb_parameter_edit_4.setObjectName("pb_parameter_edit_4")
         self.pb_parameter_save_4 = QtWidgets.QPushButton(self.Code3Details)
-        self.pb_parameter_save_4.setGeometry(QtCore.QRect(760, 257, 101, 41))
+        self.pb_parameter_save_4.setGeometry(QtCore.QRect(742, 257, 121, 41))
         self.pb_parameter_save_4.setStyleSheet("\n"
 "boder-style: outset;\n"
 "border-wiidth: 2px;\n"
@@ -944,8 +941,8 @@ class Ui_MainWindow(object):
 "font: bold 16px;\n"
 "")
         self.pb_parameter_save_4.setText("")
-        self.pb_parameter_save_4.setIcon(icon9)
-        self.pb_parameter_save_4.setIconSize(QtCore.QSize(103, 30))
+        self.pb_parameter_save_4.setIcon(icon8)
+        self.pb_parameter_save_4.setIconSize(QtCore.QSize(120, 45))
         self.pb_parameter_save_4.setObjectName("pb_parameter_save_4")
         self.lb_parameter_name_4 = QtWidgets.QLabel(self.Code3Details)
         self.lb_parameter_name_4.setGeometry(QtCore.QRect(500, 170, 101, 31))
@@ -956,7 +953,7 @@ class Ui_MainWindow(object):
         self.lb_parameter_name_4.setFont(font)
         self.lb_parameter_name_4.setObjectName("lb_parameter_name_4")
         self.pb_parameter_cancel_4 = QtWidgets.QPushButton(self.Code3Details)
-        self.pb_parameter_cancel_4.setGeometry(QtCore.QRect(870, 257, 101, 41))
+        self.pb_parameter_cancel_4.setGeometry(QtCore.QRect(869, 257, 121, 41))
         self.pb_parameter_cancel_4.setStyleSheet("\n"
 "boder-style: outset;\n"
 "border-wiidth: 2px;\n"
@@ -965,8 +962,8 @@ class Ui_MainWindow(object):
 "font: bold 16px;\n"
 "")
         self.pb_parameter_cancel_4.setText("")
-        self.pb_parameter_cancel_4.setIcon(icon10)
-        self.pb_parameter_cancel_4.setIconSize(QtCore.QSize(103, 30))
+        self.pb_parameter_cancel_4.setIcon(icon9)
+        self.pb_parameter_cancel_4.setIconSize(QtCore.QSize(120, 45))
         self.pb_parameter_cancel_4.setObjectName("pb_parameter_cancel_4")
         self.le_parameter_name_4 = QtWidgets.QLineEdit(self.Code3Details)
         self.le_parameter_name_4.setGeometry(QtCore.QRect(620, 170, 201, 31))
@@ -993,7 +990,7 @@ class Ui_MainWindow(object):
         self.lb_parameter_code_4.setFont(font)
         self.lb_parameter_code_4.setObjectName("lb_parameter_code_4")
         self.pb_parameter_close_4 = QtWidgets.QPushButton(self.Code3Details)
-        self.pb_parameter_close_4.setGeometry(QtCore.QRect(650, 310, 101, 41))
+        self.pb_parameter_close_4.setGeometry(QtCore.QRect(741, 310, 121, 41))
         self.pb_parameter_close_4.setStyleSheet("\n"
 "boder-style: outset;\n"
 "border-wiidth: 2px;\n"
@@ -1002,11 +999,11 @@ class Ui_MainWindow(object):
 "font: bold 16px;\n"
 "")
         self.pb_parameter_close_4.setText("")
-        self.pb_parameter_close_4.setIcon(icon11)
-        self.pb_parameter_close_4.setIconSize(QtCore.QSize(103, 30))
+        self.pb_parameter_close_4.setIcon(icon10)
+        self.pb_parameter_close_4.setIconSize(QtCore.QSize(120, 45))
         self.pb_parameter_close_4.setObjectName("pb_parameter_close_4")
         self.pb_parameter_print_4 = QtWidgets.QPushButton(self.Code3Details)
-        self.pb_parameter_print_4.setGeometry(QtCore.QRect(540, 310, 101, 41))
+        self.pb_parameter_print_4.setGeometry(QtCore.QRect(612, 310, 121, 41))
         self.pb_parameter_print_4.setStyleSheet("\n"
 "boder-style: outset;\n"
 "border-wiidth: 2px;\n"
@@ -1015,11 +1012,11 @@ class Ui_MainWindow(object):
 "font: bold 16px;\n"
 "")
         self.pb_parameter_print_4.setText("")
-        self.pb_parameter_print_4.setIcon(icon12)
-        self.pb_parameter_print_4.setIconSize(QtCore.QSize(103, 30))
+        self.pb_parameter_print_4.setIcon(icon11)
+        self.pb_parameter_print_4.setIconSize(QtCore.QSize(120, 45))
         self.pb_parameter_print_4.setObjectName("pb_parameter_print_4")
         self.pb_parameter_create_4 = QtWidgets.QPushButton(self.Code3Details)
-        self.pb_parameter_create_4.setGeometry(QtCore.QRect(430, 257, 101, 41))
+        self.pb_parameter_create_4.setGeometry(QtCore.QRect(360, 257, 121, 41))
         self.pb_parameter_create_4.setStyleSheet("\n"
 "boder-style: outset;\n"
 "border-wiidth: 2px;\n"
@@ -1028,11 +1025,11 @@ class Ui_MainWindow(object):
 "font: bold 16px;\n"
 "")
         self.pb_parameter_create_4.setText("")
-        self.pb_parameter_create_4.setIcon(icon7)
-        self.pb_parameter_create_4.setIconSize(QtCore.QSize(103, 30))
+        self.pb_parameter_create_4.setIcon(icon6)
+        self.pb_parameter_create_4.setIconSize(QtCore.QSize(120, 45))
         self.pb_parameter_create_4.setObjectName("pb_parameter_create_4")
         self.pb_parameter_delete_4 = QtWidgets.QPushButton(self.Code3Details)
-        self.pb_parameter_delete_4.setGeometry(QtCore.QRect(540, 257, 101, 41))
+        self.pb_parameter_delete_4.setGeometry(QtCore.QRect(487, 257, 121, 41))
         self.pb_parameter_delete_4.setStyleSheet("\n"
 "boder-style: outset;\n"
 "border-wiidth: 2px;\n"
@@ -1041,11 +1038,11 @@ class Ui_MainWindow(object):
 "font: bold 16px;\n"
 "")
         self.pb_parameter_delete_4.setText("")
-        self.pb_parameter_delete_4.setIcon(icon8)
-        self.pb_parameter_delete_4.setIconSize(QtCore.QSize(103, 30))
+        self.pb_parameter_delete_4.setIcon(icon7)
+        self.pb_parameter_delete_4.setIconSize(QtCore.QSize(120, 45))
         self.pb_parameter_delete_4.setObjectName("pb_parameter_delete_4")
         self.pb_parameter_add_4 = QtWidgets.QPushButton(self.Code3Details)
-        self.pb_parameter_add_4.setGeometry(QtCore.QRect(430, 310, 91, 28))
+        self.pb_parameter_add_4.setGeometry(QtCore.QRect(480, 310, 121, 41))
         self.pb_parameter_add_4.setStyleSheet("background-color: rgb(71, 98, 186);\n"
 "color:white;\n"
 "boder-style: outset;\n"
@@ -1054,7 +1051,7 @@ class Ui_MainWindow(object):
 "border-color: black;\n"
 "font: bold 16px;\n"
 "")
-        self.pb_parameter_add_4.setIconSize(QtCore.QSize(103, 30))
+        self.pb_parameter_add_4.setIconSize(QtCore.QSize(120, 45))
         self.pb_parameter_add_4.setObjectName("pb_parameter_add_4")
         self.stackedWidgetParameterSettings.addWidget(self.Code3Details)
         self.Code4Details = QtWidgets.QWidget()
@@ -1065,7 +1062,7 @@ class Ui_MainWindow(object):
         self.label_6.setText("")
         self.label_6.setObjectName("label_6")
         self.pb_parameter_edit_5 = QtWidgets.QPushButton(self.Code4Details)
-        self.pb_parameter_edit_5.setGeometry(QtCore.QRect(630, 247, 101, 41))
+        self.pb_parameter_edit_5.setGeometry(QtCore.QRect(600, 247, 121, 41))
         self.pb_parameter_edit_5.setStyleSheet("\n"
 "boder-style: outset;\n"
 "border-wiidth: 2px;\n"
@@ -1074,8 +1071,8 @@ class Ui_MainWindow(object):
 "font: bold 16px;\n"
 "")
         self.pb_parameter_edit_5.setText("")
-        self.pb_parameter_edit_5.setIcon(icon6)
-        self.pb_parameter_edit_5.setIconSize(QtCore.QSize(103, 30))
+        self.pb_parameter_edit_5.setIcon(icon5)
+        self.pb_parameter_edit_5.setIconSize(QtCore.QSize(120, 45))
         self.pb_parameter_edit_5.setObjectName("pb_parameter_edit_5")
         self.lb_parameter_name_5 = QtWidgets.QLabel(self.Code4Details)
         self.lb_parameter_name_5.setGeometry(QtCore.QRect(480, 160, 101, 31))
@@ -1094,7 +1091,7 @@ class Ui_MainWindow(object):
         self.lb_parameter_code_5.setFont(font)
         self.lb_parameter_code_5.setObjectName("lb_parameter_code_5")
         self.pb_parameter_cancel_5 = QtWidgets.QPushButton(self.Code4Details)
-        self.pb_parameter_cancel_5.setGeometry(QtCore.QRect(850, 247, 111, 41))
+        self.pb_parameter_cancel_5.setGeometry(QtCore.QRect(860, 247, 121, 41))
         self.pb_parameter_cancel_5.setStyleSheet("\n"
 "boder-style: outset;\n"
 "border-wiidth: 2px;\n"
@@ -1103,11 +1100,11 @@ class Ui_MainWindow(object):
 "font: bold 16px;\n"
 "")
         self.pb_parameter_cancel_5.setText("")
-        self.pb_parameter_cancel_5.setIcon(icon10)
-        self.pb_parameter_cancel_5.setIconSize(QtCore.QSize(103, 30))
+        self.pb_parameter_cancel_5.setIcon(icon9)
+        self.pb_parameter_cancel_5.setIconSize(QtCore.QSize(120, 45))
         self.pb_parameter_cancel_5.setObjectName("pb_parameter_cancel_5")
         self.pb_parameter_print_5 = QtWidgets.QPushButton(self.Code4Details)
-        self.pb_parameter_print_5.setGeometry(QtCore.QRect(520, 300, 101, 41))
+        self.pb_parameter_print_5.setGeometry(QtCore.QRect(600, 300, 121, 41))
         self.pb_parameter_print_5.setStyleSheet("\n"
 "boder-style: outset;\n"
 "border-wiidth: 2px;\n"
@@ -1116,14 +1113,14 @@ class Ui_MainWindow(object):
 "font: bold 16px;\n"
 "")
         self.pb_parameter_print_5.setText("")
-        self.pb_parameter_print_5.setIcon(icon12)
-        self.pb_parameter_print_5.setIconSize(QtCore.QSize(103, 30))
+        self.pb_parameter_print_5.setIcon(icon11)
+        self.pb_parameter_print_5.setIconSize(QtCore.QSize(120, 45))
         self.pb_parameter_print_5.setObjectName("pb_parameter_print_5")
         self.le_parameter_code_5 = QtWidgets.QLineEdit(self.Code4Details)
         self.le_parameter_code_5.setGeometry(QtCore.QRect(600, 100, 201, 31))
         self.le_parameter_code_5.setObjectName("le_parameter_code_5")
         self.pb_parameter_save_5 = QtWidgets.QPushButton(self.Code4Details)
-        self.pb_parameter_save_5.setGeometry(QtCore.QRect(740, 247, 101, 41))
+        self.pb_parameter_save_5.setGeometry(QtCore.QRect(730, 247, 121, 41))
         self.pb_parameter_save_5.setStyleSheet("\n"
 "boder-style: outset;\n"
 "border-wiidth: 2px;\n"
@@ -1132,11 +1129,11 @@ class Ui_MainWindow(object):
 "font: bold 16px;\n"
 "")
         self.pb_parameter_save_5.setText("")
-        self.pb_parameter_save_5.setIcon(icon9)
-        self.pb_parameter_save_5.setIconSize(QtCore.QSize(103, 30))
+        self.pb_parameter_save_5.setIcon(icon8)
+        self.pb_parameter_save_5.setIconSize(QtCore.QSize(120, 45))
         self.pb_parameter_save_5.setObjectName("pb_parameter_save_5")
         self.pb_parameter_close_5 = QtWidgets.QPushButton(self.Code4Details)
-        self.pb_parameter_close_5.setGeometry(QtCore.QRect(630, 300, 101, 41))
+        self.pb_parameter_close_5.setGeometry(QtCore.QRect(730, 300, 121, 41))
         self.pb_parameter_close_5.setStyleSheet("\n"
 "boder-style: outset;\n"
 "border-wiidth: 2px;\n"
@@ -1145,11 +1142,11 @@ class Ui_MainWindow(object):
 "font: bold 16px;\n"
 "")
         self.pb_parameter_close_5.setText("")
-        self.pb_parameter_close_5.setIcon(icon11)
-        self.pb_parameter_close_5.setIconSize(QtCore.QSize(103, 30))
+        self.pb_parameter_close_5.setIcon(icon10)
+        self.pb_parameter_close_5.setIconSize(QtCore.QSize(120, 45))
         self.pb_parameter_close_5.setObjectName("pb_parameter_close_5")
         self.pb_parameter_create_5 = QtWidgets.QPushButton(self.Code4Details)
-        self.pb_parameter_create_5.setGeometry(QtCore.QRect(410, 247, 101, 41))
+        self.pb_parameter_create_5.setGeometry(QtCore.QRect(340, 247, 121, 41))
         self.pb_parameter_create_5.setStyleSheet("\n"
 "boder-style: outset;\n"
 "border-wiidth: 2px;\n"
@@ -1158,8 +1155,8 @@ class Ui_MainWindow(object):
 "font: bold 16px;\n"
 "")
         self.pb_parameter_create_5.setText("")
-        self.pb_parameter_create_5.setIcon(icon7)
-        self.pb_parameter_create_5.setIconSize(QtCore.QSize(103, 30))
+        self.pb_parameter_create_5.setIcon(icon6)
+        self.pb_parameter_create_5.setIconSize(QtCore.QSize(120, 45))
         self.pb_parameter_create_5.setObjectName("pb_parameter_create_5")
         self.tableWidget_5 = QtWidgets.QTableWidget(self.Code4Details)
         self.tableWidget_5.setGeometry(QtCore.QRect(40, 70, 291, 311))
@@ -1175,7 +1172,7 @@ class Ui_MainWindow(object):
         self.le_parameter_name_5.setText("")
         self.le_parameter_name_5.setObjectName("le_parameter_name_5")
         self.pb_parameter_delete_5 = QtWidgets.QPushButton(self.Code4Details)
-        self.pb_parameter_delete_5.setGeometry(QtCore.QRect(520, 247, 101, 41))
+        self.pb_parameter_delete_5.setGeometry(QtCore.QRect(470, 247, 121, 41))
         self.pb_parameter_delete_5.setStyleSheet("\n"
 "boder-style: outset;\n"
 "border-wiidth: 2px;\n"
@@ -1184,11 +1181,11 @@ class Ui_MainWindow(object):
 "font: bold 16px;\n"
 "")
         self.pb_parameter_delete_5.setText("")
-        self.pb_parameter_delete_5.setIcon(icon8)
-        self.pb_parameter_delete_5.setIconSize(QtCore.QSize(103, 30))
+        self.pb_parameter_delete_5.setIcon(icon7)
+        self.pb_parameter_delete_5.setIconSize(QtCore.QSize(120, 45))
         self.pb_parameter_delete_5.setObjectName("pb_parameter_delete_5")
         self.pb_parameter_add_5 = QtWidgets.QPushButton(self.Code4Details)
-        self.pb_parameter_add_5.setGeometry(QtCore.QRect(410, 300, 91, 28))
+        self.pb_parameter_add_5.setGeometry(QtCore.QRect(490, 300, 91, 28))
         self.pb_parameter_add_5.setStyleSheet("background-color: rgb(71, 98, 186);\n"
 "color:white;\n"
 "boder-style: outset;\n"
@@ -1208,7 +1205,7 @@ class Ui_MainWindow(object):
         self.label_8.setText("")
         self.label_8.setObjectName("label_8")
         self.pb_parameter_edit_6 = QtWidgets.QPushButton(self.Code5Details)
-        self.pb_parameter_edit_6.setGeometry(QtCore.QRect(630, 267, 101, 41))
+        self.pb_parameter_edit_6.setGeometry(QtCore.QRect(600, 267, 121, 41))
         self.pb_parameter_edit_6.setStyleSheet("\n"
 "boder-style: outset;\n"
 "border-wiidth: 2px;\n"
@@ -1217,11 +1214,11 @@ class Ui_MainWindow(object):
 "font: bold 16px;\n"
 "")
         self.pb_parameter_edit_6.setText("")
-        self.pb_parameter_edit_6.setIcon(icon6)
-        self.pb_parameter_edit_6.setIconSize(QtCore.QSize(103, 30))
+        self.pb_parameter_edit_6.setIcon(icon5)
+        self.pb_parameter_edit_6.setIconSize(QtCore.QSize(120, 45))
         self.pb_parameter_edit_6.setObjectName("pb_parameter_edit_6")
         self.pb_parameter_delete_6 = QtWidgets.QPushButton(self.Code5Details)
-        self.pb_parameter_delete_6.setGeometry(QtCore.QRect(520, 267, 101, 41))
+        self.pb_parameter_delete_6.setGeometry(QtCore.QRect(470, 267, 121, 41))
         self.pb_parameter_delete_6.setStyleSheet("\n"
 "boder-style: outset;\n"
 "border-wiidth: 2px;\n"
@@ -1230,8 +1227,8 @@ class Ui_MainWindow(object):
 "font: bold 16px;\n"
 "")
         self.pb_parameter_delete_6.setText("")
-        self.pb_parameter_delete_6.setIcon(icon8)
-        self.pb_parameter_delete_6.setIconSize(QtCore.QSize(103, 30))
+        self.pb_parameter_delete_6.setIcon(icon7)
+        self.pb_parameter_delete_6.setIconSize(QtCore.QSize(120, 45))
         self.pb_parameter_delete_6.setObjectName("pb_parameter_delete_6")
         self.lb_parameter_code_6 = QtWidgets.QLabel(self.Code5Details)
         self.lb_parameter_code_6.setGeometry(QtCore.QRect(480, 120, 101, 31))
@@ -1242,7 +1239,7 @@ class Ui_MainWindow(object):
         self.lb_parameter_code_6.setFont(font)
         self.lb_parameter_code_6.setObjectName("lb_parameter_code_6")
         self.pb_parameter_cancel_6 = QtWidgets.QPushButton(self.Code5Details)
-        self.pb_parameter_cancel_6.setGeometry(QtCore.QRect(850, 267, 101, 41))
+        self.pb_parameter_cancel_6.setGeometry(QtCore.QRect(860, 267, 121, 41))
         self.pb_parameter_cancel_6.setStyleSheet("\n"
 "boder-style: outset;\n"
 "border-wiidth: 2px;\n"
@@ -1251,11 +1248,11 @@ class Ui_MainWindow(object):
 "font: bold 16px;\n"
 "")
         self.pb_parameter_cancel_6.setText("")
-        self.pb_parameter_cancel_6.setIcon(icon10)
-        self.pb_parameter_cancel_6.setIconSize(QtCore.QSize(103, 30))
+        self.pb_parameter_cancel_6.setIcon(icon9)
+        self.pb_parameter_cancel_6.setIconSize(QtCore.QSize(120, 45))
         self.pb_parameter_cancel_6.setObjectName("pb_parameter_cancel_6")
         self.pb_parameter_print_6 = QtWidgets.QPushButton(self.Code5Details)
-        self.pb_parameter_print_6.setGeometry(QtCore.QRect(520, 320, 101, 41))
+        self.pb_parameter_print_6.setGeometry(QtCore.QRect(600, 320, 121, 41))
         self.pb_parameter_print_6.setStyleSheet("\n"
 "boder-style: outset;\n"
 "border-wiidth: 2px;\n"
@@ -1264,11 +1261,11 @@ class Ui_MainWindow(object):
 "font: bold 16px;\n"
 "")
         self.pb_parameter_print_6.setText("")
-        self.pb_parameter_print_6.setIcon(icon12)
-        self.pb_parameter_print_6.setIconSize(QtCore.QSize(103, 30))
+        self.pb_parameter_print_6.setIcon(icon11)
+        self.pb_parameter_print_6.setIconSize(QtCore.QSize(120, 45))
         self.pb_parameter_print_6.setObjectName("pb_parameter_print_6")
         self.pb_parameter_create_6 = QtWidgets.QPushButton(self.Code5Details)
-        self.pb_parameter_create_6.setGeometry(QtCore.QRect(410, 267, 101, 41))
+        self.pb_parameter_create_6.setGeometry(QtCore.QRect(340, 267, 121, 41))
         self.pb_parameter_create_6.setStyleSheet("\n"
 "boder-style: outset;\n"
 "border-wiidth: 2px;\n"
@@ -1277,8 +1274,8 @@ class Ui_MainWindow(object):
 "font: bold 16px;\n"
 "")
         self.pb_parameter_create_6.setText("")
-        self.pb_parameter_create_6.setIcon(icon7)
-        self.pb_parameter_create_6.setIconSize(QtCore.QSize(103, 30))
+        self.pb_parameter_create_6.setIcon(icon6)
+        self.pb_parameter_create_6.setIconSize(QtCore.QSize(120, 45))
         self.pb_parameter_create_6.setObjectName("pb_parameter_create_6")
         self.le_parameter_code_6 = QtWidgets.QLineEdit(self.Code5Details)
         self.le_parameter_code_6.setGeometry(QtCore.QRect(600, 120, 201, 31))
@@ -1288,7 +1285,7 @@ class Ui_MainWindow(object):
         self.le_parameter_name_6.setText("")
         self.le_parameter_name_6.setObjectName("le_parameter_name_6")
         self.pb_parameter_save_6 = QtWidgets.QPushButton(self.Code5Details)
-        self.pb_parameter_save_6.setGeometry(QtCore.QRect(740, 267, 101, 41))
+        self.pb_parameter_save_6.setGeometry(QtCore.QRect(730, 267, 121, 41))
         self.pb_parameter_save_6.setStyleSheet("\n"
 "boder-style: outset;\n"
 "border-wiidth: 2px;\n"
@@ -1297,11 +1294,11 @@ class Ui_MainWindow(object):
 "font: bold 16px;\n"
 "")
         self.pb_parameter_save_6.setText("")
-        self.pb_parameter_save_6.setIcon(icon9)
-        self.pb_parameter_save_6.setIconSize(QtCore.QSize(103, 30))
+        self.pb_parameter_save_6.setIcon(icon8)
+        self.pb_parameter_save_6.setIconSize(QtCore.QSize(120, 45))
         self.pb_parameter_save_6.setObjectName("pb_parameter_save_6")
         self.pb_parameter_close_6 = QtWidgets.QPushButton(self.Code5Details)
-        self.pb_parameter_close_6.setGeometry(QtCore.QRect(630, 320, 101, 41))
+        self.pb_parameter_close_6.setGeometry(QtCore.QRect(730, 320, 121, 41))
         self.pb_parameter_close_6.setStyleSheet("\n"
 "boder-style: outset;\n"
 "border-wiidth: 2px;\n"
@@ -1310,8 +1307,8 @@ class Ui_MainWindow(object):
 "font: bold 16px;\n"
 "")
         self.pb_parameter_close_6.setText("")
-        self.pb_parameter_close_6.setIcon(icon11)
-        self.pb_parameter_close_6.setIconSize(QtCore.QSize(103, 30))
+        self.pb_parameter_close_6.setIcon(icon10)
+        self.pb_parameter_close_6.setIconSize(QtCore.QSize(120, 45))
         self.pb_parameter_close_6.setObjectName("pb_parameter_close_6")
         self.lb_parameter_name_6 = QtWidgets.QLabel(self.Code5Details)
         self.lb_parameter_name_6.setGeometry(QtCore.QRect(480, 180, 101, 31))
@@ -1331,7 +1328,7 @@ class Ui_MainWindow(object):
         item = QtWidgets.QTableWidgetItem()
         self.tableWidget_6.setHorizontalHeaderItem(1, item)
         self.pb_parameter_add_6 = QtWidgets.QPushButton(self.Code5Details)
-        self.pb_parameter_add_6.setGeometry(QtCore.QRect(410, 320, 91, 28))
+        self.pb_parameter_add_6.setGeometry(QtCore.QRect(500, 320, 91, 28))
         self.pb_parameter_add_6.setStyleSheet("background-color: rgb(71, 98, 186);\n"
 "color:white;\n"
 "boder-style: outset;\n"
@@ -1344,7 +1341,7 @@ class Ui_MainWindow(object):
         self.pb_parameter_add_6.setObjectName("pb_parameter_add_6")
         self.stackedWidgetParameterSettings.addWidget(self.Code5Details)
         self.pb_Parameter_Save = QtWidgets.QPushButton(self.ParameterSettings)
-        self.pb_Parameter_Save.setGeometry(QtCore.QRect(310, 520, 151, 51))
+        self.pb_Parameter_Save.setGeometry(QtCore.QRect(310, 520, 181, 61))
         self.pb_Parameter_Save.setStyleSheet("\n"
 "color:white;\n"
 "boder-style: outset;\n"
@@ -1354,11 +1351,11 @@ class Ui_MainWindow(object):
 "font: bold 16px;\n"
 "")
         self.pb_Parameter_Save.setText("")
-        self.pb_Parameter_Save.setIcon(icon9)
-        self.pb_Parameter_Save.setIconSize(QtCore.QSize(137, 100))
+        self.pb_Parameter_Save.setIcon(icon8)
+        self.pb_Parameter_Save.setIconSize(QtCore.QSize(170, 100))
         self.pb_Parameter_Save.setObjectName("pb_Parameter_Save")
         self.pb_Parameter_Cancel = QtWidgets.QPushButton(self.ParameterSettings)
-        self.pb_Parameter_Cancel.setGeometry(QtCore.QRect(540, 520, 151, 51))
+        self.pb_Parameter_Cancel.setGeometry(QtCore.QRect(550, 520, 171, 61))
         self.pb_Parameter_Cancel.setStyleSheet("\n"
 "color:white;\n"
 "boder-style: outset;\n"
@@ -1368,11 +1365,11 @@ class Ui_MainWindow(object):
 "font: bold 16px;\n"
 "")
         self.pb_Parameter_Cancel.setText("")
-        self.pb_Parameter_Cancel.setIcon(icon10)
-        self.pb_Parameter_Cancel.setIconSize(QtCore.QSize(137, 100))
+        self.pb_Parameter_Cancel.setIcon(icon9)
+        self.pb_Parameter_Cancel.setIconSize(QtCore.QSize(170, 100))
         self.pb_Parameter_Cancel.setObjectName("pb_Parameter_Cancel")
         self.pb_Parameter_Close = QtWidgets.QPushButton(self.ParameterSettings)
-        self.pb_Parameter_Close.setGeometry(QtCore.QRect(790, 520, 151, 51))
+        self.pb_Parameter_Close.setGeometry(QtCore.QRect(790, 520, 171, 61))
         self.pb_Parameter_Close.setStyleSheet("color:white;\n"
 "boder-style: outset;\n"
 "border-wiidth: 2px;\n"
@@ -1381,8 +1378,8 @@ class Ui_MainWindow(object):
 "font: bold 16px;\n"
 "")
         self.pb_Parameter_Close.setText("")
-        self.pb_Parameter_Close.setIcon(icon11)
-        self.pb_Parameter_Close.setIconSize(QtCore.QSize(137, 100))
+        self.pb_Parameter_Close.setIcon(icon10)
+        self.pb_Parameter_Close.setIconSize(QtCore.QSize(170, 100))
         self.pb_Parameter_Close.setObjectName("pb_Parameter_Close")
         self.stackedWidgetMain.addWidget(self.ParameterSettings)
         self.Report = QtWidgets.QWidget()
@@ -1408,9 +1405,9 @@ class Ui_MainWindow(object):
 "font: bold 16px;\n"
 "")
         self.pb_report_OverallReport.setText("")
-        icon13 = QtGui.QIcon()
-        icon13.addPixmap(QtGui.QPixmap("WeighBridgeScreens/Button/over-all.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.pb_report_OverallReport.setIcon(icon13)
+        icon12 = QtGui.QIcon()
+        icon12.addPixmap(QtGui.QPixmap("WeighBridgeScreens/Button/over-all.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pb_report_OverallReport.setIcon(icon12)
         self.pb_report_OverallReport.setIconSize(QtCore.QSize(141, 92))
         self.pb_report_OverallReport.setObjectName("pb_report_OverallReport")
         self.combo_report_Header = QtWidgets.QComboBox(self.Report)
@@ -1440,9 +1437,9 @@ class Ui_MainWindow(object):
 "font: bold 16px;\n"
 "")
         self.pb_report_HeaderOk.setText("")
-        icon14 = QtGui.QIcon()
-        icon14.addPixmap(QtGui.QPixmap("WeighBridgeScreens/Button/ok.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.pb_report_HeaderOk.setIcon(icon14)
+        icon13 = QtGui.QIcon()
+        icon13.addPixmap(QtGui.QPixmap("WeighBridgeScreens/Button/ok.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pb_report_HeaderOk.setIcon(icon13)
         self.pb_report_HeaderOk.setIconSize(QtCore.QSize(141, 50))
         self.pb_report_HeaderOk.setObjectName("pb_report_HeaderOk")
         self.lb_report_Code = QtWidgets.QLabel(self.Report)
@@ -1472,14 +1469,14 @@ class Ui_MainWindow(object):
 "font: bold 16px;\n"
 "")
         self.pb_report_CodeOk.setText("")
-        self.pb_report_CodeOk.setIcon(icon14)
+        self.pb_report_CodeOk.setIcon(icon13)
         self.pb_report_CodeOk.setIconSize(QtCore.QSize(141, 50))
         self.pb_report_CodeOk.setObjectName("pb_report_CodeOk")
         self.dateEdit = QtWidgets.QDateEdit(self.Report)
         self.dateEdit.setGeometry(QtCore.QRect(-250, 250, 110, 22))
         self.dateEdit.setObjectName("dateEdit")
         self.pb_report_excel = QtWidgets.QPushButton(self.Report)
-        self.pb_report_excel.setGeometry(QtCore.QRect(330, 540, 131, 45))
+        self.pb_report_excel.setGeometry(QtCore.QRect(310, 534, 171, 61))
         font = QtGui.QFont()
         font.setPointSize(-1)
         font.setBold(True)
@@ -1494,13 +1491,13 @@ class Ui_MainWindow(object):
 "font: bold 16px;\n"
 "")
         self.pb_report_excel.setText("")
-        icon15 = QtGui.QIcon()
-        icon15.addPixmap(QtGui.QPixmap("WeighBridgeScreens/Button/excel.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.pb_report_excel.setIcon(icon15)
-        self.pb_report_excel.setIconSize(QtCore.QSize(141, 43))
+        icon14 = QtGui.QIcon()
+        icon14.addPixmap(QtGui.QPixmap("WeighBridgeScreens/Button/excel.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pb_report_excel.setIcon(icon14)
+        self.pb_report_excel.setIconSize(QtCore.QSize(170, 100))
         self.pb_report_excel.setObjectName("pb_report_excel")
         self.pb_report_print = QtWidgets.QPushButton(self.Report)
-        self.pb_report_print.setGeometry(QtCore.QRect(530, 540, 131, 45))
+        self.pb_report_print.setGeometry(QtCore.QRect(510, 534, 171, 61))
         font = QtGui.QFont()
         font.setPointSize(-1)
         font.setBold(True)
@@ -1515,11 +1512,11 @@ class Ui_MainWindow(object):
 "font: bold 16px;\n"
 "")
         self.pb_report_print.setText("")
-        self.pb_report_print.setIcon(icon12)
-        self.pb_report_print.setIconSize(QtCore.QSize(141, 43))
+        self.pb_report_print.setIcon(icon11)
+        self.pb_report_print.setIconSize(QtCore.QSize(170, 100))
         self.pb_report_print.setObjectName("pb_report_print")
         self.pb_report_close = QtWidgets.QPushButton(self.Report)
-        self.pb_report_close.setGeometry(QtCore.QRect(740, 540, 131, 45))
+        self.pb_report_close.setGeometry(QtCore.QRect(720, 534, 171, 61))
         font = QtGui.QFont()
         font.setPointSize(-1)
         font.setBold(True)
@@ -1534,11 +1531,11 @@ class Ui_MainWindow(object):
 "font: bold 16px;\n"
 "")
         self.pb_report_close.setText("")
-        self.pb_report_close.setIcon(icon11)
-        self.pb_report_close.setIconSize(QtCore.QSize(141, 43))
+        self.pb_report_close.setIcon(icon10)
+        self.pb_report_close.setIconSize(QtCore.QSize(170, 100))
         self.pb_report_close.setObjectName("pb_report_close")
         self.pb_report_pdf = QtWidgets.QPushButton(self.Report)
-        self.pb_report_pdf.setGeometry(QtCore.QRect(120, 540, 141, 45))
+        self.pb_report_pdf.setGeometry(QtCore.QRect(100, 534, 181, 61))
         font = QtGui.QFont()
         font.setPointSize(-1)
         font.setBold(True)
@@ -1553,21 +1550,15 @@ class Ui_MainWindow(object):
 "font: bold 16px;\n"
 "")
         self.pb_report_pdf.setText("")
-        icon16 = QtGui.QIcon()
-        icon16.addPixmap(QtGui.QPixmap("WeighBridgeScreens/Button/pdf.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.pb_report_pdf.setIcon(icon16)
-        self.pb_report_pdf.setIconSize(QtCore.QSize(141, 43))
+        icon15 = QtGui.QIcon()
+        icon15.addPixmap(QtGui.QPixmap("WeighBridgeScreens/Button/pdf.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pb_report_pdf.setIcon(icon15)
+        self.pb_report_pdf.setIconSize(QtCore.QSize(170, 100))
         self.pb_report_pdf.setObjectName("pb_report_pdf")
         self.gb_Report_DaiyReport = QtWidgets.QGroupBox(self.Report)
         self.gb_Report_DaiyReport.setGeometry(QtCore.QRect(180, 140, 421, 71))
         self.gb_Report_DaiyReport.setTitle("")
         self.gb_Report_DaiyReport.setObjectName("gb_Report_DaiyReport")
-        self.report_DateEdit = QtWidgets.QDateEdit(self.gb_Report_DaiyReport)
-        self.report_DateEdit.setGeometry(QtCore.QRect(90, 14, 151, 41))
-        font = QtGui.QFont()
-        font.setPointSize(12)
-        self.report_DateEdit.setFont(font)
-        self.report_DateEdit.setObjectName("report_DateEdit")
         self.lb_report_Date = QtWidgets.QLabel(self.gb_Report_DaiyReport)
         self.lb_report_Date.setGeometry(QtCore.QRect(10, 26, 71, 22))
         font = QtGui.QFont()
@@ -1592,11 +1583,18 @@ class Ui_MainWindow(object):
 "font: bold 16px;\n"
 "")
         self.pb_report_dailyReportDateGo.setText("")
-        icon17 = QtGui.QIcon()
-        icon17.addPixmap(QtGui.QPixmap("WeighBridgeScreens/Button/GO.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.pb_report_dailyReportDateGo.setIcon(icon17)
+        icon16 = QtGui.QIcon()
+        icon16.addPixmap(QtGui.QPixmap("WeighBridgeScreens/Button/GO.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pb_report_dailyReportDateGo.setIcon(icon16)
         self.pb_report_dailyReportDateGo.setIconSize(QtCore.QSize(141, 40))
         self.pb_report_dailyReportDateGo.setObjectName("pb_report_dailyReportDateGo")
+        self.pb_report_calendar = QtWidgets.QPushButton(self.gb_Report_DaiyReport)
+        self.pb_report_calendar.setGeometry(QtCore.QRect(80, 20, 161, 31))
+        font = QtGui.QFont()
+        font.setBold(True)
+        font.setWeight(75)
+        self.pb_report_calendar.setFont(font)
+        self.pb_report_calendar.setObjectName("pb_report_calendar")
         self.gb_Report_HeaderCode = QtWidgets.QGroupBox(self.Report)
         self.gb_Report_HeaderCode.setGeometry(QtCore.QRect(620, 140, 391, 71))
         self.gb_Report_HeaderCode.setTitle("")
@@ -1632,37 +1630,39 @@ class Ui_MainWindow(object):
 "font: bold 16px;\n"
 "")
         self.pb_report_monthlyReportDateGo.setText("")
-        self.pb_report_monthlyReportDateGo.setIcon(icon17)
+        self.pb_report_monthlyReportDateGo.setIcon(icon16)
         self.pb_report_monthlyReportDateGo.setIconSize(QtCore.QSize(141, 40))
         self.pb_report_monthlyReportDateGo.setObjectName("pb_report_monthlyReportDateGo")
         self.lb_report_ToDate = QtWidgets.QLabel(self.gb_Report_MonthlyReport)
-        self.lb_report_ToDate.setGeometry(QtCore.QRect(360, 30, 101, 22))
+        self.lb_report_ToDate.setGeometry(QtCore.QRect(360, 26, 101, 22))
         font = QtGui.QFont()
         font.setPointSize(11)
         font.setBold(False)
         font.setWeight(50)
         self.lb_report_ToDate.setFont(font)
         self.lb_report_ToDate.setObjectName("lb_report_ToDate")
-        self.report_FromDate = QtWidgets.QDateEdit(self.gb_Report_MonthlyReport)
-        self.report_FromDate.setGeometry(QtCore.QRect(130, 16, 151, 41))
-        font = QtGui.QFont()
-        font.setPointSize(12)
-        self.report_FromDate.setFont(font)
-        self.report_FromDate.setObjectName("report_FromDate")
         self.lb_report_FromDate = QtWidgets.QLabel(self.gb_Report_MonthlyReport)
-        self.lb_report_FromDate.setGeometry(QtCore.QRect(10, 30, 111, 22))
+        self.lb_report_FromDate.setGeometry(QtCore.QRect(10, 26, 111, 22))
         font = QtGui.QFont()
         font.setPointSize(11)
         font.setBold(False)
         font.setWeight(50)
         self.lb_report_FromDate.setFont(font)
         self.lb_report_FromDate.setObjectName("lb_report_FromDate")
-        self.report_ToDate = QtWidgets.QDateEdit(self.gb_Report_MonthlyReport)
-        self.report_ToDate.setGeometry(QtCore.QRect(470, 16, 151, 41))
+        self.pb_report_fromcalendar = QtWidgets.QPushButton(self.gb_Report_MonthlyReport)
+        self.pb_report_fromcalendar.setGeometry(QtCore.QRect(130, 20, 161, 31))
         font = QtGui.QFont()
-        font.setPointSize(12)
-        self.report_ToDate.setFont(font)
-        self.report_ToDate.setObjectName("report_ToDate")
+        font.setBold(True)
+        font.setWeight(75)
+        self.pb_report_fromcalendar.setFont(font)
+        self.pb_report_fromcalendar.setObjectName("pb_report_fromcalendar")
+        self.pb_report_tocalendar = QtWidgets.QPushButton(self.gb_Report_MonthlyReport)
+        self.pb_report_tocalendar.setGeometry(QtCore.QRect(460, 20, 161, 31))
+        font = QtGui.QFont()
+        font.setBold(True)
+        font.setWeight(75)
+        self.pb_report_tocalendar.setFont(font)
+        self.pb_report_tocalendar.setObjectName("pb_report_tocalendar")
         self.gb_Report_TypOfReport = QtWidgets.QGroupBox(self.Report)
         self.gb_Report_TypOfReport.setGeometry(QtCore.QRect(20, 140, 151, 141))
         self.gb_Report_TypOfReport.setTitle("")
@@ -1683,9 +1683,9 @@ class Ui_MainWindow(object):
 "font: bold 16px;\n"
 "")
         self.pb_Report_DailyReport.setText("")
-        icon18 = QtGui.QIcon()
-        icon18.addPixmap(QtGui.QPixmap("WeighBridgeScreens/ReportScreen/Daily1.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.pb_Report_DailyReport.setIcon(icon18)
+        icon17 = QtGui.QIcon()
+        icon17.addPixmap(QtGui.QPixmap("WeighBridgeScreens/ReportScreen/Daily1.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pb_Report_DailyReport.setIcon(icon17)
         self.pb_Report_DailyReport.setIconSize(QtCore.QSize(141, 40))
         self.pb_Report_DailyReport.setObjectName("pb_Report_DailyReport")
         self.pb_Report_MonthlyReport = QtWidgets.QPushButton(self.gb_Report_TypOfReport)
@@ -1704,9 +1704,9 @@ class Ui_MainWindow(object):
 "font: bold 16px;\n"
 "")
         self.pb_Report_MonthlyReport.setText("")
-        icon19 = QtGui.QIcon()
-        icon19.addPixmap(QtGui.QPixmap("WeighBridgeScreens/ReportScreen/Monthly1.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.pb_Report_MonthlyReport.setIcon(icon19)
+        icon18 = QtGui.QIcon()
+        icon18.addPixmap(QtGui.QPixmap("WeighBridgeScreens/ReportScreen/Monthly1.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pb_Report_MonthlyReport.setIcon(icon18)
         self.pb_Report_MonthlyReport.setIconSize(QtCore.QSize(141, 40))
         self.pb_Report_MonthlyReport.setObjectName("pb_Report_MonthlyReport")
         self.lb_report_background = QtWidgets.QLabel(self.Report)
@@ -1714,6 +1714,15 @@ class Ui_MainWindow(object):
         self.lb_report_background.setText("")
         self.lb_report_background.setPixmap(QtGui.QPixmap("WeighBridgeScreens/ReportScreen/ReportScreen.png"))
         self.lb_report_background.setObjectName("lb_report_background")
+        self.calendarWidget_daily = QtWidgets.QCalendarWidget(self.Report)
+        self.calendarWidget_daily.setGeometry(QtCore.QRect(240, 280, 401, 231))
+        self.calendarWidget_daily.setObjectName("calendarWidget_daily")
+        self.calendarWidget_monthly_to = QtWidgets.QCalendarWidget(self.Report)
+        self.calendarWidget_monthly_to.setGeometry(QtCore.QRect(240, 280, 401, 231))
+        self.calendarWidget_monthly_to.setObjectName("calendarWidget_monthly_to")
+        self.calendarWidget_montly_from = QtWidgets.QCalendarWidget(self.Report)
+        self.calendarWidget_montly_from.setGeometry(QtCore.QRect(240, 280, 401, 231))
+        self.calendarWidget_montly_from.setObjectName("calendarWidget_montly_from")
         self.lb_report_background.raise_()
         self.report_tableWidget.raise_()
         self.pb_report_OverallReport.raise_()
@@ -1732,6 +1741,9 @@ class Ui_MainWindow(object):
         self.gb_Report_HeaderCode.raise_()
         self.gb_Report_MonthlyReport.raise_()
         self.gb_Report_TypOfReport.raise_()
+        self.calendarWidget_daily.raise_()
+        self.calendarWidget_monthly_to.raise_()
+        self.calendarWidget_montly_from.raise_()
         self.stackedWidgetMain.addWidget(self.Report)
         self.Settings = QtWidgets.QWidget()
         self.Settings.setObjectName("Settings")
@@ -1750,9 +1762,9 @@ class Ui_MainWindow(object):
 "font: bold 16px;\n"
 "")
         self.pb_CommPortSettings.setText("")
-        icon20 = QtGui.QIcon()
-        icon20.addPixmap(QtGui.QPixmap("WeighBridgeScreens/Button/comm-port.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.pb_CommPortSettings.setIcon(icon20)
+        icon19 = QtGui.QIcon()
+        icon19.addPixmap(QtGui.QPixmap("WeighBridgeScreens/Button/comm-port.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pb_CommPortSettings.setIcon(icon19)
         self.pb_CommPortSettings.setIconSize(QtCore.QSize(167, 187))
         self.pb_CommPortSettings.setObjectName("pb_CommPortSettings")
         self.pb_UserAccountSettings = QtWidgets.QPushButton(self.settingsMainPage)
@@ -1765,9 +1777,9 @@ class Ui_MainWindow(object):
 "font: bold 16px;\n"
 "")
         self.pb_UserAccountSettings.setText("")
-        icon21 = QtGui.QIcon()
-        icon21.addPixmap(QtGui.QPixmap("WeighBridgeScreens/Button/user-acc.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.pb_UserAccountSettings.setIcon(icon21)
+        icon20 = QtGui.QIcon()
+        icon20.addPixmap(QtGui.QPixmap("WeighBridgeScreens/Button/user-acc.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pb_UserAccountSettings.setIcon(icon20)
         self.pb_UserAccountSettings.setIconSize(QtCore.QSize(167, 187))
         self.pb_UserAccountSettings.setObjectName("pb_UserAccountSettings")
         self.lb_SettingsBackGround = QtWidgets.QLabel(self.settingsMainPage)
@@ -1781,7 +1793,7 @@ class Ui_MainWindow(object):
         self.lb_SettingsBackGround.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.lb_SettingsBackGround.setObjectName("lb_SettingsBackGround")
         self.pb_settings_close = QtWidgets.QPushButton(self.settingsMainPage)
-        self.pb_settings_close.setGeometry(QtCore.QRect(820, 530, 181, 61))
+        self.pb_settings_close.setGeometry(QtCore.QRect(820, 520, 181, 61))
         self.pb_settings_close.setStyleSheet("\n"
 "boder-style: outset;\n"
 "border-wiidth: 2px;\n"
@@ -1790,7 +1802,7 @@ class Ui_MainWindow(object):
 "font: bold 16px;\n"
 "")
         self.pb_settings_close.setText("")
-        self.pb_settings_close.setIcon(icon11)
+        self.pb_settings_close.setIcon(icon10)
         self.pb_settings_close.setIconSize(QtCore.QSize(167, 187))
         self.pb_settings_close.setObjectName("pb_settings_close")
         self.lb_SettingsBackGround.raise_()
@@ -1877,7 +1889,7 @@ class Ui_MainWindow(object):
         self.lb_settings_PrinterCommPortDisplay.setText("")
         self.lb_settings_PrinterCommPortDisplay.setObjectName("lb_settings_PrinterCommPortDisplay")
         self.pb_settings_search = QtWidgets.QPushButton(self.CommPortSettings)
-        self.pb_settings_search.setGeometry(QtCore.QRect(390, 400, 181, 61))
+        self.pb_settings_search.setGeometry(QtCore.QRect(390, 400, 171, 61))
         self.pb_settings_search.setStyleSheet("\n"
 "boder-style: outset;\n"
 "border-wiidth: 2px;\n"
@@ -1886,9 +1898,9 @@ class Ui_MainWindow(object):
 "font: bold 16px;\n"
 "")
         self.pb_settings_search.setText("")
-        icon22 = QtGui.QIcon()
-        icon22.addPixmap(QtGui.QPixmap("WeighBridgeScreens/Button/search.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.pb_settings_search.setIcon(icon22)
+        icon21 = QtGui.QIcon()
+        icon21.addPixmap(QtGui.QPixmap("WeighBridgeScreens/Button/search.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pb_settings_search.setIcon(icon21)
         self.pb_settings_search.setIconSize(QtCore.QSize(184, 181))
         self.pb_settings_search.setObjectName("pb_settings_search")
         self.pb_settings_Comm_save = QtWidgets.QPushButton(self.CommPortSettings)
@@ -1901,7 +1913,7 @@ class Ui_MainWindow(object):
 "font: bold 16px;\n"
 "")
         self.pb_settings_Comm_save.setText("")
-        self.pb_settings_Comm_save.setIcon(icon9)
+        self.pb_settings_Comm_save.setIcon(icon8)
         self.pb_settings_Comm_save.setIconSize(QtCore.QSize(181, 181))
         self.pb_settings_Comm_save.setObjectName("pb_settings_Comm_save")
         self.lb_settings_CommPortDisplay = QtWidgets.QLabel(self.CommPortSettings)
@@ -1922,7 +1934,7 @@ class Ui_MainWindow(object):
 "font: bold 16px;\n"
 "")
         self.pb_settings_comport_close.setText("")
-        self.pb_settings_comport_close.setIcon(icon11)
+        self.pb_settings_comport_close.setIcon(icon10)
         self.pb_settings_comport_close.setIconSize(QtCore.QSize(181, 181))
         self.pb_settings_comport_close.setObjectName("pb_settings_comport_close")
         self.line = QtWidgets.QFrame(self.CommPortSettings)
@@ -2028,7 +2040,7 @@ class Ui_MainWindow(object):
 "font: bold 16px;\n"
 "")
         self.pb_settings_save_2.setText("")
-        self.pb_settings_save_2.setIcon(icon9)
+        self.pb_settings_save_2.setIcon(icon8)
         self.pb_settings_save_2.setIconSize(QtCore.QSize(181, 181))
         self.pb_settings_save_2.setObjectName("pb_settings_save_2")
         self.pb_settings_browse = QtWidgets.QPushButton(self.HeaderSettings)
@@ -2107,7 +2119,7 @@ class Ui_MainWindow(object):
 "font: bold 16px;\n"
 "")
         self.pb_settings_header_close.setText("")
-        self.pb_settings_header_close.setIcon(icon11)
+        self.pb_settings_header_close.setIcon(icon10)
         self.pb_settings_header_close.setIconSize(QtCore.QSize(181, 181))
         self.pb_settings_header_close.setObjectName("pb_settings_header_close")
         self.stackedWidgetSettings.addWidget(self.HeaderSettings)
@@ -2175,7 +2187,7 @@ class Ui_MainWindow(object):
 "border-color: black;\n"
 "font: bold 20px;")
         self.pb_settings_edit.setText("")
-        self.pb_settings_edit.setIcon(icon6)
+        self.pb_settings_edit.setIcon(icon5)
         self.pb_settings_edit.setIconSize(QtCore.QSize(181, 66))
         self.pb_settings_edit.setObjectName("pb_settings_edit")
         self.lb_settings_active = QtWidgets.QLabel(self.UserAccountSettings)
@@ -2229,7 +2241,7 @@ class Ui_MainWindow(object):
 "border-color: black;\n"
 "font: bold 20px;")
         self.pb_settings_save.setText("")
-        self.pb_settings_save.setIcon(icon9)
+        self.pb_settings_save.setIcon(icon8)
         self.pb_settings_save.setIconSize(QtCore.QSize(181, 66))
         self.pb_settings_save.setObjectName("pb_settings_save")
         self.le_settings_retypepassword = QtWidgets.QLineEdit(self.UserAccountSettings)
@@ -2250,7 +2262,7 @@ class Ui_MainWindow(object):
 "border-color: black;\n"
 "font: bold 20px;")
         self.pb_settings_cancel.setText("")
-        self.pb_settings_cancel.setIcon(icon10)
+        self.pb_settings_cancel.setIcon(icon9)
         self.pb_settings_cancel.setIconSize(QtCore.QSize(181, 66))
         self.pb_settings_cancel.setObjectName("pb_settings_cancel")
         self.le_settings_password = QtWidgets.QLineEdit(self.UserAccountSettings)
@@ -2342,7 +2354,7 @@ class Ui_MainWindow(object):
 "border-color: black;\n"
 "font: bold 20px;")
         self.pb_settings_UserSettings_close.setText("")
-        self.pb_settings_UserSettings_close.setIcon(icon11)
+        self.pb_settings_UserSettings_close.setIcon(icon10)
         self.pb_settings_UserSettings_close.setIconSize(QtCore.QSize(181, 66))
         self.pb_settings_UserSettings_close.setObjectName("pb_settings_UserSettings_close")
         self.stackedWidgetSettings.addWidget(self.UserAccountSettings)
@@ -2368,7 +2380,7 @@ class Ui_MainWindow(object):
         self.lb_VehicleEntry_weightDisplay = QtWidgets.QLabel(self.VehicleEntry)
         self.lb_VehicleEntry_weightDisplay.setGeometry(QtCore.QRect(650, 120, 261, 71))
         font = QtGui.QFont()
-        font.setPointSize(44)
+        font.setPointSize(27)
         self.lb_VehicleEntry_weightDisplay.setFont(font)
         self.lb_VehicleEntry_weightDisplay.setAutoFillBackground(False)
         self.lb_VehicleEntry_weightDisplay.setStyleSheet("background-color: rgb(255, 255, 255);\n"
@@ -2421,9 +2433,9 @@ class Ui_MainWindow(object):
 "border-radius: 8px;\n"
 "border-color: black;\n"
 "font: bold 16px;")
-        icon23 = QtGui.QIcon()
-        icon23.addPixmap(QtGui.QPixmap("WeighBridgeScreens/Button/gross-weight.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.pb_VehicleEntry_G_weight.setIcon(icon23)
+        icon22 = QtGui.QIcon()
+        icon22.addPixmap(QtGui.QPixmap("WeighBridgeScreens/Button/gross-weight.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pb_VehicleEntry_G_weight.setIcon(icon22)
         self.pb_VehicleEntry_G_weight.setIconSize(QtCore.QSize(101, 41))
         self.pb_VehicleEntry_G_weight.setObjectName("pb_VehicleEntry_G_weight")
         self.pb_VehicleEntry_T_Weight = QtWidgets.QPushButton(self.VehicleEntry)
@@ -2441,13 +2453,13 @@ class Ui_MainWindow(object):
 "border-color: black;\n"
 "font: bold 16px;")
         self.pb_VehicleEntry_T_Weight.setText("")
-        icon24 = QtGui.QIcon()
-        icon24.addPixmap(QtGui.QPixmap("WeighBridgeScreens/Button/tare-weight.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.pb_VehicleEntry_T_Weight.setIcon(icon24)
+        icon23 = QtGui.QIcon()
+        icon23.addPixmap(QtGui.QPixmap("WeighBridgeScreens/Button/tare-weight.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pb_VehicleEntry_T_Weight.setIcon(icon23)
         self.pb_VehicleEntry_T_Weight.setIconSize(QtCore.QSize(101, 41))
         self.pb_VehicleEntry_T_Weight.setObjectName("pb_VehicleEntry_T_Weight")
         self.pb_VehicleEntry_save = QtWidgets.QPushButton(self.VehicleEntry)
-        self.pb_VehicleEntry_save.setGeometry(QtCore.QRect(390, 500, 151, 51))
+        self.pb_VehicleEntry_save.setGeometry(QtCore.QRect(380, 511, 181, 61))
         font = QtGui.QFont()
         font.setPointSize(-1)
         font.setBold(True)
@@ -2462,11 +2474,11 @@ class Ui_MainWindow(object):
 "font: bold 16px;\n"
 "")
         self.pb_VehicleEntry_save.setText("")
-        self.pb_VehicleEntry_save.setIcon(icon9)
-        self.pb_VehicleEntry_save.setIconSize(QtCore.QSize(137, 100))
+        self.pb_VehicleEntry_save.setIcon(icon8)
+        self.pb_VehicleEntry_save.setIconSize(QtCore.QSize(170, 100))
         self.pb_VehicleEntry_save.setObjectName("pb_VehicleEntry_save")
         self.pb_VehicleEntry_cancel = QtWidgets.QPushButton(self.VehicleEntry)
-        self.pb_VehicleEntry_cancel.setGeometry(QtCore.QRect(570, 500, 151, 51))
+        self.pb_VehicleEntry_cancel.setGeometry(QtCore.QRect(580, 511, 181, 61))
         font = QtGui.QFont()
         font.setPointSize(-1)
         font.setBold(True)
@@ -2481,11 +2493,11 @@ class Ui_MainWindow(object):
 "font: bold 16px;\n"
 "")
         self.pb_VehicleEntry_cancel.setText("")
-        self.pb_VehicleEntry_cancel.setIcon(icon10)
-        self.pb_VehicleEntry_cancel.setIconSize(QtCore.QSize(137, 100))
+        self.pb_VehicleEntry_cancel.setIcon(icon9)
+        self.pb_VehicleEntry_cancel.setIconSize(QtCore.QSize(170, 100))
         self.pb_VehicleEntry_cancel.setObjectName("pb_VehicleEntry_cancel")
         self.pb_VehicleEntry_close = QtWidgets.QPushButton(self.VehicleEntry)
-        self.pb_VehicleEntry_close.setGeometry(QtCore.QRect(750, 500, 151, 51))
+        self.pb_VehicleEntry_close.setGeometry(QtCore.QRect(790, 511, 171, 61))
         font = QtGui.QFont()
         font.setPointSize(-1)
         font.setBold(True)
@@ -2500,11 +2512,11 @@ class Ui_MainWindow(object):
 "font: bold 16px;\n"
 "")
         self.pb_VehicleEntry_close.setText("")
-        self.pb_VehicleEntry_close.setIcon(icon11)
-        self.pb_VehicleEntry_close.setIconSize(QtCore.QSize(137, 100))
+        self.pb_VehicleEntry_close.setIcon(icon10)
+        self.pb_VehicleEntry_close.setIconSize(QtCore.QSize(170, 100))
         self.pb_VehicleEntry_close.setObjectName("pb_VehicleEntry_close")
         self.pb_VehicleEntry_entry = QtWidgets.QPushButton(self.VehicleEntry)
-        self.pb_VehicleEntry_entry.setGeometry(QtCore.QRect(220, 500, 151, 51))
+        self.pb_VehicleEntry_entry.setGeometry(QtCore.QRect(180, 511, 181, 61))
         font = QtGui.QFont()
         font.setPointSize(-1)
         font.setBold(True)
@@ -2519,13 +2531,13 @@ class Ui_MainWindow(object):
 "font: bold 16px;\n"
 "")
         self.pb_VehicleEntry_entry.setText("")
-        icon25 = QtGui.QIcon()
-        icon25.addPixmap(QtGui.QPixmap("WeighBridgeScreens/Button/entry.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.pb_VehicleEntry_entry.setIcon(icon25)
-        self.pb_VehicleEntry_entry.setIconSize(QtCore.QSize(137, 100))
+        icon24 = QtGui.QIcon()
+        icon24.addPixmap(QtGui.QPixmap("WeighBridgeScreens/Button/entry.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pb_VehicleEntry_entry.setIcon(icon24)
+        self.pb_VehicleEntry_entry.setIconSize(QtCore.QSize(170, 100))
         self.pb_VehicleEntry_entry.setObjectName("pb_VehicleEntry_entry")
         self.cb_VehicleEntry_print = QtWidgets.QCheckBox(self.VehicleEntry)
-        self.cb_VehicleEntry_print.setGeometry(QtCore.QRect(60, 520, 131, 20))
+        self.cb_VehicleEntry_print.setGeometry(QtCore.QRect(30, 520, 131, 20))
         font = QtGui.QFont()
         font.setPointSize(10)
         font.setBold(True)
@@ -2708,7 +2720,7 @@ class Ui_MainWindow(object):
         self.lb_VehicleReEntry_weightDisplay_3 = QtWidgets.QLabel(self.VehicleExit)
         self.lb_VehicleReEntry_weightDisplay_3.setGeometry(QtCore.QRect(650, 120, 261, 71))
         font = QtGui.QFont()
-        font.setPointSize(44)
+        font.setPointSize(28)
         self.lb_VehicleReEntry_weightDisplay_3.setFont(font)
         self.lb_VehicleReEntry_weightDisplay_3.setAutoFillBackground(False)
         self.lb_VehicleReEntry_weightDisplay_3.setStyleSheet("background-color: rgb(255, 255, 255);\n"
@@ -2742,7 +2754,7 @@ class Ui_MainWindow(object):
 "font: bold 16px;\n"
 "")
         self.pb_VehicleReEntry_T_Weight_3.setText("")
-        self.pb_VehicleReEntry_T_Weight_3.setIcon(icon24)
+        self.pb_VehicleReEntry_T_Weight_3.setIcon(icon23)
         self.pb_VehicleReEntry_T_Weight_3.setIconSize(QtCore.QSize(97, 41))
         self.pb_VehicleReEntry_T_Weight_3.setObjectName("pb_VehicleReEntry_T_Weight_3")
         self.lb_VehicleReEntry_amount_3 = QtWidgets.QLabel(self.VehicleExit)
@@ -2766,7 +2778,7 @@ class Ui_MainWindow(object):
 "border-color: black;\n"
 "font: bold 16px;")
         self.pb_VehicleReEntry_G_weight_3.setText("")
-        self.pb_VehicleReEntry_G_weight_3.setIcon(icon23)
+        self.pb_VehicleReEntry_G_weight_3.setIcon(icon22)
         self.pb_VehicleReEntry_G_weight_3.setIconSize(QtCore.QSize(97, 41))
         self.pb_VehicleReEntry_G_weight_3.setObjectName("pb_VehicleReEntry_G_weight_3")
         self.lb_VehicleReEntry_grossDateTime_3 = QtWidgets.QLabel(self.VehicleExit)
@@ -2791,11 +2803,11 @@ class Ui_MainWindow(object):
 "border-radius: 12px;\n"
 "border-color: black;")
         self.pb_VehicleReEntry_serialNoSearch_3.setText("")
-        self.pb_VehicleReEntry_serialNoSearch_3.setIcon(icon22)
+        self.pb_VehicleReEntry_serialNoSearch_3.setIcon(icon21)
         self.pb_VehicleReEntry_serialNoSearch_3.setIconSize(QtCore.QSize(180, 30))
         self.pb_VehicleReEntry_serialNoSearch_3.setObjectName("pb_VehicleReEntry_serialNoSearch_3")
         self.pb_VehicleReEntry_close_3 = QtWidgets.QPushButton(self.VehicleExit)
-        self.pb_VehicleReEntry_close_3.setGeometry(QtCore.QRect(800, 510, 151, 51))
+        self.pb_VehicleReEntry_close_3.setGeometry(QtCore.QRect(800, 510, 171, 61))
         font = QtGui.QFont()
         font.setPointSize(-1)
         font.setBold(True)
@@ -2809,8 +2821,8 @@ class Ui_MainWindow(object):
 "font: bold 16px;\n"
 "")
         self.pb_VehicleReEntry_close_3.setText("")
-        self.pb_VehicleReEntry_close_3.setIcon(icon11)
-        self.pb_VehicleReEntry_close_3.setIconSize(QtCore.QSize(137, 100))
+        self.pb_VehicleReEntry_close_3.setIcon(icon10)
+        self.pb_VehicleReEntry_close_3.setIconSize(QtCore.QSize(170, 100))
         self.pb_VehicleReEntry_close_3.setObjectName("pb_VehicleReEntry_close_3")
         self.cb_VehicleReEntry_Print = QtWidgets.QCheckBox(self.VehicleExit)
         self.cb_VehicleReEntry_Print.setGeometry(QtCore.QRect(30, 520, 131, 20))
@@ -2822,7 +2834,7 @@ class Ui_MainWindow(object):
         self.cb_VehicleReEntry_Print.setStyleSheet("color: rgb(71, 98, 186);")
         self.cb_VehicleReEntry_Print.setObjectName("cb_VehicleReEntry_Print")
         self.pb_VehicleReEntry_save_2 = QtWidgets.QPushButton(self.VehicleExit)
-        self.pb_VehicleReEntry_save_2.setGeometry(QtCore.QRect(400, 510, 151, 51))
+        self.pb_VehicleReEntry_save_2.setGeometry(QtCore.QRect(400, 510, 171, 61))
         font = QtGui.QFont()
         font.setPointSize(-1)
         font.setBold(True)
@@ -2837,11 +2849,11 @@ class Ui_MainWindow(object):
 "font: bold 16px;\n"
 "")
         self.pb_VehicleReEntry_save_2.setText("")
-        self.pb_VehicleReEntry_save_2.setIcon(icon9)
-        self.pb_VehicleReEntry_save_2.setIconSize(QtCore.QSize(137, 100))
+        self.pb_VehicleReEntry_save_2.setIcon(icon8)
+        self.pb_VehicleReEntry_save_2.setIconSize(QtCore.QSize(170, 100))
         self.pb_VehicleReEntry_save_2.setObjectName("pb_VehicleReEntry_save_2")
         self.pb_VehicleReEntry_cancel_2 = QtWidgets.QPushButton(self.VehicleExit)
-        self.pb_VehicleReEntry_cancel_2.setGeometry(QtCore.QRect(600, 510, 151, 51))
+        self.pb_VehicleReEntry_cancel_2.setGeometry(QtCore.QRect(600, 510, 171, 61))
         font = QtGui.QFont()
         font.setPointSize(-1)
         font.setBold(True)
@@ -2856,8 +2868,8 @@ class Ui_MainWindow(object):
 "font: bold 16px;\n"
 "")
         self.pb_VehicleReEntry_cancel_2.setText("")
-        self.pb_VehicleReEntry_cancel_2.setIcon(icon10)
-        self.pb_VehicleReEntry_cancel_2.setIconSize(QtCore.QSize(137, 100))
+        self.pb_VehicleReEntry_cancel_2.setIcon(icon9)
+        self.pb_VehicleReEntry_cancel_2.setIconSize(QtCore.QSize(170, 100))
         self.pb_VehicleReEntry_cancel_2.setObjectName("pb_VehicleReEntry_cancel_2")
         self.combo_VehicleReEntry_code4_moistureValue = QtWidgets.QComboBox(self.VehicleExit)
         self.combo_VehicleReEntry_code4_moistureValue.setGeometry(QtCore.QRect(689, 330, 181, 22))
@@ -2928,7 +2940,7 @@ class Ui_MainWindow(object):
 "border-radius: 12px;\n"
 "border-color: black;")
         self.pb_VehicleReEntry_vehicleSearch_3.setText("")
-        self.pb_VehicleReEntry_vehicleSearch_3.setIcon(icon22)
+        self.pb_VehicleReEntry_vehicleSearch_3.setIcon(icon21)
         self.pb_VehicleReEntry_vehicleSearch_3.setIconSize(QtCore.QSize(183, 30))
         self.pb_VehicleReEntry_vehicleSearch_3.setObjectName("pb_VehicleReEntry_vehicleSearch_3")
         self.combo_VehicleReEntry_vehicle = QtWidgets.QComboBox(self.VehicleExit)
@@ -2971,7 +2983,7 @@ class Ui_MainWindow(object):
         self.le_VehicleReEntry_serialNumber_3.setGeometry(QtCore.QRect(260, 90, 181, 22))
         self.le_VehicleReEntry_serialNumber_3.setObjectName("le_VehicleReEntry_serialNumber_3")
         self.pb_VehicleReEntry_entry_2 = QtWidgets.QPushButton(self.VehicleExit)
-        self.pb_VehicleReEntry_entry_2.setGeometry(QtCore.QRect(200, 510, 151, 51))
+        self.pb_VehicleReEntry_entry_2.setGeometry(QtCore.QRect(198, 510, 171, 61))
         font = QtGui.QFont()
         font.setPointSize(-1)
         font.setBold(True)
@@ -2986,10 +2998,10 @@ class Ui_MainWindow(object):
 "font: bold 16px;\n"
 "")
         self.pb_VehicleReEntry_entry_2.setText("")
-        icon26 = QtGui.QIcon()
-        icon26.addPixmap(QtGui.QPixmap("WeighBridgeScreens/Button/entry-01.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.pb_VehicleReEntry_entry_2.setIcon(icon26)
-        self.pb_VehicleReEntry_entry_2.setIconSize(QtCore.QSize(137, 100))
+        icon25 = QtGui.QIcon()
+        icon25.addPixmap(QtGui.QPixmap("WeighBridgeScreens/Button/entry-01.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pb_VehicleReEntry_entry_2.setIcon(icon25)
+        self.pb_VehicleReEntry_entry_2.setIconSize(QtCore.QSize(170, 100))
         self.pb_VehicleReEntry_entry_2.setObjectName("pb_VehicleReEntry_entry_2")
         self.le_VehicleReEntry_tareTime_2 = QtWidgets.QLineEdit(self.VehicleExit)
         self.le_VehicleReEntry_tareTime_2.setGeometry(QtCore.QRect(789, 410, 81, 22))
@@ -3019,9 +3031,9 @@ class Ui_MainWindow(object):
 "font: bold 16px;\n"
 "")
         self.pb_VehicleReEntry_N_weight_3.setText("")
-        icon27 = QtGui.QIcon()
-        icon27.addPixmap(QtGui.QPixmap("WeighBridgeScreens/Button/net-weight.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.pb_VehicleReEntry_N_weight_3.setIcon(icon27)
+        icon26 = QtGui.QIcon()
+        icon26.addPixmap(QtGui.QPixmap("WeighBridgeScreens/Button/net-weight.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pb_VehicleReEntry_N_weight_3.setIcon(icon26)
         self.pb_VehicleReEntry_N_weight_3.setIconSize(QtCore.QSize(97, 41))
         self.pb_VehicleReEntry_N_weight_3.setObjectName("pb_VehicleReEntry_N_weight_3")
         self.lb_VehicleReEntry_netWeight_3 = QtWidgets.QLabel(self.VehicleExit)
@@ -3082,12 +3094,229 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
-        self.stackedWidgetMain.setCurrentIndex(0)
+        self.stackedWidgetMain.setCurrentIndex(4)
         self.stackedWidgetParameterSettings.setCurrentIndex(0)
-        self.tabWidget_parameter_code.setCurrentIndex(0)
-        self.tabWidget_parameter_header.setCurrentIndex(0)
-        self.stackedWidgetSettings.setCurrentIndex(0)
+        self.tabWidget_parameter_code.setCurrentIndex(1)
+        self.tabWidget_parameter_header.setCurrentIndex(1)
+        self.stackedWidgetSettings.setCurrentIndex(3)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
+        MainWindow.setTabOrder(self.le_VehicleEntry_serialNumber, self.le_VehicleEntry_header1_vehicle)
+        MainWindow.setTabOrder(self.le_VehicleEntry_header1_vehicle, self.le_VehicleEntry_header2_supervisorName)
+        MainWindow.setTabOrder(self.le_VehicleEntry_header2_supervisorName, self.le_VehicleEntry_header3_count)
+        MainWindow.setTabOrder(self.le_VehicleEntry_header3_count, self.le_VehicleEntry_header4_msezDeliverNo)
+        MainWindow.setTabOrder(self.le_VehicleEntry_header4_msezDeliverNo, self.le_VehicleEntry_header5_supplierChalanNo)
+        MainWindow.setTabOrder(self.le_VehicleEntry_header5_supplierChalanNo, self.combo_VehicleEntry_code1_materia)
+        MainWindow.setTabOrder(self.combo_VehicleEntry_code1_materia, self.le_VehicleEntry_grossWeight)
+        MainWindow.setTabOrder(self.le_VehicleEntry_grossWeight, self.le_VehicleEntry_tareWeight)
+        MainWindow.setTabOrder(self.le_VehicleEntry_tareWeight, self.le_VehicleEntry_netWeight)
+        MainWindow.setTabOrder(self.le_VehicleEntry_netWeight, self.combo_VehicleEntry_code2_agentName)
+        MainWindow.setTabOrder(self.combo_VehicleEntry_code2_agentName, self.combo_VehicleEntry_code3_placeOfLoading)
+        MainWindow.setTabOrder(self.combo_VehicleEntry_code3_placeOfLoading, self.combo_VehicleEntry_code4_moisturevalue)
+        MainWindow.setTabOrder(self.combo_VehicleEntry_code4_moisturevalue, self.combo_VehicleEntry_code5_size)
+        MainWindow.setTabOrder(self.combo_VehicleEntry_code5_size, self.le_VehicleEntry_grossDate)
+        MainWindow.setTabOrder(self.le_VehicleEntry_grossDate, self.le_VehicleEntry_grossTime)
+        MainWindow.setTabOrder(self.le_VehicleEntry_grossTime, self.le_VehicleEntry_tareDate)
+        MainWindow.setTabOrder(self.le_VehicleEntry_tareDate, self.le_VehicleEntry_tareTime)
+        MainWindow.setTabOrder(self.le_VehicleEntry_tareTime, self.le_VehicleEntry_amount)
+        MainWindow.setTabOrder(self.le_VehicleEntry_amount, self.pb_VehicleEntry_G_weight)
+        MainWindow.setTabOrder(self.pb_VehicleEntry_G_weight, self.pb_VehicleEntry_T_Weight)
+        MainWindow.setTabOrder(self.pb_VehicleEntry_T_Weight, self.cb_VehicleEntry_print)
+        MainWindow.setTabOrder(self.cb_VehicleEntry_print, self.pb_VehicleEntry_entry)
+        MainWindow.setTabOrder(self.pb_VehicleEntry_entry, self.pb_VehicleEntry_save)
+        MainWindow.setTabOrder(self.pb_VehicleEntry_save, self.pb_VehicleEntry_cancel)
+        MainWindow.setTabOrder(self.pb_VehicleEntry_cancel, self.pb_VehicleEntry_close)
+        MainWindow.setTabOrder(self.pb_VehicleEntry_close, self.le_VehicleReEntry_serialNumber_3)
+        MainWindow.setTabOrder(self.le_VehicleReEntry_serialNumber_3, self.combo_VehicleReEntry_vehicle)
+        MainWindow.setTabOrder(self.combo_VehicleReEntry_vehicle, self.le_VehicleReEntry_header2_supervisorName_3)
+        MainWindow.setTabOrder(self.le_VehicleReEntry_header2_supervisorName_3, self.le_VehicleReEntry_header3_count_3)
+        MainWindow.setTabOrder(self.le_VehicleReEntry_header3_count_3, self.le_VehicleReEntry_header4_msezDeliverNo_3)
+        MainWindow.setTabOrder(self.le_VehicleReEntry_header4_msezDeliverNo_3, self.le_VehicleReEntry_header5_supplierChalanNo_3)
+        MainWindow.setTabOrder(self.le_VehicleReEntry_header5_supplierChalanNo_3, self.combo_VehicleReEntry_code1_materia_3)
+        MainWindow.setTabOrder(self.combo_VehicleReEntry_code1_materia_3, self.le_VehicleReEntry_grossWeight_3)
+        MainWindow.setTabOrder(self.le_VehicleReEntry_grossWeight_3, self.le_VehicleReEntry_tareWeight_3)
+        MainWindow.setTabOrder(self.le_VehicleReEntry_tareWeight_3, self.le_VehicleReEntry_netWeight_3)
+        MainWindow.setTabOrder(self.le_VehicleReEntry_netWeight_3, self.combo_VehicleReEntry_code2_agentName_3)
+        MainWindow.setTabOrder(self.combo_VehicleReEntry_code2_agentName_3, self.combo_VehicleReEntry_code3_placeOfLoading_3)
+        MainWindow.setTabOrder(self.combo_VehicleReEntry_code3_placeOfLoading_3, self.combo_VehicleReEntry_code5_size)
+        MainWindow.setTabOrder(self.combo_VehicleReEntry_code5_size, self.combo_VehicleReEntry_code4_moistureValue)
+        MainWindow.setTabOrder(self.combo_VehicleReEntry_code4_moistureValue, self.le_VehicleReEntry_grossDate_2)
+        MainWindow.setTabOrder(self.le_VehicleReEntry_grossDate_2, self.le_VehicleReEntry_grossTime_2)
+        MainWindow.setTabOrder(self.le_VehicleReEntry_grossTime_2, self.le_VehicleReEntry_tareDate_2)
+        MainWindow.setTabOrder(self.le_VehicleReEntry_tareDate_2, self.le_VehicleReEntry_tareTime_2)
+        MainWindow.setTabOrder(self.le_VehicleReEntry_tareTime_2, self.le_VehicleReEntry_amount_3)
+        MainWindow.setTabOrder(self.le_VehicleReEntry_amount_3, self.pb_VehicleReEntry_G_weight_3)
+        MainWindow.setTabOrder(self.pb_VehicleReEntry_G_weight_3, self.pb_VehicleReEntry_T_Weight_3)
+        MainWindow.setTabOrder(self.pb_VehicleReEntry_T_Weight_3, self.pb_VehicleReEntry_N_weight_3)
+        MainWindow.setTabOrder(self.pb_VehicleReEntry_N_weight_3, self.cb_VehicleReEntry_Print)
+        MainWindow.setTabOrder(self.cb_VehicleReEntry_Print, self.pb_VehicleReEntry_entry_2)
+        MainWindow.setTabOrder(self.pb_VehicleReEntry_entry_2, self.pb_VehicleReEntry_save_2)
+        MainWindow.setTabOrder(self.pb_VehicleReEntry_save_2, self.pb_VehicleReEntry_cancel_2)
+        MainWindow.setTabOrder(self.pb_VehicleReEntry_cancel_2, self.pb_VehicleReEntry_close_3)
+        MainWindow.setTabOrder(self.pb_VehicleReEntry_close_3, self.pb_home_tare)
+        MainWindow.setTabOrder(self.pb_home_tare, self.cb_virtualKeyBoard)
+        MainWindow.setTabOrder(self.cb_virtualKeyBoard, self.tw_Home_Entry)
+        MainWindow.setTabOrder(self.tw_Home_Entry, self.pb_home_VehicleEntry)
+        MainWindow.setTabOrder(self.pb_home_VehicleEntry, self.pb_home_VehicleReEntry)
+        MainWindow.setTabOrder(self.pb_home_VehicleReEntry, self.pb_home_Settings)
+        MainWindow.setTabOrder(self.pb_home_Settings, self.pb_home_ParameterSettings)
+        MainWindow.setTabOrder(self.pb_home_ParameterSettings, self.pb_home_report)
+        MainWindow.setTabOrder(self.pb_home_report, self.le_parameterMain_Code1)
+        MainWindow.setTabOrder(self.le_parameterMain_Code1, self.le_parameterMain_Code2)
+        MainWindow.setTabOrder(self.le_parameterMain_Code2, self.le_parameterMain_Code3)
+        MainWindow.setTabOrder(self.le_parameterMain_Code3, self.le_parameterMain_Code4)
+        MainWindow.setTabOrder(self.le_parameterMain_Code4, self.le_parameterMain_Code5)
+        MainWindow.setTabOrder(self.le_parameterMain_Code5, self.le_parameterMain_Header1)
+        MainWindow.setTabOrder(self.le_parameterMain_Header1, self.le_parameterMain_Header2)
+        MainWindow.setTabOrder(self.le_parameterMain_Header2, self.le_parameterMain_Header3)
+        MainWindow.setTabOrder(self.le_parameterMain_Header3, self.le_parameterMain_Header4)
+        MainWindow.setTabOrder(self.le_parameterMain_Header4, self.le_parameterMain_Header5)
+        MainWindow.setTabOrder(self.le_parameterMain_Header5, self.tabWidget_parameter_code)
+        MainWindow.setTabOrder(self.tabWidget_parameter_code, self.calendarWidget_montly_from)
+        MainWindow.setTabOrder(self.calendarWidget_montly_from, self.cb_parameter_VehicleEntry_Code2)
+        MainWindow.setTabOrder(self.cb_parameter_VehicleEntry_Code2, self.calendarWidget_monthly_to)
+        MainWindow.setTabOrder(self.calendarWidget_monthly_to, self.cb_parameter_VehicleEntry_Code3)
+        MainWindow.setTabOrder(self.cb_parameter_VehicleEntry_Code3, self.cb_parameter_VehicleEntry_Code4)
+        MainWindow.setTabOrder(self.cb_parameter_VehicleEntry_Code4, self.cb_parameter_VehicleEntry_Code5)
+        MainWindow.setTabOrder(self.cb_parameter_VehicleEntry_Code5, self.tabWidget_parameter_header)
+        MainWindow.setTabOrder(self.tabWidget_parameter_header, self.cb_parameter_VehicleEntry_header2)
+        MainWindow.setTabOrder(self.cb_parameter_VehicleEntry_header2, self.cb_parameter_VehicleEntry_header3)
+        MainWindow.setTabOrder(self.cb_parameter_VehicleEntry_header3, self.cb_parameter_VehicleEntry_header4)
+        MainWindow.setTabOrder(self.cb_parameter_VehicleEntry_header4, self.cb_parameter_VehicleEntry_header5)
+        MainWindow.setTabOrder(self.cb_parameter_VehicleEntry_header5, self.cb_parameter_VehicleExit_Code2)
+        MainWindow.setTabOrder(self.cb_parameter_VehicleExit_Code2, self.cb_parameter_VehicleExit_Code3)
+        MainWindow.setTabOrder(self.cb_parameter_VehicleExit_Code3, self.cb_parameter_VehicleExit_Code4)
+        MainWindow.setTabOrder(self.cb_parameter_VehicleExit_Code4, self.cb_parameter_VehicleExit_Code5)
+        MainWindow.setTabOrder(self.cb_parameter_VehicleExit_Code5, self.cb_parameter_VehicleExit_header2)
+        MainWindow.setTabOrder(self.cb_parameter_VehicleExit_header2, self.cb_parameter_VehicleExit_header3)
+        MainWindow.setTabOrder(self.cb_parameter_VehicleExit_header3, self.cb_parameter_VehicleExit_header4)
+        MainWindow.setTabOrder(self.cb_parameter_VehicleExit_header4, self.cb_parameter_VehicleExit_header5)
+        MainWindow.setTabOrder(self.cb_parameter_VehicleExit_header5, self.pb_parameter_Code1Details)
+        MainWindow.setTabOrder(self.pb_parameter_Code1Details, self.pb_parameter_Code2Details)
+        MainWindow.setTabOrder(self.pb_parameter_Code2Details, self.pb_parameter_Code3Details)
+        MainWindow.setTabOrder(self.pb_parameter_Code3Details, self.pb_parameter_Code4Details)
+        MainWindow.setTabOrder(self.pb_parameter_Code4Details, self.pb_parameter_Code5Details)
+        MainWindow.setTabOrder(self.pb_parameter_Code5Details, self.cb_parameter_Amount)
+        MainWindow.setTabOrder(self.cb_parameter_Amount, self.cb_parameter_DateTime)
+        MainWindow.setTabOrder(self.cb_parameter_DateTime, self.cb_parameter_GunnyBag)
+        MainWindow.setTabOrder(self.cb_parameter_GunnyBag, self.rb_parameter_kg)
+        MainWindow.setTabOrder(self.rb_parameter_kg, self.rb_parameter_Tonne)
+        MainWindow.setTabOrder(self.rb_parameter_Tonne, self.le_parameter_code_1)
+        MainWindow.setTabOrder(self.le_parameter_code_1, self.le_parameter_name_1)
+        MainWindow.setTabOrder(self.le_parameter_name_1, self.pb_parameter_create_1)
+        MainWindow.setTabOrder(self.pb_parameter_create_1, self.pb_parameter_delete_1)
+        MainWindow.setTabOrder(self.pb_parameter_delete_1, self.pb_parameter_edit_1)
+        MainWindow.setTabOrder(self.pb_parameter_edit_1, self.pb_parameter_save_1)
+        MainWindow.setTabOrder(self.pb_parameter_save_1, self.pb_parameter_cancel_1)
+        MainWindow.setTabOrder(self.pb_parameter_cancel_1, self.pb_parameter_add)
+        MainWindow.setTabOrder(self.pb_parameter_add, self.pb_parameter_print_1)
+        MainWindow.setTabOrder(self.pb_parameter_print_1, self.pb_parameter_close_1)
+        MainWindow.setTabOrder(self.pb_parameter_close_1, self.tableWidget_1)
+        MainWindow.setTabOrder(self.tableWidget_1, self.pb_Parameter_Edit)
+        MainWindow.setTabOrder(self.pb_Parameter_Edit, self.pb_Parameter_Save)
+        MainWindow.setTabOrder(self.pb_Parameter_Save, self.pb_Parameter_Cancel)
+        MainWindow.setTabOrder(self.pb_Parameter_Cancel, self.pb_Parameter_Close)
+        MainWindow.setTabOrder(self.pb_Parameter_Close, self.le_parameter_code_3)
+        MainWindow.setTabOrder(self.le_parameter_code_3, self.le_parameter_name_3)
+        MainWindow.setTabOrder(self.le_parameter_name_3, self.pb_parameter_create_3)
+        MainWindow.setTabOrder(self.pb_parameter_create_3, self.pb_parameter_delete_3)
+        MainWindow.setTabOrder(self.pb_parameter_delete_3, self.pb_parameter_edit_3)
+        MainWindow.setTabOrder(self.pb_parameter_edit_3, self.pb_parameter_save_3)
+        MainWindow.setTabOrder(self.pb_parameter_save_3, self.pb_parameter_cancel_3)
+        MainWindow.setTabOrder(self.pb_parameter_cancel_3, self.pb_parameter_add_3)
+        MainWindow.setTabOrder(self.pb_parameter_add_3, self.pb_parameter_print_3)
+        MainWindow.setTabOrder(self.pb_parameter_print_3, self.pb_parameter_close_3)
+        MainWindow.setTabOrder(self.pb_parameter_close_3, self.tableWidget_3)
+        MainWindow.setTabOrder(self.tableWidget_3, self.le_parameter_code_4)
+        MainWindow.setTabOrder(self.le_parameter_code_4, self.le_parameter_name_4)
+        MainWindow.setTabOrder(self.le_parameter_name_4, self.pb_parameter_create_4)
+        MainWindow.setTabOrder(self.pb_parameter_create_4, self.pb_parameter_delete_4)
+        MainWindow.setTabOrder(self.pb_parameter_delete_4, self.pb_parameter_edit_4)
+        MainWindow.setTabOrder(self.pb_parameter_edit_4, self.pb_parameter_save_4)
+        MainWindow.setTabOrder(self.pb_parameter_save_4, self.pb_parameter_cancel_4)
+        MainWindow.setTabOrder(self.pb_parameter_cancel_4, self.pb_parameter_add_4)
+        MainWindow.setTabOrder(self.pb_parameter_add_4, self.pb_parameter_print_4)
+        MainWindow.setTabOrder(self.pb_parameter_print_4, self.pb_parameter_close_4)
+        MainWindow.setTabOrder(self.pb_parameter_close_4, self.tableWidget_4)
+        MainWindow.setTabOrder(self.tableWidget_4, self.le_parameter_code_5)
+        MainWindow.setTabOrder(self.le_parameter_code_5, self.le_parameter_name_5)
+        MainWindow.setTabOrder(self.le_parameter_name_5, self.pb_parameter_create_5)
+        MainWindow.setTabOrder(self.pb_parameter_create_5, self.pb_parameter_delete_5)
+        MainWindow.setTabOrder(self.pb_parameter_delete_5, self.pb_parameter_edit_5)
+        MainWindow.setTabOrder(self.pb_parameter_edit_5, self.pb_parameter_save_5)
+        MainWindow.setTabOrder(self.pb_parameter_save_5, self.pb_parameter_cancel_5)
+        MainWindow.setTabOrder(self.pb_parameter_cancel_5, self.pb_parameter_add_5)
+        MainWindow.setTabOrder(self.pb_parameter_add_5, self.pb_parameter_print_5)
+        MainWindow.setTabOrder(self.pb_parameter_print_5, self.pb_parameter_close_5)
+        MainWindow.setTabOrder(self.pb_parameter_close_5, self.tableWidget_5)
+        MainWindow.setTabOrder(self.tableWidget_5, self.le_parameter_code_6)
+        MainWindow.setTabOrder(self.le_parameter_code_6, self.le_parameter_name_6)
+        MainWindow.setTabOrder(self.le_parameter_name_6, self.pb_parameter_create_6)
+        MainWindow.setTabOrder(self.pb_parameter_create_6, self.pb_parameter_delete_6)
+        MainWindow.setTabOrder(self.pb_parameter_delete_6, self.pb_parameter_edit_6)
+        MainWindow.setTabOrder(self.pb_parameter_edit_6, self.pb_parameter_save_6)
+        MainWindow.setTabOrder(self.pb_parameter_save_6, self.pb_parameter_cancel_6)
+        MainWindow.setTabOrder(self.pb_parameter_cancel_6, self.pb_parameter_add_6)
+        MainWindow.setTabOrder(self.pb_parameter_add_6, self.pb_parameter_print_6)
+        MainWindow.setTabOrder(self.pb_parameter_print_6, self.pb_parameter_close_6)
+        MainWindow.setTabOrder(self.pb_parameter_close_6, self.tableWidget_6)
+        MainWindow.setTabOrder(self.tableWidget_6, self.pb_report_OverallReport)
+        MainWindow.setTabOrder(self.pb_report_OverallReport, self.combo_report_Header)
+        MainWindow.setTabOrder(self.combo_report_Header, self.pb_report_HeaderOk)
+        MainWindow.setTabOrder(self.pb_report_HeaderOk, self.combo_report_Code)
+        MainWindow.setTabOrder(self.combo_report_Code, self.pb_report_CodeOk)
+        MainWindow.setTabOrder(self.pb_report_CodeOk, self.pb_Report_DailyReport)
+        MainWindow.setTabOrder(self.pb_Report_DailyReport, self.pb_report_calendar)
+        MainWindow.setTabOrder(self.pb_report_calendar, self.pb_report_dailyReportDateGo)
+        MainWindow.setTabOrder(self.pb_report_dailyReportDateGo, self.combo_report_selection)
+        MainWindow.setTabOrder(self.combo_report_selection, self.pb_Report_MonthlyReport)
+        MainWindow.setTabOrder(self.pb_Report_MonthlyReport, self.pb_report_fromcalendar)
+        MainWindow.setTabOrder(self.pb_report_fromcalendar, self.pb_report_tocalendar)
+        MainWindow.setTabOrder(self.pb_report_tocalendar, self.pb_report_monthlyReportDateGo)
+        MainWindow.setTabOrder(self.pb_report_monthlyReportDateGo, self.calendarWidget_daily)
+        MainWindow.setTabOrder(self.calendarWidget_daily, self.report_tableWidget)
+        MainWindow.setTabOrder(self.report_tableWidget, self.pb_report_pdf)
+        MainWindow.setTabOrder(self.pb_report_pdf, self.pb_report_excel)
+        MainWindow.setTabOrder(self.pb_report_excel, self.pb_report_print)
+        MainWindow.setTabOrder(self.pb_report_print, self.pb_report_close)
+        MainWindow.setTabOrder(self.pb_report_close, self.pb_CommPortSettings)
+        MainWindow.setTabOrder(self.pb_CommPortSettings, self.pb_UserAccountSettings)
+        MainWindow.setTabOrder(self.pb_UserAccountSettings, self.pb_settings_close)
+        MainWindow.setTabOrder(self.pb_settings_close, self.combo_settings_BaudRate)
+        MainWindow.setTabOrder(self.combo_settings_BaudRate, self.combo_settings_Controller)
+        MainWindow.setTabOrder(self.combo_settings_Controller, self.combo_settings_PrinterBaudRate)
+        MainWindow.setTabOrder(self.combo_settings_PrinterBaudRate, self.combo_settings_PrinterType)
+        MainWindow.setTabOrder(self.combo_settings_PrinterType, self.pb_settings_search)
+        MainWindow.setTabOrder(self.pb_settings_search, self.pb_settings_Comm_save)
+        MainWindow.setTabOrder(self.pb_settings_Comm_save, self.pb_settings_comport_close)
+        MainWindow.setTabOrder(self.pb_settings_comport_close, self.le_settings_title1)
+        MainWindow.setTabOrder(self.le_settings_title1, self.le_settings_title2)
+        MainWindow.setTabOrder(self.le_settings_title2, self.le_settings_title3)
+        MainWindow.setTabOrder(self.le_settings_title3, self.pb_settings_edit_2)
+        MainWindow.setTabOrder(self.pb_settings_edit_2, self.pb_settings_cancel_2)
+        MainWindow.setTabOrder(self.pb_settings_cancel_2, self.le_settings_browse)
+        MainWindow.setTabOrder(self.le_settings_browse, self.pb_settings_browse)
+        MainWindow.setTabOrder(self.pb_settings_browse, self.pb_settings_save_2)
+        MainWindow.setTabOrder(self.pb_settings_save_2, self.pb_settings_header_close)
+        MainWindow.setTabOrder(self.pb_settings_header_close, self.le_settings_id)
+        MainWindow.setTabOrder(self.le_settings_id, self.le_settings_username)
+        MainWindow.setTabOrder(self.le_settings_username, self.le_settings_password)
+        MainWindow.setTabOrder(self.le_settings_password, self.le_settings_newpassword)
+        MainWindow.setTabOrder(self.le_settings_newpassword, self.le_settings_retypepassword)
+        MainWindow.setTabOrder(self.le_settings_retypepassword, self.rb_settings_activeYes)
+        MainWindow.setTabOrder(self.rb_settings_activeYes, self.rb_settings_activeNo)
+        MainWindow.setTabOrder(self.rb_settings_activeNo, self.rb_settings_adminYes)
+        MainWindow.setTabOrder(self.rb_settings_adminYes, self.rb_settings_adminNo)
+        MainWindow.setTabOrder(self.rb_settings_adminNo, self.pb_settings_admin)
+        MainWindow.setTabOrder(self.pb_settings_admin, self.pb_settings_operator)
+        MainWindow.setTabOrder(self.pb_settings_operator, self.pb_settings_lcs)
+        MainWindow.setTabOrder(self.pb_settings_lcs, self.tw_settings_users)
+        MainWindow.setTabOrder(self.tw_settings_users, self.pb_settings_edit)
+        MainWindow.setTabOrder(self.pb_settings_edit, self.pb_settings_save)
+        MainWindow.setTabOrder(self.pb_settings_save, self.pb_settings_cancel)
+        MainWindow.setTabOrder(self.pb_settings_cancel, self.pb_settings_UserSettings_close)
+        MainWindow.setTabOrder(self.pb_settings_UserSettings_close, self.pb_VehicleReEntry_vehicleSearch_3)
+        MainWindow.setTabOrder(self.pb_VehicleReEntry_vehicleSearch_3, self.pb_VehicleReEntry_serialNoSearch_3)
+        MainWindow.setTabOrder(self.pb_VehicleReEntry_serialNoSearch_3, self.dateEdit)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -3097,6 +3326,7 @@ class Ui_MainWindow(object):
         self.lb_home_unit.setText(_translate("MainWindow", "kg"))
         self.lb_DateDisplay.setText(_translate("MainWindow", "Date"))
         self.lb_TimeDisplay.setText(_translate("MainWindow", "Time"))
+        self.cb_virtualKeyBoard.setText(_translate("MainWindow", "Vitual keyboard"))
         self.groupBox.setTitle(_translate("MainWindow", "Code Settings"))
         self.pb_parameter_Code5Details.setText(_translate("MainWindow", "Enter details"))
         self.pb_parameter_Code2Details.setText(_translate("MainWindow", "Enter details"))
@@ -3184,9 +3414,12 @@ class Ui_MainWindow(object):
         self.lb_report_header.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" color:#ffffff;\">Header</span></p></body></html>"))
         self.lb_report_Code.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" color:#ffffff;\">Code</span></p></body></html>"))
         self.lb_report_Date.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" color:#ffffff;\">Date</span></p></body></html>"))
+        self.pb_report_calendar.setText(_translate("MainWindow", "<Click to Select Date>"))
         self.lb_report_selection.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" color:#ffffff;\">Agent Name</span></p></body></html>"))
         self.lb_report_ToDate.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" color:#ffffff;\">To Date</span></p></body></html>"))
         self.lb_report_FromDate.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" color:#ffffff;\">From Date</span></p></body></html>"))
+        self.pb_report_fromcalendar.setText(_translate("MainWindow", "<Click to Select Date>"))
+        self.pb_report_tocalendar.setText(_translate("MainWindow", "<Click to Select Date>"))
         self.lb_settings_Controller.setText(_translate("MainWindow", "Controller"))
         self.lb_settings_CommPort.setText(_translate("MainWindow", "Comm. Port"))
         self.lb_settings_BaudRate.setText(_translate("MainWindow", "Baud Rate"))
