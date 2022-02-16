@@ -1,6 +1,6 @@
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
-from laki import *
+from main import *
 
 class SplashScreen(QWidget):
     def __init__(self):

@@ -241,12 +241,12 @@ from datetime import datetime
 # b="12"
 # if not (a or b):
 #     print("ss")
-conn = sqlite3.connect("WeighBridge.db")
-c = conn.cursor()
-c.execute("""CREATE TABLE IF NOT EXISTS "T_Code1" (
-	"Code"	TEXT,
-	"Name"	TEXT
-);""")
+# conn = sqlite3.connect("WeighBridge.db")
+# c = conn.cursor()
+# c.execute("""CREATE TABLE IF NOT EXISTS "T_Code1" (
+# 	"Code"	TEXT,
+# 	"Name"	TEXT
+# );""")
 # c.execute("""SELECT EXISTS (SELECT * FROM T_Code1 WHERE Code="C1")
 #             BEGIN
 #              UPDATE T_Code1 SET Code="C1",Name="new" WHERE Code="C1"
@@ -255,7 +255,29 @@ c.execute("""CREATE TABLE IF NOT EXISTS "T_Code1" (
 #             BEGIN
 #              INSERT INTO T_Code1 (Code,Name) VALUES ("c1","CODESS")
 #             END;""")
-r = c.execute("""SELECT EXISTS(SELECT * FROM T_Code1 WHERE Code=?);""",("s1",))
+# r = c.execute("""SELECT EXISTS(SELECT * FROM T_Code1 WHERE Code=?);""",("s1",))
+#
+# for i in r:
+#     print(i)
+from PyQt5.QtWidgets import *
+import sys
 
-for i in r:
-    print(i)
+class Window(QWidget):
+    def __init__(self):
+        QWidget.__init__(self)
+        layout = QGridLayout()
+        self.setLayout(layout)
+
+        # auto complete options
+        names = ["Apple", "Alps", "Berry", "Cherry" ]
+        completer = QCompleter(names)
+
+        # create line edit and add auto complete
+        self.lineedit = QLineEdit()
+        self.lineedit.setCompleter(completer)
+        layout.addWidget(self.lineedit, 0, 0)
+
+app = QApplication(sys.argv)
+screen = Window()
+screen.show()
+sys.exit(app.exec_())

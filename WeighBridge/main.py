@@ -64,6 +64,7 @@ class LoginWindowcls(QObject):
 
     LoginUpdate = pyqtSignal(str)
     def UserName(self,event):
+        print("rep")
 
         self.userNameFlag = True
         self.kb.setGeometry(0, 240, 1024, 350)
@@ -137,8 +138,6 @@ class LoginWindowcls(QObject):
         reply = QMessageBox.question(None, "Save", "Are you sure?", QMessageBox.Yes | QMessageBox.No,QMessageBox.No)
         if reply == QMessageBox.Yes:
             self.main_window.close()
-
-
 class UI():
 
     def __init__(self):
@@ -152,6 +151,7 @@ class UI():
         # self.lws = LoginWindowcls()  #changed
         # self.lws.LoginUpdate.connect(self.login)  #changed
         ### Declaring variables
+
         self.idList = []
         self.userList = []
         self.passwordList = []
@@ -160,6 +160,8 @@ class UI():
         self.keyBoardFlag = False
         self.loginKeyBoard = False
         self.EntryExitButtonEnable = True
+        self.parameterEditFlag = True
+        self.home = True
         self.ui.tw_Home_Entry.setEditTriggers(QtWidgets.QTableWidget.NoEditTriggers)
         self.ui.tw_settings_users.setEditTriggers(QtWidgets.QTableWidget.NoEditTriggers)
         # self.t1 = threading.Thread(target=self.ShowDate)
@@ -172,8 +174,8 @@ class UI():
         ## object creation for classes
         self.serial = Serial()
         self.serial.start()
-        self.key = Keyboard()
-        self.key.start()
+        # self.key = Keyboard()
+        # self.key.start()
         self.kb = LcsKeyBoard()
         self.Nkb = LcsNumKeyPad()
 
@@ -182,9 +184,10 @@ class UI():
         self.mainPageTable()
         self.getLableNameFromDB() #changed
         self.setParameters()
+        self.setLeMaxLimit()
         ### key press
 
-        self.key.keyupdate.connect(self.Keyevents)
+        # self.key.keyupdate.connect(self.Keyevents)
 
         ### Setting Mouse event
                 # Mouse Event Entry Page
@@ -203,12 +206,14 @@ class UI():
         self.ui.le_VehicleEntry_header5_supplierChalanNo.mousePressEvent = self.showEntryHeader5
         self.ui.le_VehicleEntry_amount.mousePressEvent = self.showEntryAmount
                 # Mouse Event Exit Page
+        self.exitSerialFlag = False
         self.exitHeader1Flag = False
         self.exitHeader2Flag = False
         self.exitHeader3Flag = False
         self.exitHeader4Flag = False
         self.exitHFlag = False
         self.exitAmountFlag = False
+        self.ui.le_VehicleReEntry_serialNumber_3.mousePressEvent = self.showExitSerialNo
         self.ui.le_VehicleReEntry_header2_supervisorName_3.mousePressEvent = self.showExitHeader2
         self.ui.le_VehicleReEntry_header3_count_3.mousePressEvent = self.showExitHeader3
         self.ui.le_VehicleReEntry_header4_msezDeliverNo_3.mousePressEvent = self.showExitHeader4
@@ -285,6 +290,7 @@ class UI():
         timer.start(1000)
         self.ui.pb_home_Settings.clicked.connect(self.showSettings)
 
+        self.ui.pb_home_tare.clicked.connect(self.sendTaremsg)
         # self.ui.pb_home_report.setHidden(True)  #changed
         self.ui.pb_home_report.clicked.connect(self.showReport)
 
@@ -301,20 +307,23 @@ class UI():
         self.ui.pb_VehicleEntry_save.clicked.connect(self.VehicleEntrySave)
         self.ui.pb_VehicleEntry_G_weight.clicked.connect(self.Entry_getGrossWeight)
         self.ui.pb_VehicleEntry_T_Weight.clicked.connect(self.Entry_getTareWeight)
+        self.ui.lb_VehicleEntry_netWeight.setHidden(True)
+        self.ui.le_VehicleEntry_netWeight.setHidden(True)
+        self.ui.lb_vehicleEntry_unit_net.setHidden(True)
 
         ## Setting up Vehicle exit Page
         self.ui.pb_VehicleReEntry_close_3.clicked.connect(self.showHome)
         self.ui.pb_VehicleReEntry_entry_2.clicked.connect(self.Exit_Entry)
         self.ui.pb_VehicleReEntry_cancel_2.clicked.connect(self.Exit_Cancel)
         self.ui.pb_VehicleReEntry_serialNoSearch_3.clicked.connect(self.Exit_SnoSearch)
+        self.ui.pb_VehicleReEntry_vehicleSearch_3.clicked.connect(self.Exit_header1Search)
         self.ui.pb_VehicleReEntry_G_weight_3.clicked.connect(self.Exit_getGrossWeight)
         self.ui.pb_VehicleReEntry_T_Weight_3.clicked.connect(self.Exit_getTareWeight)
         self.ui.le_VehicleReEntry_netWeight_3.setReadOnly(True)
-        self.ui.pb_VehicleReEntry_N_weight_3.clicked.connect(self.Exit_netWeight)
+        # self.ui.pb_VehicleReEntry_N_weight_3.clicked.connect(self.Exit_netWeight)
         self.ui.pb_VehicleReEntry_save_2.clicked.connect(self.Exit_Save)
 
         ## Setting up Parameter Settings Page
-        self.parameterEditFlag = True
 
 
         self.ui.pb_Parameter_Close.clicked.connect(self.showHome)
@@ -475,6 +484,48 @@ class UI():
         # self.model = torch.hub.load("yolov5", 'custom', path="last.pt", source='local')
         # self.vs = VideoStream(src=0).start()
         # self.reader = easyocr.Reader(['en'])
+    def setLeMaxLimit(self):
+        ## vehicle entry limit
+        self.ui.le_VehicleEntry_header1_vehicle.setMaxLength(15)
+        self.ui.le_VehicleEntry_header2_supervisorName.setMaxLength(15)
+        self.ui.le_VehicleEntry_header3_count.setMaxLength(5)
+        self.ui.le_VehicleEntry_header4_msezDeliverNo.setMaxLength(15)
+        self.ui.le_VehicleEntry_header5_supplierChalanNo.setMaxLength(15)
+        self.ui.le_VehicleEntry_amount.setMaxLength(5)
+        ## vehicle re entry limit
+        self.ui.le_VehicleReEntry_header2_supervisorName_3.setMaxLength(15)
+        self.ui.le_VehicleReEntry_header3_count_3.setMaxLength(5)
+        self.ui.le_VehicleReEntry_header4_msezDeliverNo_3.setMaxLength(15)
+        self.ui.le_VehicleReEntry_header5_supplierChalanNo_3.setMaxLength(15)
+        self.ui.le_VehicleReEntry_serialNumber_3.setMaxLength(15)
+        self.ui.le_VehicleReEntry_amount_3.setMaxLength(5)
+
+        ## parameter limit
+        self.ui.le_parameterMain_Code1.setMaxLength(13)
+        self.ui.le_parameterMain_Code2.setMaxLength(13)
+        self.ui.le_parameterMain_Code3.setMaxLength(13)
+        self.ui.le_parameterMain_Code4.setMaxLength(13)
+        self.ui.le_parameterMain_Code5.setMaxLength(13)
+        self.ui.le_parameterMain_Header1.setMaxLength(13)
+        self.ui.le_parameterMain_Header2.setMaxLength(13)
+        self.ui.le_parameterMain_Header3.setMaxLength(13)
+        self.ui.le_parameterMain_Header4.setMaxLength(13)
+        self.ui.le_parameterMain_Header5.setMaxLength(13)
+        self.ui.le_parameter_code_1.setMaxLength(10)
+        self.ui.le_parameter_code_3.setMaxLength(10)
+        self.ui.le_parameter_code_4.setMaxLength(10)
+        self.ui.le_parameter_code_5.setMaxLength(10)
+        self.ui.le_parameter_code_6.setMaxLength(10)
+        self.ui.le_parameter_name_1.setMaxLength(10)
+        self.ui.le_parameter_name_3.setMaxLength(10)
+        self.ui.le_parameter_name_4.setMaxLength(10)
+        self.ui.le_parameter_name_5.setMaxLength(10)
+        self.ui.le_parameter_name_6.setMaxLength(10)
+    def sendTaremsg(self):
+        global tarebtnmsg,tarebtnClicked
+        tarebtnmsg = "%Tare$"
+        tarebtnClicked = True
+
     def keyBoardCheck(self):
         print(self.ui.cb_virtualKeyBoard.isChecked())
         if self.ui.cb_virtualKeyBoard.isChecked():
@@ -485,9 +536,9 @@ class UI():
             self.loginKeyBoard = False
 
     def Keyevents(self, w):
-        if w == "f1" and self.EntryExitButtonEnable:
+        if w == "f1" and self.EntryExitButtonEnable and self.home:
             self.showVehicleEntry()
-        if w == "f2" and self.EntryExitButtonEnable:
+        if w == "f2" and self.EntryExitButtonEnable and self.home:
             self.showVehicleReEntry()
     def DataBaseCreation(self):
         self.conn = sqlite3.connect("WeighBridge.db")
@@ -648,11 +699,13 @@ class UI():
     # Functions used in main page
     def showHome(self):
         reply = QMessageBox.question(None, "Save", "Are you sure?", QMessageBox.Yes | QMessageBox.No,QMessageBox.No)
+
         if reply == QMessageBox.Yes:
             self.setParameters()
             self.ui.stackedWidgetMain.setCurrentWidget(self.ui.Home)
             self.setTheField()
             self.mainPageTable()
+            self.home = True
     def ShowDate(self):
         # while True:
         DateTime = datetime.now()
@@ -674,9 +727,10 @@ class UI():
         self.ui.lb_VehicleReEntry_weightDisplay_3.setText(w)
         self.weight = w
         if w == "COM err":
-            self.EntryExitButtonEnable = False
-            self.ui.pb_home_VehicleEntry.setEnabled(False)
-            self.ui.pb_home_VehicleReEntry.setEnabled(False)
+            # self.EntryExitButtonEnable = False
+            # self.ui.pb_home_VehicleEntry.setEnabled(False)
+            # self.ui.pb_home_VehicleReEntry.setEnabled(False)
+            pass
         else:
             self.EntryExitButtonEnable = True
             self.ui.pb_home_VehicleEntry.setEnabled(True)
@@ -723,6 +777,7 @@ class UI():
 
     # Functions used in Vehicle Entry page
     def showVehicleEntry(self):
+        self.home = False
         self.ui.stackedWidgetMain.setCurrentWidget(self.ui.VehicleEntry)
         self.getLableNameFromDB()
         self.setParameters()
@@ -771,28 +826,31 @@ class UI():
             if self.kb.flgLettersPressed == True:
                 self.ui.le_VehicleEntry_header2_supervisorName.setText(self.kb.text_input.text())
             elif self.kb.flgNumbersPressed == True:
-                self.showErrormsg("","Only Letters is allowed")
+                self.ui.le_VehicleEntry_header2_supervisorName.setText(self.kb.text_input.text())
             elif self.kb.flgSymbolsPressed == True:
-                self.showErrormsg("","Only Letters is allowed")
+                self.ui.le_VehicleEntry_header2_supervisorName.setText(self.kb.text_input.text())
         self.entryHeader2Flag = False
-    def showEntryHeader3(self,event):
+
+    def showEntryHeader3(self, event):
         self.entryHeader3Flag = True
-        self.Nkb.setGeometry(0, 240, 1024, 350)
-        self.Nkb.text_inputNum.setText(self.ui.le_VehicleEntry_header3_count.text())
-
-        self.Nkb.flgNumKeyIsActivated = True
-        self.Nkb.set_receiver(self.Nkb.text_inputNum)
-        self.Nkb.KeyboardSignal.connect(self.getEntryHeader3)
+        self.kb.setGeometry(0, 240, 1024, 350)
+        self.kb.text_input.setText(self.ui.le_VehicleEntry_header3_count.text())
+        self.kb.text_input1.setText(self.ui.le_VehicleEntry_header3_count.text())
+        self.kb.text_input2.setText(self.ui.le_VehicleEntry_header3_count.text())
+        self.kb.flgKeyIsActivated = True
+        self.kb.set_receiver(self.kb.text_input)
+        self.kb.KeyboardSignal.connect(self.getEntryHeader3)
         if self.keyBoardFlag:
-
-            self.Nkb.show()
+            self.kb.show()
 
     def getEntryHeader3(self):
         if self.entryHeader3Flag == True:
-
-
-            self.ui.le_VehicleEntry_header3_count.setText(self.Nkb.text_inputNum.text())
-
+            if self.kb.flgLettersPressed == True:
+                self.ui.le_VehicleEntry_header3_count.setText(self.kb.text_input.text())
+            elif self.kb.flgNumbersPressed == True:
+                self.ui.le_VehicleEntry_header3_count.setText(self.kb.text_input.text())
+            elif self.kb.flgSymbolsPressed == True:
+                self.ui.le_VehicleEntry_header3_count.setText(self.kb.text_input.text())
         self.entryHeader3Flag = False
     def showEntryHeader4(self,event):
         self.entryHeader4Flag = True
@@ -1099,14 +1157,10 @@ class UI():
 
         if values[0] == "0":
             self.ui.lb_VehicleEntry_amount.setHidden(True)
-            self.ui.lb_VehicleReEntry_amount_3.setHidden(True)
             self.ui.le_VehicleEntry_amount.setHidden(True)
-            self.ui.le_VehicleReEntry_amount_3.setHidden(True)
         else:
             self.ui.lb_VehicleEntry_amount.setHidden(False)
-            self.ui.lb_VehicleReEntry_amount_3.setHidden(False)
             self.ui.le_VehicleEntry_amount.setHidden(False)
-            self.ui.le_VehicleReEntry_amount_3.setHidden(False)
         if values[3] == "Tonne":
             self.ui.lb_vehicleEntry_unit.setText("Tonne")
             self.ui.lb_vehicleReEntry_unit.setText("Tonne")
@@ -1261,10 +1315,10 @@ class UI():
             s10 = (self.names[4], code5)
             s11 = ("GROSS WEIGHT", grosswt)
             s12 = ("TARE WEIGHT", tarewt)
-            s13 = ("NET WEIGHT", " ")
+
             s14 = ("AMOUNT", " ")
-            s = [s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, s13, s14]
-            en = [1] + self.enableField + [1, 1, 1, 1]
+            s = [s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, s14]
+            en = [1] + self.enableField + [1, 1, 1]
             lines = []
             for i in range(len(en)):
                 if en[i] == 1:
@@ -1422,6 +1476,7 @@ class UI():
 
     # Functions used in Vehicle exit page
     def showVehicleReEntry(self):
+        self.home = False
         self.ui.stackedWidgetMain.setCurrentWidget(self.ui.VehicleExit)
         self.getLableNameFromDB()
         self.setParameters()
@@ -1430,7 +1485,7 @@ class UI():
         self.Exit_disableCancelSaveAllLe()
         self.Exit_settingReadOnly()
         self.Exit_setInitialValues()
-        self.Exit_addVehicleComboBox()
+        self.Exit_addCompleter()
 
     def showExitHeader2(self,event):
         self.exitHeader2Flag = True
@@ -1449,26 +1504,32 @@ class UI():
             if self.kb.flgLettersPressed == True:
                 self.ui.le_VehicleReEntry_header2_supervisorName_3.setText(self.kb.text_input.text())
             elif self.kb.flgNumbersPressed == True:
-                self.showErrormsg("","Only Letters")
+                self.ui.le_VehicleReEntry_header2_supervisorName_3.setText(self.kb.text_input.text())
             elif self.kb.flgSymbolsPressed == True:
-                self.showErrormsg("","Only Letters")
+                self.ui.le_VehicleReEntry_header2_supervisorName_3.setText(self.kb.text_input.text())
         self.exitHeader2Flag = False
 
-    def showExitHeader3(self,event):
+    def showExitHeader3(self, event):
         self.exitHeader3Flag = True
-        self.Nkb.setGeometry(0, 240, 1024, 350)
-        self.Nkb.text_inputNum.setText(self.ui.le_VehicleEntry_header3_count.text())
-        self.Nkb.flgKeyIsActivated = True
-        self.Nkb.set_receiver(self.kb.text_input)
-        self.Nkb.KeyboardSignal.connect(self.getExitHeader3)
+        self.kb.setGeometry(0, 240, 1024, 350)
+        self.kb.text_input.setText(self.ui.le_VehicleReEntry_header3_count_3.text())
+        self.kb.text_input1.setText(self.ui.le_VehicleReEntry_header3_count_3.text())
+        self.kb.text_input2.setText(self.ui.le_VehicleReEntry_header3_count_3.text())
+        self.kb.flgKeyIsActivated = True
+        self.kb.set_receiver(self.kb.text_input)
+        self.kb.KeyboardSignal.connect(self.getExitHeader3)
         if self.keyBoardFlag:
-            self.Nkb.show()
+            self.kb.show()
 
     def getExitHeader3(self):
         if self.exitHeader3Flag == True:
-            self.ui.le_VehicleReEntry_header3_count_3.setText(self.Nkb.text_inputNum.text())
+            if self.kb.flgLettersPressed == True:
+                self.ui.le_VehicleReEntry_header3_count_3.setText(self.kb.text_input.text())
+            elif self.kb.flgNumbersPressed == True:
+                self.ui.le_VehicleReEntry_header3_count_3.setText(self.kb.text_input.text())
+            elif self.kb.flgSymbolsPressed == True:
+                self.ui.le_VehicleReEntry_header3_count_3.setText(self.kb.text_input.text())
         self.exitHeader3Flag = False
-
     def showExitHeader4(self,event):
         self.exitHeader4Flag = True
         self.kb.setGeometry(0, 240, 1024, 350)
@@ -1534,15 +1595,35 @@ class UI():
             elif self.kb.flgSymbolsPressed == True:
                 self.showErrormsg("","Only numbers")
         self.exitAmountFlag = False
-    def Exit_addVehicleComboBox(self):
+
+    def showExitSerialNo(self,event):
+        self.exitSerialFlag = True
+        self.Nkb.setGeometry(0, 240, 1024, 350)
+        self.Nkb.text_inputNum.setText(self.ui.le_VehicleReEntry_serialNumber_3.text())
+        self.Nkb.flgNumKeyIsActivated = True
+        self.Nkb.set_receiver(self.Nkb.text_inputNum)
+        self.Nkb.KeyboardSignal.connect(self.getExitSerial)
+        if self.keyBoardFlag:
+            self.Nkb.show()
+
+    def getExitSerial(self):
+        if self.exitSerialFlag == True:
+            self.ui.le_VehicleReEntry_serialNumber_3.setText(self.Nkb.text_inputNum.text())
+        self.exitSerialFlag = False
+    def Exit_addCompleter(self):
         self.conn = sqlite3.connect("WeighBridge.db")
         self.c = self.conn.cursor()
-        vehicles = []
-        result = self.c.execute("SELECT header1 FROM T_Entry")
+        self.vehicles = []
+        self.serialnum = []
+        result = self.c.execute("SELECT SerialNo,header1 FROM T_Entry")
         for v in result:
-            vehicles.append(v[0])
+            self.serialnum.append(v[0])
+            self.vehicles.append(v[1])
 
-        self.ui.combo_VehicleReEntry_vehicle.addItems(vehicles)
+        completer1 = QCompleter(self.serialnum)
+        self.ui.le_VehicleReEntry_serialNumber_3.setCompleter(completer1)
+        completer2 = QCompleter(self.vehicles)
+        self.ui.le_VehicleReEntry_vehicle_3.setCompleter(completer2)
         self.c.close()
         self.conn.close()
 
@@ -1551,7 +1632,7 @@ class UI():
         self.ui.le_VehicleReEntry_grossWeight_3.setEnabled(False)
         self.ui.le_VehicleReEntry_tareWeight_3.setEnabled(False)
         self.ui.le_VehicleReEntry_netWeight_3.setEnabled(False)
-        self.ui.combo_VehicleReEntry_vehicle.setEnabled(False)
+        self.ui.le_VehicleReEntry_vehicle_3.setEnabled(False)
         self.ui.le_VehicleReEntry_header2_supervisorName_3.setEnabled(False)
         self.ui.le_VehicleReEntry_header3_count_3.setEnabled(False)
         self.ui.le_VehicleReEntry_header4_msezDeliverNo_3.setEnabled(False)
@@ -1565,7 +1646,7 @@ class UI():
         self.ui.pb_VehicleReEntry_cancel_2.setEnabled(False)
         self.ui.pb_VehicleReEntry_G_weight_3.setEnabled(False)
         self.ui.pb_VehicleReEntry_T_Weight_3.setEnabled(False)
-        self.ui.pb_VehicleReEntry_N_weight_3.setEnabled(False)
+        # self.ui.pb_VehicleReEntry_N_weight_3.setEnabled(False)
 
     def Exit_settingReadOnly(self):
         self.ui.le_VehicleReEntry_grossDate_2.setReadOnly(True)
@@ -1591,6 +1672,7 @@ class UI():
         self.ui.le_VehicleReEntry_header4_msezDeliverNo_3.clear()
         self.ui.le_VehicleReEntry_header3_count_3.clear()
         self.ui.le_VehicleReEntry_header2_supervisorName_3.clear()
+        self.ui.le_VehicleReEntry_amount_3.clear()
 
 
 
@@ -1605,7 +1687,7 @@ class UI():
         self.ui.le_VehicleReEntry_grossWeight_3.setEnabled(True)
         self.ui.le_VehicleReEntry_tareWeight_3.setEnabled(True)
         self.ui.le_VehicleReEntry_netWeight_3.setEnabled(True)
-        self.ui.combo_VehicleReEntry_vehicle.setEnabled(True)
+        self.ui.le_VehicleReEntry_vehicle_3.setEnabled(True)
         self.ui.le_VehicleReEntry_header2_supervisorName_3.setEnabled(True)
         self.ui.le_VehicleReEntry_header3_count_3.setEnabled(True)
         self.ui.le_VehicleReEntry_header4_msezDeliverNo_3.setEnabled(True)
@@ -1617,7 +1699,7 @@ class UI():
         self.ui.pb_VehicleReEntry_G_weight_3.setEnabled(True)
         self.ui.pb_VehicleReEntry_T_Weight_3.setEnabled(True)
 
-        self.ui.pb_VehicleReEntry_N_weight_3.setEnabled(True)
+        # self.ui.pb_VehicleReEntry_N_weight_3.setEnabled(True)
 
 
     def Exit_Cancel(self):
@@ -1638,7 +1720,7 @@ class UI():
                 # print(data)
                 flag = 0
                 self.ui.le_VehicleReEntry_serialNumber_3.setText(data[0])
-                self.ui.combo_VehicleReEntry_vehicle.setCurrentText(data[1])
+                self.ui.le_VehicleReEntry_vehicle_3.setText(data[1])
                 self.ui.le_VehicleReEntry_header2_supervisorName_3.setText(data[2])
                 self.ui.le_VehicleReEntry_header3_count_3.setText(data[3])
                 self.ui.le_VehicleReEntry_header4_msezDeliverNo_3.setText(data[4])
@@ -1651,11 +1733,64 @@ class UI():
                 print("laki")
                 if data[11]:
                     self.ui.pb_VehicleReEntry_G_weight_3.setEnabled(False)
+                    self.ui.pb_VehicleReEntry_T_Weight_3.setEnabled(True)
                     self.ui.le_VehicleReEntry_grossWeight_3.setText(data[11])
                     self.ui.le_VehicleReEntry_grossTime_2.setText(data[13])
                     self.ui.le_VehicleReEntry_grossDate_2.setText(data[14])
                 elif data[15]:
                     self.ui.pb_VehicleReEntry_T_Weight_3.setEnabled(False)
+                    self.ui.pb_VehicleReEntry_G_weight_3.setEnabled(True
+                                                                    )
+
+                    self.ui.le_VehicleReEntry_tareWeight_3.setText(data[15])
+                    self.ui.le_VehicleReEntry_tareTime_2.setText(data[17])
+                    self.ui.le_VehicleReEntry_tareDate_2.setText(data[18])
+            if flag == 1:
+                raise Exception()
+
+        except :
+            print("Error")
+            self.showErrormsg("Warning","No data found")
+
+
+        self.c.close()
+        self.conn.close()
+    def Exit_header1Search(self):
+        hd = self.ui.le_VehicleReEntry_vehicle_3.text()
+        # self.Exit_setInitialValues()
+        flag = 1
+        self.conn = sqlite3.connect("WeighBridge.db")
+        self.c = self.conn.cursor()
+        try:
+
+            result = self.c.execute("SELECT * FROM T_Entry WHERE header1=?",(hd,))
+
+            for i,data in enumerate(result):
+                # print(data)
+                flag = 0
+                self.ui.le_VehicleReEntry_serialNumber_3.setText(data[0])
+                self.ui.le_VehicleReEntry_vehicle_3.setText(data[1])
+                self.ui.le_VehicleReEntry_header2_supervisorName_3.setText(data[2])
+                self.ui.le_VehicleReEntry_header3_count_3.setText(data[3])
+                self.ui.le_VehicleReEntry_header4_msezDeliverNo_3.setText(data[4])
+                self.ui.le_VehicleReEntry_header5_supplierChalanNo_3.setText(data[5])
+                self.ui.combo_VehicleReEntry_code1_materia_3.setCurrentText(data[6])
+                self.ui.combo_VehicleReEntry_code2_agentName_3.setCurrentText(data[7])
+                self.ui.combo_VehicleReEntry_code3_placeOfLoading_3.setCurrentText(data[8])
+                self.ui.combo_VehicleReEntry_code4_moistureValue.setCurrentText(data[9])
+                self.ui.combo_VehicleReEntry_code5_size.setCurrentText(data[10])
+                print("laki")
+                if data[11]:
+                    self.ui.pb_VehicleReEntry_G_weight_3.setEnabled(False)
+                    self.ui.pb_VehicleReEntry_T_Weight_3.setEnabled(True)
+                    self.ui.le_VehicleReEntry_grossWeight_3.setText(data[11])
+                    self.ui.le_VehicleReEntry_grossTime_2.setText(data[13])
+                    self.ui.le_VehicleReEntry_grossDate_2.setText(data[14])
+                elif data[15]:
+                    self.ui.pb_VehicleReEntry_T_Weight_3.setEnabled(False)
+                    self.ui.pb_VehicleReEntry_G_weight_3.setEnabled(True
+                                                                    )
+
                     self.ui.le_VehicleReEntry_tareWeight_3.setText(data[15])
                     self.ui.le_VehicleReEntry_tareTime_2.setText(data[17])
                     self.ui.le_VehicleReEntry_tareDate_2.setText(data[18])
@@ -1679,6 +1814,7 @@ class UI():
         self.ui.lb_VehicleReEntry_tareWeight_3.setStyleSheet("")
         self.ui.lb_VehicleReEntry_netWeight_3.setStyleSheet("")
         self.ui.lb_VehicleReEntry_serialNumber_3.setStyleSheet("")
+        self.ui.lb_VehicleReEntry_amount_3.setStyleSheet("")
     def Exit_Save(self):
         self.setExitInitialStyleSheets()  # changed
         textFlag = 0  # changed
@@ -1690,7 +1826,7 @@ class UI():
         self.c = self.conn.cursor()
 
         serialno = self.ui.le_VehicleReEntry_serialNumber_3.text()
-        header1 = self.ui.combo_VehicleReEntry_vehicle.currentText()
+        header1 = self.ui.le_VehicleReEntry_vehicle_3.text()
         header2 = self.ui.le_VehicleReEntry_header2_supervisorName_3.text()
         header3 = self.ui.le_VehicleReEntry_header3_count_3.text()
         header4 = self.ui.le_VehicleReEntry_header4_msezDeliverNo_3.text()
@@ -1728,6 +1864,8 @@ class UI():
             saveFlag *= 0
         elif serialno == "":
             saveFlag *=0
+        elif amount == "":
+            saveFlag *= 0
 
         # print(self.entryfields,self.exitfields,sep='\n')
         reply = QMessageBox.question(None, "Save", "Do you want to save?", QMessageBox.Yes | QMessageBox.No,QMessageBox.No)  # changed
@@ -1770,6 +1908,8 @@ class UI():
                         self.ui.lb_VehicleReEntry_tareWeight_3.setStyleSheet("color:red;")
                     if netwt == "" or netwt   == "COM err":
                         self.ui.lb_VehicleReEntry_netWeight_3.setStyleSheet("color:red;")
+                    if amount == "":
+                        self.ui.lb_VehicleReEntry_amount_3.setStyleSheet("color:red;")
                     self.showErrormsg("", "Enter all fields")
             else: #changed
                 self.c.close()
@@ -1823,6 +1963,7 @@ class UI():
             self.ui.le_VehicleReEntry_grossDate_2.setText(str(date)) #changed
 
             self.ui.le_VehicleReEntry_grossTime_2.setText(str(time_)) #changed
+            self.Exit_netWeight()
         except:
             self.showErrormsg("Error","No weight values")
 
@@ -1840,6 +1981,7 @@ class UI():
             self.ui.le_VehicleReEntry_tareDate_2.setText(str(date)) #changed
 
             self.ui.le_VehicleReEntry_tareTime_2.setText(str(time_)) #changed
+            self.Exit_netWeight()
         except:
             self.showErrormsg("Error","No weight values")
 
@@ -1848,7 +1990,8 @@ class UI():
         gw = self.ui.le_VehicleReEntry_grossWeight_3.text()
         tw = self.ui.le_VehicleReEntry_tareWeight_3.text()
         if gw and tw :
-            nw = float(gw)-float(tw)
+            nw = float(tw)-float(gw)
+            nw = "{0:.3f}".format(nw)
             self.ui.le_VehicleReEntry_netWeight_3.setText(str(nw))
         else:
             self.showErrormsg("Error","Enter both weights")
@@ -1856,6 +1999,7 @@ class UI():
 
     # Functions used in Parameter Settings page
     def showParameterSettings(self):
+        self.home = False
         self.ParameterSettingslws = LoginWindowcls()
         self.ParameterSettingslws.keyBoardFlag = self.loginKeyBoard
         self.ParameterSettingslws.LoginUpdate.connect(self.ParameterSettingslogin)
@@ -1869,7 +2013,9 @@ class UI():
             # self.ui.pb_UserAccountSettings.setHidden(False)
             self.ui.stackedWidgetParameterSettings.setCurrentWidget(self.ui.ParameterSettingsMainPage)
             self.ui.stackedWidgetMain.setCurrentWidget(self.ui.ParameterSettings)
-
+            self.ui.pb_Parameter_Edit.setEnabled(True)
+            self.setCancelSaveAddDelete()
+            self.CodesLeDefault()
             self.setLePlaceHolderValues()
             self.setRead()
         else:
@@ -2329,7 +2475,10 @@ class UI():
 
     def showParameterSettingsMainPage(self):
         self.ui.stackedWidgetParameterSettings.setCurrentWidget(self.ui.ParameterSettingsMainPage)
+        self.ui.pb_Parameter_Edit.setEnabled(True)
+        self.setCancelSaveAddDelete()
         self.CodesLeDefault()
+        self.setRead()
 
     def setCancelSaveAddDelete(self):
         self.ui.pb_Parameter_Save.setEnabled(False)
@@ -3292,6 +3441,7 @@ class UI():
         self.ui.tableWidget_6.setItem(row, 1, QtWidgets.QTableWidgetItem(str(name)))
     #### Functions used in Settings page
     def showSettings(self):
+        self.home = False
         self.ui.stackedWidgetMain.setCurrentWidget(self.ui.Settings)
         self.getValuesFromDB()
         self.ui.pb_settings_Comm_save.setEnabled(False)
@@ -3340,14 +3490,14 @@ class UI():
 
                 p = str(p)
                 # for windows
-                p = p.split(" ")
-                port = p[0]
-                # for pi
-                # p = p.split("- ")
+                # p = p.split(" ")
                 # port = p[0]
-                # port = port.split(" ")
+                # for pi
+                p = p.split("- ")
+                port = p[0]
+                port = port.split(" ")
                 self.ports.append(port)
-            self.ui.lb_settings_CommPortDisplay.setText(self.ports[0])
+            self.ui.lb_settings_CommPortDisplay.setText(self.ports[0][0])
         except:
             self.ui.pb_settings_search.setEnabled(True)
             self.ui.pb_settings_Comm_save.setEnabled(False)
@@ -3697,7 +3847,10 @@ class UI():
 
     # Functions used in Report page
     def showReport(self):
+        self.home = False
         self.Reportlws = LoginWindowcls()
+        self.Reportlws.keyBoardFlag = self.loginKeyBoard
+
         self.Reportlws.LoginUpdate.connect(self.Reportlogin)
 
         # print(self.adminList)
@@ -4291,12 +4444,12 @@ class Serial(QThread):
         for p in self.pts:
             p = str(p)
             # for windows
-            p = p.split(" ")
-            port = p[0]
-            # for pi
-            # p = p.split("- ")
+            # p = p.split(" ")
             # port = p[0]
-            # port = port.split(" ")
+            # for pi
+            p = p.split("- ")
+            port = p[0]
+            port = port.split(" ")
             return port
 
 
@@ -4329,15 +4482,25 @@ class Serial(QThread):
         for baud in db:
             self.baud = baud[0]
         comm = self.findcom()
+
         try:
-            if comm == None:
+            if comm == None or comm[0][0:-1] == "/dev/ttyAMA":
                 raise Exception
             self.WeightUpdate.emit("Connecting...")
-            ip = serial.Serial(port=comm, baudrate=self.baud, bytesize=8, parity=serial.PARITY_NONE,
+            ip = serial.Serial(port=comm[0], baudrate=self.baud, bytesize=8, parity=serial.PARITY_NONE,
                                stopbits=serial.STOPBITS_ONE)
 
 
             while ip.isOpen():
+                global tarebtnClicked
+                if tarebtnClicked:
+                    print(tarebtnmsg)
+                    # ip.write(tarebtnmsg)
+                    # time.sleep(2)
+                    # global tarebtnClicked
+                    tarebtnClicked = False
+                else:
+                    pass
                 l = str(ip.read(13))
                 val = l[2:15]
                 # print(val)
@@ -4367,20 +4530,22 @@ class Serial(QThread):
             time.sleep(1)
             self.run()
 
-class Keyboard(QThread):
-    def _init_(self):
-        super(Keyboard, self)._init_()
-
-    keyupdate = pyqtSignal(str)
-
-    def run(self):
-        while True:
-            self.keyupdate.emit(keyboard.read_key())
-            # self.keyupdate.emit("ds")
+# class Keyboard(QThread):
+#     def _init_(self):
+#         super(Keyboard, self)._init_()
+#
+#     keyupdate = pyqtSignal(str)
+#
+#     def run(self):
+#         while True:
+#             self.keyupdate.emit(keyboard.read_key())
+#             # self.keyupdate.emit("ds")
 
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
+    tarebtnmsg = ""
+    tarebtnClicked = False
     app.setStyleSheet("""QLabel
         {
         color: White;
