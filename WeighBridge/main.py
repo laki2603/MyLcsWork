@@ -211,14 +211,17 @@ class UI():
         self.exitHeader2Flag = False
         self.exitHeader3Flag = False
         self.exitHeader4Flag = False
+        self.exitHeader5Flag = False
         self.exitHFlag = False
         self.exitAmountFlag = False
         self.ui.le_VehicleReEntry_serialNumber_3.mousePressEvent = self.showExitSerialNo
+        self.ui.le_VehicleReEntry_header1_vehicle_3.mousePressEvent = self.showExitHeader1
         self.ui.le_VehicleReEntry_header2_supervisorName_3.mousePressEvent = self.showExitHeader2
         self.ui.le_VehicleReEntry_header3_count_3.mousePressEvent = self.showExitHeader3
         self.ui.le_VehicleReEntry_header4_msezDeliverNo_3.mousePressEvent = self.showExitHeader4
         self.ui.le_VehicleReEntry_header5_supplierChalanNo_3.mousePressEvent = self.showExitHeader5
         self.ui.le_VehicleReEntry_amount_3.mousePressEvent = self.showExitAmount
+        self.ui.cb_virtualKeyBoard.setChecked(True)
                 # Mouse Event Paramter page
         self.code1Flag = False
         self.code2Flag = False
@@ -324,7 +327,27 @@ class UI():
         self.ui.pb_VehicleReEntry_save_2.clicked.connect(self.Exit_Save)
 
         ## Setting up Parameter Settings Page
+        self.ui.cb_parameter_VehicleEntry_Code2.stateChanged.connect(self.EntrycheckboxCode2)
+        self.ui.cb_parameter_VehicleEntry_Code3.stateChanged.connect(self.EntrycheckboxCode3)
+        self.ui.cb_parameter_VehicleEntry_Code4.stateChanged.connect(self.EntrycheckboxCode4)
+        self.ui.cb_parameter_VehicleEntry_Code5.stateChanged.connect(self.EntrycheckboxCode5)
+        self.ui.cb_parameter_VehicleExit_Code2.stateChanged.connect(self.ExitcheckboxCode2)
+        self.ui.cb_parameter_VehicleExit_Code3.stateChanged.connect(self.ExitcheckboxCode3)
+        self.ui.cb_parameter_VehicleExit_Code4.stateChanged.connect(self.ExitcheckboxCode4)
+        self.ui.cb_parameter_VehicleExit_Code5.stateChanged.connect(self.ExitcheckboxCode5)
 
+        self.ui.cb_parameter_VehicleEntry_header2.stateChanged.connect(self.Entrycheckboxheader2)
+        self.ui.cb_parameter_VehicleEntry_header3.stateChanged.connect(self.Entrycheckboxheader3)
+        self.ui.cb_parameter_VehicleEntry_header4.stateChanged.connect(self.Entrycheckboxheader4)
+        self.ui.cb_parameter_VehicleEntry_header5.stateChanged.connect(self.Entrycheckboxheader5)
+        self.ui.cb_parameter_VehicleExit_header2.stateChanged.connect(self.Exitcheckboxheader2)
+        self.ui.cb_parameter_VehicleExit_header3.stateChanged.connect(self.Exitcheckboxheader3)
+        self.ui.cb_parameter_VehicleExit_header4.stateChanged.connect(self.Exitcheckboxheader4)
+        self.ui.cb_parameter_VehicleExit_header5.stateChanged.connect(self.Exitcheckboxheader5)
+
+        self.ui.cb_parameter_Amount.stateChanged.connect(self.checkboxAmount)
+        self.ui.cb_parameter_DateTime.stateChanged.connect(self.checkboxDateTime)
+        self.ui.cb_parameter_GunnyBag.stateChanged.connect(self.checkboxGunnyBag)
 
         self.ui.pb_Parameter_Close.clicked.connect(self.showHome)
         self.ui.pb_parameter_Code1Details.clicked.connect(self.showCode1Details)
@@ -486,31 +509,31 @@ class UI():
         # self.reader = easyocr.Reader(['en'])
     def setLeMaxLimit(self):
         ## vehicle entry limit
-        self.ui.le_VehicleEntry_header1_vehicle.setMaxLength(15)
-        self.ui.le_VehicleEntry_header2_supervisorName.setMaxLength(15)
+        self.ui.le_VehicleEntry_header1_vehicle.setMaxLength(17)
+        self.ui.le_VehicleEntry_header2_supervisorName.setMaxLength(17)
         self.ui.le_VehicleEntry_header3_count.setMaxLength(5)
-        self.ui.le_VehicleEntry_header4_msezDeliverNo.setMaxLength(15)
-        self.ui.le_VehicleEntry_header5_supplierChalanNo.setMaxLength(15)
+        self.ui.le_VehicleEntry_header4_msezDeliverNo.setMaxLength(17)
+        self.ui.le_VehicleEntry_header5_supplierChalanNo.setMaxLength(17)
         self.ui.le_VehicleEntry_amount.setMaxLength(5)
         ## vehicle re entry limit
-        self.ui.le_VehicleReEntry_header2_supervisorName_3.setMaxLength(15)
+        self.ui.le_VehicleReEntry_header2_supervisorName_3.setMaxLength(17)
         self.ui.le_VehicleReEntry_header3_count_3.setMaxLength(5)
-        self.ui.le_VehicleReEntry_header4_msezDeliverNo_3.setMaxLength(15)
-        self.ui.le_VehicleReEntry_header5_supplierChalanNo_3.setMaxLength(15)
-        self.ui.le_VehicleReEntry_serialNumber_3.setMaxLength(15)
+        self.ui.le_VehicleReEntry_header4_msezDeliverNo_3.setMaxLength(17)
+        self.ui.le_VehicleReEntry_header5_supplierChalanNo_3.setMaxLength(17)
+        self.ui.le_VehicleReEntry_serialNumber_3.setMaxLength(17)
         self.ui.le_VehicleReEntry_amount_3.setMaxLength(5)
 
         ## parameter limit
-        self.ui.le_parameterMain_Code1.setMaxLength(13)
-        self.ui.le_parameterMain_Code2.setMaxLength(13)
-        self.ui.le_parameterMain_Code3.setMaxLength(13)
-        self.ui.le_parameterMain_Code4.setMaxLength(13)
-        self.ui.le_parameterMain_Code5.setMaxLength(13)
-        self.ui.le_parameterMain_Header1.setMaxLength(13)
-        self.ui.le_parameterMain_Header2.setMaxLength(13)
-        self.ui.le_parameterMain_Header3.setMaxLength(13)
-        self.ui.le_parameterMain_Header4.setMaxLength(13)
-        self.ui.le_parameterMain_Header5.setMaxLength(13)
+        self.ui.le_parameterMain_Code1.setMaxLength(17)
+        self.ui.le_parameterMain_Code2.setMaxLength(17)
+        self.ui.le_parameterMain_Code3.setMaxLength(17)
+        self.ui.le_parameterMain_Code4.setMaxLength(17)
+        self.ui.le_parameterMain_Code5.setMaxLength(17)
+        self.ui.le_parameterMain_Header1.setMaxLength(17)
+        self.ui.le_parameterMain_Header2.setMaxLength(17)
+        self.ui.le_parameterMain_Header3.setMaxLength(17)
+        self.ui.le_parameterMain_Header4.setMaxLength(17)
+        self.ui.le_parameterMain_Header5.setMaxLength(17)
         self.ui.le_parameter_code_1.setMaxLength(10)
         self.ui.le_parameter_code_3.setMaxLength(10)
         self.ui.le_parameter_code_4.setMaxLength(10)
@@ -1487,6 +1510,28 @@ class UI():
         self.Exit_setInitialValues()
         self.Exit_addCompleter()
 
+    def showExitHeader1(self, event):
+        self.exitHeader2Flag = True
+        self.kb.setGeometry(0, 240, 1024, 350)
+        self.kb.text_input.setText(self.ui.le_VehicleReEntry_header1_vehicle_3.text())
+        self.kb.text_input1.setText(self.ui.le_VehicleReEntry_header1_vehicle_3.text())
+        self.kb.text_input2.setText(self.ui.le_VehicleReEntry_header1_vehicle_3.text())
+        self.kb.flgKeyIsActivated = True
+        self.kb.set_receiver(self.kb.text_input)
+        self.kb.KeyboardSignal.connect(self.getExitHeader1)
+        if self.keyBoardFlag:
+            self.kb.show()
+
+    def getExitHeader1(self):
+        if self.exitHeader1Flag == True:
+            if self.kb.flgLettersPressed == True:
+                self.ui.le_VehicleReEntry_header1_vehicle_3.setText(self.kb.text_input.text())
+            elif self.kb.flgNumbersPressed == True:
+                self.ui.le_VehicleReEntry_header1_vehicle_3.setText(self.kb.text_input.text())
+            elif self.kb.flgSymbolsPressed == True:
+                self.ui.le_VehicleReEntry_header1_vehicle_3.setText(self.kb.text_input.text())
+        self.exitHeader1Flag = False
+
     def showExitHeader2(self,event):
         self.exitHeader2Flag = True
         self.kb.setGeometry(0, 240, 1024, 350)
@@ -1623,7 +1668,7 @@ class UI():
         completer1 = QCompleter(self.serialnum)
         self.ui.le_VehicleReEntry_serialNumber_3.setCompleter(completer1)
         completer2 = QCompleter(self.vehicles)
-        self.ui.le_VehicleReEntry_vehicle_3.setCompleter(completer2)
+        self.ui.le_VehicleReEntry_header1_vehicle_3.setCompleter(completer2)
         self.c.close()
         self.conn.close()
 
@@ -1632,7 +1677,7 @@ class UI():
         self.ui.le_VehicleReEntry_grossWeight_3.setEnabled(False)
         self.ui.le_VehicleReEntry_tareWeight_3.setEnabled(False)
         self.ui.le_VehicleReEntry_netWeight_3.setEnabled(False)
-        self.ui.le_VehicleReEntry_vehicle_3.setEnabled(False)
+        self.ui.le_VehicleReEntry_header1_vehicle_3.setEnabled(False)
         self.ui.le_VehicleReEntry_header2_supervisorName_3.setEnabled(False)
         self.ui.le_VehicleReEntry_header3_count_3.setEnabled(False)
         self.ui.le_VehicleReEntry_header4_msezDeliverNo_3.setEnabled(False)
@@ -1687,7 +1732,7 @@ class UI():
         self.ui.le_VehicleReEntry_grossWeight_3.setEnabled(True)
         self.ui.le_VehicleReEntry_tareWeight_3.setEnabled(True)
         self.ui.le_VehicleReEntry_netWeight_3.setEnabled(True)
-        self.ui.le_VehicleReEntry_vehicle_3.setEnabled(True)
+        self.ui.le_VehicleReEntry_header1_vehicle_3.setEnabled(True)
         self.ui.le_VehicleReEntry_header2_supervisorName_3.setEnabled(True)
         self.ui.le_VehicleReEntry_header3_count_3.setEnabled(True)
         self.ui.le_VehicleReEntry_header4_msezDeliverNo_3.setEnabled(True)
@@ -1720,7 +1765,7 @@ class UI():
                 # print(data)
                 flag = 0
                 self.ui.le_VehicleReEntry_serialNumber_3.setText(data[0])
-                self.ui.le_VehicleReEntry_vehicle_3.setText(data[1])
+                self.ui.le_VehicleReEntry_header1_vehicle_3.setText(data[1])
                 self.ui.le_VehicleReEntry_header2_supervisorName_3.setText(data[2])
                 self.ui.le_VehicleReEntry_header3_count_3.setText(data[3])
                 self.ui.le_VehicleReEntry_header4_msezDeliverNo_3.setText(data[4])
@@ -1756,7 +1801,7 @@ class UI():
         self.c.close()
         self.conn.close()
     def Exit_header1Search(self):
-        hd = self.ui.le_VehicleReEntry_vehicle_3.text()
+        hd = self.ui.le_VehicleReEntry_header1_vehicle_3.text()
         # self.Exit_setInitialValues()
         flag = 1
         self.conn = sqlite3.connect("WeighBridge.db")
@@ -1769,7 +1814,7 @@ class UI():
                 # print(data)
                 flag = 0
                 self.ui.le_VehicleReEntry_serialNumber_3.setText(data[0])
-                self.ui.le_VehicleReEntry_vehicle_3.setText(data[1])
+                self.ui.le_VehicleReEntry_header1_vehicle_3.setText(data[1])
                 self.ui.le_VehicleReEntry_header2_supervisorName_3.setText(data[2])
                 self.ui.le_VehicleReEntry_header3_count_3.setText(data[3])
                 self.ui.le_VehicleReEntry_header4_msezDeliverNo_3.setText(data[4])
@@ -1826,7 +1871,7 @@ class UI():
         self.c = self.conn.cursor()
 
         serialno = self.ui.le_VehicleReEntry_serialNumber_3.text()
-        header1 = self.ui.le_VehicleReEntry_vehicle_3.text()
+        header1 = self.ui.le_VehicleReEntry_header1_vehicle_3.text()
         header2 = self.ui.le_VehicleReEntry_header2_supervisorName_3.text()
         header3 = self.ui.le_VehicleReEntry_header3_count_3.text()
         header4 = self.ui.le_VehicleReEntry_header4_msezDeliverNo_3.text()
@@ -2015,6 +2060,8 @@ class UI():
             self.ui.stackedWidgetMain.setCurrentWidget(self.ui.ParameterSettings)
             self.ui.pb_Parameter_Edit.setEnabled(True)
             self.setCancelSaveAddDelete()
+            self.setParameterFieldClear()
+            self.setDefaultCheckBoxText()
             self.CodesLeDefault()
             self.setLePlaceHolderValues()
             self.setRead()
@@ -2503,6 +2550,101 @@ class UI():
         self.ui.pb_parameter_delete_4.setEnabled(True)
         self.ui.pb_parameter_delete_5.setEnabled(True)
         self.ui.pb_parameter_delete_6.setEnabled(True)
+    def EntrycheckboxCode2(self):
+        if self.ui.cb_parameter_VehicleEntry_Code2.isChecked():
+            self.ui.cb_parameter_VehicleEntry_Code2.setText("Enable")
+        else:
+            self.ui.cb_parameter_VehicleEntry_Code2.setText("Disable")
+    def EntrycheckboxCode3(self):
+        if self.ui.cb_parameter_VehicleEntry_Code3.isChecked():
+            self.ui.cb_parameter_VehicleEntry_Code3.setText("Enable")
+        else:
+            self.ui.cb_parameter_VehicleEntry_Code3.setText("Disable")
+    def EntrycheckboxCode4(self):
+        if self.ui.cb_parameter_VehicleEntry_Code4.isChecked():
+            self.ui.cb_parameter_VehicleEntry_Code4.setText("Enable")
+        else:
+            self.ui.cb_parameter_VehicleEntry_Code4.setText("Disable")
+    def EntrycheckboxCode5(self):
+        if self.ui.cb_parameter_VehicleEntry_Code5.isChecked():
+            self.ui.cb_parameter_VehicleEntry_Code5.setText("Enable")
+        else:
+            self.ui.cb_parameter_VehicleEntry_Code5.setText("Disable")
+    def ExitcheckboxCode2(self):
+        if self.ui.cb_parameter_VehicleExit_Code2.isChecked():
+            self.ui.cb_parameter_VehicleExit_Code2.setText("Enable")
+        else:
+            self.ui.cb_parameter_VehicleExit_Code2.setText("Disable")
+    def ExitcheckboxCode3(self):
+        if self.ui.cb_parameter_VehicleExit_Code3.isChecked():
+            self.ui.cb_parameter_VehicleExit_Code3.setText("Enable")
+        else:
+            self.ui.cb_parameter_VehicleExit_Code3.setText("Disable")
+    def ExitcheckboxCode4(self):
+        if self.ui.cb_parameter_VehicleExit_Code4.isChecked():
+            self.ui.cb_parameter_VehicleExit_Code4.setText("Enable")
+        else:
+            self.ui.cb_parameter_VehicleExit_Code4.setText("Disable")
+    def ExitcheckboxCode5(self):
+        if self.ui.cb_parameter_VehicleExit_Code5.isChecked():
+            self.ui.cb_parameter_VehicleExit_Code5.setText("Enable")
+        else:
+            self.ui.cb_parameter_VehicleExit_Code5.setText("Disable")
+    def Entrycheckboxheader2(self):
+        if self.ui.cb_parameter_VehicleEntry_header2.isChecked():
+            self.ui.cb_parameter_VehicleEntry_header2.setText("Enable")
+        else:
+            self.ui.cb_parameter_VehicleEntry_header2.setText("Disable")
+    def Entrycheckboxheader3(self):
+        if self.ui.cb_parameter_VehicleEntry_header3.isChecked():
+            self.ui.cb_parameter_VehicleEntry_header3.setText("Enable")
+        else:
+            self.ui.cb_parameter_VehicleEntry_header3.setText("Disable")
+    def Entrycheckboxheader4(self):
+        if self.ui.cb_parameter_VehicleEntry_header4.isChecked():
+            self.ui.cb_parameter_VehicleEntry_header4.setText("Enable")
+        else:
+            self.ui.cb_parameter_VehicleEntry_header4.setText("Disable")
+    def Entrycheckboxheader5(self):
+        if self.ui.cb_parameter_VehicleEntry_header5.isChecked():
+            self.ui.cb_parameter_VehicleEntry_header5.setText("Enable")
+        else:
+            self.ui.cb_parameter_VehicleEntry_header5.setText("Disable")
+    def Exitcheckboxheader2(self):
+        if self.ui.cb_parameter_VehicleExit_header2.isChecked():
+            self.ui.cb_parameter_VehicleExit_header2.setText("Enable")
+        else:
+            self.ui.cb_parameter_VehicleExit_header2.setText("Disable")
+    def Exitcheckboxheader3(self):
+        if self.ui.cb_parameter_VehicleExit_header3.isChecked():
+            self.ui.cb_parameter_VehicleExit_header3.setText("Enable")
+        else:
+            self.ui.cb_parameter_VehicleExit_header3.setText("Disable")
+    def Exitcheckboxheader4(self):
+        if self.ui.cb_parameter_VehicleExit_header4.isChecked():
+            self.ui.cb_parameter_VehicleExit_header4.setText("Enable")
+        else:
+            self.ui.cb_parameter_VehicleExit_header4.setText("Disable")
+    def Exitcheckboxheader5(self):
+        if self.ui.cb_parameter_VehicleExit_header5.isChecked():
+            self.ui.cb_parameter_VehicleExit_header5.setText("Enable")
+        else:
+            self.ui.cb_parameter_VehicleExit_header5.setText("Disable")
+    def checkboxAmount(self):
+        if self.ui.cb_parameter_Amount.isChecked():
+            self.ui.cb_parameter_Amount.setText("Enable")
+        else:
+            self.ui.cb_parameter_Amount.setText("Disable")
+    def checkboxDateTime(self):
+        if self.ui.cb_parameter_DateTime.isChecked():
+            self.ui.cb_parameter_DateTime.setText("Enable")
+        else:
+            self.ui.cb_parameter_DateTime.setText("Disable")
+    def checkboxGunnyBag(self):
+        if self.ui.cb_parameter_GunnyBag.isChecked():
+            self.ui.cb_parameter_GunnyBag.setText("Enable")
+        else:
+            self.ui.cb_parameter_GunnyBag.setText("Disable")
 
         ### Code 1
     def showCode1Details(self):
@@ -2544,6 +2686,41 @@ class UI():
         self.ui.tableWidget_6.setEditTriggers(QtWidgets.QTableWidget.NoEditTriggers)
         self.ui.tableWidget_6.selectRow(0)
         self.on_Code5TableSelectionChanged()
+    def setParameterFieldClear(self):
+        self.ui.le_parameterMain_Code1.clear()
+        self.ui.le_parameterMain_Code2.clear()
+        self.ui.le_parameterMain_Code3.clear()
+        self.ui.le_parameterMain_Code4.clear()
+        self.ui.le_parameterMain_Code5.clear()
+
+        self.ui.le_parameterMain_Header1.clear()
+        self.ui.le_parameterMain_Header2.clear()
+        self.ui.le_parameterMain_Header3.clear()
+        self.ui.le_parameterMain_Header4.clear()
+        self.ui.le_parameterMain_Header5.clear()
+    def setDefaultCheckBoxText(self):
+        self.ui.cb_parameter_VehicleEntry_Code2.setText("Disable")
+        self.ui.cb_parameter_VehicleEntry_Code3.setText("Disable")
+        self.ui.cb_parameter_VehicleEntry_Code4.setText("Disable")
+        self.ui.cb_parameter_VehicleEntry_Code5.setText("Disable")
+        self.ui.cb_parameter_VehicleExit_Code2.setText("Disable")
+        self.ui.cb_parameter_VehicleExit_Code3.setText("Disable")
+        self.ui.cb_parameter_VehicleExit_Code4.setText("Disable")
+        self.ui.cb_parameter_VehicleExit_Code5.setText("Disable")
+
+        self.ui.cb_parameter_VehicleEntry_header2.setText("Disable")
+        self.ui.cb_parameter_VehicleEntry_header3.setText("Disable")
+        self.ui.cb_parameter_VehicleEntry_header4.setText("Disable")
+        self.ui.cb_parameter_VehicleEntry_header5.setText("Disable")
+        self.ui.cb_parameter_VehicleExit_header2.setText("Disable")
+        self.ui.cb_parameter_VehicleExit_header3.setText("Disable")
+        self.ui.cb_parameter_VehicleExit_header4.setText("Disable")
+        self.ui.cb_parameter_VehicleExit_header5.setText("Disable")
+
+        self.ui.cb_parameter_Amount.setText("Disable")
+        self.ui.cb_parameter_DateTime.setText("Disable")
+        self.ui.cb_parameter_GunnyBag.setText("Disable")
+
     def setRead(self):
         self.ui.le_parameterMain_Code1.setEnabled(False)
         self.ui.le_parameterMain_Code2.setEnabled(False)
@@ -3480,7 +3657,6 @@ class UI():
             self.ui.pb_settings_Comm_save.setEnabled(True)
             self.ui.pb_settings_search.setEnabled(False)
             self.pts = serial.tools.list_ports.comports()
-            print("ok")
             self.ports = []
             #portss = ['com1','com2','com3']
 
@@ -3870,6 +4046,9 @@ class UI():
             self.ui.report_tableWidget.setRowCount(0)
             self.ui.report_tableWidget.setColumnCount(0)
             self.OverallReportFlag = 0
+            self.ui.calendarWidget_montly_from.hide()
+            self.ui.calendarWidget_monthly_to.hide()
+            self.ui.calendarWidget_daily.hide()
         else:
             self.showErrormsg("", "User not authorized")
 
@@ -3886,6 +4065,9 @@ class UI():
         self.ui.lb_report_selection.clear()
         self.ui.combo_report_selection.clear()
         self.value = ''
+        self.ui.calendarWidget_montly_from.hide()
+        self.ui.calendarWidget_monthly_to.hide()
+        self.ui.calendarWidget_daily.hide()
 
 
     def openOverallReport(self):
@@ -3900,82 +4082,100 @@ class UI():
 
     def openDailyReport(self):
         self.ui.gb_Report_DaiyReport.setHidden(False)
+        self.ui.calendarWidget_montly_from.hide()
+        self.ui.calendarWidget_monthly_to.hide()
+        self.ui.calendarWidget_daily.hide()
 
     def openMonthlyReport(self):
         self.ui.gb_Report_MonthlyReport.setHidden(False)
+        self.ui.calendarWidget_montly_from.hide()
+        self.ui.calendarWidget_monthly_to.hide()
+        self.ui.calendarWidget_daily.hide()
 
     def setSelectionHeader(self):
-        self.OverallReportFlag = 1
-        self.ui.gb_Report_HeaderCode.setHidden(False)
-        self.ui.gb_Report_TypOfReport.setHidden(False)
-        self.ui.pb_Report_DailyReport.setHidden(True)
-        self.ui.gb_Report_MonthlyReport.setHidden(False)
-        self.conn = sqlite3.connect('WeighBridge.db')
-        self.c = self.conn.cursor()
-        header1,header2,header3,header4,header5 = [],[],[],[],[]
-        result = self.c.execute("SELECT header1,header2,header3,header4,header5 FROM T_Entry")
-        for i, data in enumerate(result):
-            header1.append(data[0])
-            header2.append(data[1])
-            header3.append(data[2])
-            header4.append(data[3])
-            header5.append(data[4])
-        txt = self.ui.combo_report_Header.currentText()
-        self.ui.lb_report_selection.setText(txt)
-        index = self.headersname.index(txt)
+        try:
+            self.ui.calendarWidget_montly_from.hide()
+            self.ui.calendarWidget_monthly_to.hide()
+            self.ui.calendarWidget_daily.hide()
+            self.OverallReportFlag = 1
+            self.ui.gb_Report_HeaderCode.setHidden(False)
+            self.ui.gb_Report_TypOfReport.setHidden(False)
+            self.ui.pb_Report_DailyReport.setHidden(True)
+            self.ui.gb_Report_MonthlyReport.setHidden(False)
+            self.conn = sqlite3.connect('WeighBridge.db')
+            self.c = self.conn.cursor()
+            header1,header2,header3,header4,header5 = [],[],[],[],[]
+            result = self.c.execute("SELECT header1,header2,header3,header4,header5 FROM T_Entry")
+            for i, data in enumerate(result):
+                header1.append(data[0])
+                header2.append(data[1])
+                header3.append(data[2])
+                header4.append(data[3])
+                header5.append(data[4])
+            txt = self.ui.combo_report_Header.currentText()
+            self.ui.lb_report_selection.setText(txt)
+            index = self.headersname.index(txt)
 
-        self.value = self.headers[index]
-        self.ui.combo_report_selection.clear()
-        if self.value == 'header1':
-            self.ui.combo_report_selection.addItems(header1)
-        elif self.value == 'header2':
-            self.ui.combo_report_selection.addItems(header2)
-        elif self.value == 'header3':
-            self.ui.combo_report_selection.addItems(header3)
-        elif self.value == 'header4':
-            self.ui.combo_report_selection.addItems(header4)
-        elif self.value == 'header5':
-            self.ui.combo_report_selection.addItems(header5)
+            self.value = self.headers[index]
+            self.ui.combo_report_selection.clear()
+            if self.value == 'header1':
+                self.ui.combo_report_selection.addItems(header1)
+            elif self.value == 'header2':
+                self.ui.combo_report_selection.addItems(header2)
+            elif self.value == 'header3':
+                self.ui.combo_report_selection.addItems(header3)
+            elif self.value == 'header4':
+                self.ui.combo_report_selection.addItems(header4)
+            elif self.value == 'header5':
+                self.ui.combo_report_selection.addItems(header5)
 
-        self.c.close()
-        self.conn.close()
+            self.c.close()
+            self.conn.close()
+        except:
+            pass
 
     def setSelectionCode(self):
-        self.OverallReportFlag = 1
-        self.ui.gb_Report_HeaderCode.setHidden(False)
-        self.ui.gb_Report_TypOfReport.setHidden(False)
-        self.ui.pb_Report_DailyReport.setHidden(True)
-        self.ui.gb_Report_MonthlyReport.setHidden(False)
-        self.conn = sqlite3.connect('WeighBridge.db')
-        self.c = self.conn.cursor()
+        try:
+            self.ui.calendarWidget_montly_from.hide()
+            self.ui.calendarWidget_monthly_to.hide()
+            self.ui.calendarWidget_daily.hide()
+            self.OverallReportFlag = 1
+            self.ui.gb_Report_HeaderCode.setHidden(False)
+            self.ui.gb_Report_TypOfReport.setHidden(False)
+            self.ui.pb_Report_DailyReport.setHidden(True)
+            self.ui.gb_Report_MonthlyReport.setHidden(False)
+            self.conn = sqlite3.connect('WeighBridge.db')
+            self.c = self.conn.cursor()
 
-        code1, code2, code3, code4, code5 = [], [], [], [], []
-        result = self.c.execute("SELECT code1_no,code2_no,code3_no,code4_no,code5_no FROM T_Entry")
-        for i, data in enumerate(result):
-            code1.append(data[0])
-            code2.append(data[1])
-            code3.append(data[2])
-            code4.append(data[3])
-            code5.append(data[4])
-        txt = self.ui.combo_report_Code.currentText()
-        self.ui.lb_report_selection.setText(txt)
-        index = self.codersname.index(txt)
+            code1, code2, code3, code4, code5 = [], [], [], [], []
+            result = self.c.execute("SELECT code1_no,code2_no,code3_no,code4_no,code5_no FROM T_Entry")
+            for i, data in enumerate(result):
+                code1.append(data[0])
+                code2.append(data[1])
+                code3.append(data[2])
+                code4.append(data[3])
+                code5.append(data[4])
+            txt = self.ui.combo_report_Code.currentText()
+            self.ui.lb_report_selection.setText(txt)
+            index = self.codersname.index(txt)
 
-        self.value = self.coders[index]
-        self.ui.combo_report_selection.clear()
-        if self.value == 'code1':
-            self.ui.combo_report_selection.addItems(code1)
-        elif self.value == 'code2':
-            self.ui.combo_report_selection.addItems(code2)
-        elif self.value == 'code3':
-            self.ui.combo_report_selection.addItems(code3)
-        elif self.value == 'code4':
-            self.ui.combo_report_selection.addItems(code4)
-        elif self.value == 'code5':
-            self.ui.combo_report_selection.addItems(code5)
+            self.value = self.coders[index]
+            self.ui.combo_report_selection.clear()
+            if self.value == 'code1':
+                self.ui.combo_report_selection.addItems(code1)
+            elif self.value == 'code2':
+                self.ui.combo_report_selection.addItems(code2)
+            elif self.value == 'code3':
+                self.ui.combo_report_selection.addItems(code3)
+            elif self.value == 'code4':
+                self.ui.combo_report_selection.addItems(code4)
+            elif self.value == 'code5':
+                self.ui.combo_report_selection.addItems(code5)
 
-        self.c.close()
-        self.conn.close()
+            self.c.close()
+            self.conn.close()
+        except:
+            pass
     def setTheField(self):
         self.conn = sqlite3.connect('WeighBridge.db')
         self.c = self.conn.cursor()
@@ -4017,57 +4217,61 @@ class UI():
 
     def DailyReport(self):
         # date = self.ui.report_DateEdit.date().toPyDate("%d%m%y")
-        self.ui.calendarWidget_daily.hide()
-        inflag = False
-        self.ui.report_tableWidget.clear()
-        # date = self.ui.report_DateEdit.date().toPyDate().strftime("%d-%m-%y")
-        date = self.date
-        print(date)
-        self.conn = sqlite3.connect("WeighBridge.db")
-        self.c = self.conn.cursor()
-        self.pdfTableData = []
-        result = self.c.execute(
-                                "SELECT SerialNo,ReportDate,ReportTime, code1_no,code2_no,code3_no,code4_no,code5_no,header1,header2,header3,header4,header5,grossWt,tareWt,netWt,Amount FROM T_Entry WHERE ReportDate=?",
-                                (date,))
+        try:
+            self.ui.calendarWidget_daily.hide()
+            inflag = False
+            self.ui.report_tableWidget.clear()
+            # date = self.ui.report_DateEdit.date().toPyDate().strftime("%d-%m-%y")
+            date = self.date
+            print(date)
+            self.conn = sqlite3.connect("WeighBridge.db")
+            self.c = self.conn.cursor()
+            self.pdfTableData = []
+            result = self.c.execute(
+                                    "SELECT SerialNo,ReportDate,ReportTime, code1_no,code2_no,code3_no,code4_no,code5_no,header1,header2,header3,header4,header5,grossWt,tareWt,netWt,Amount FROM T_Entry WHERE ReportDate=?",
+                                    (date,))
 
-        # titles = ["SerialNo","Report date","ReportTime",self.names[5], self.names[6], self.names[7], self.names[8], self.names[9],
-        #                                                       self.names[0], self.names[1], self.names[2], self.names[3], self.names[4],
-        #                                                       "grosswt","tarewt", "netwt", "amount"]
+            # titles = ["SerialNo","Report date","ReportTime",self.names[5], self.names[6], self.names[7], self.names[8], self.names[9],
+            #                                                       self.names[0], self.names[1], self.names[2], self.names[3], self.names[4],
+            #                                                       "grosswt","tarewt", "netwt", "amount"]
 
-        nwen = [1,1,1] + self.enableField[0:] + [1,1,1,1]
+            nwen = [1,1,1] + self.enableField[0:] + [1,1,1,1]
 
-        self.pdfTableData.append(self.titles)
-        self.ui.report_tableWidget.setRowCount(0)
-        self.ui.report_tableWidget.setColumnCount(len(self.titles))
-        self.ui.report_tableWidget.setHorizontalHeaderLabels(self.titles)
-        header = self.ui.report_tableWidget.horizontalHeader()
-        header.setSectionResizeMode(QtWidgets.QHeaderView.ResizeToContents)
-        header.setSectionResizeMode(1, QtWidgets.QHeaderView.Stretch)
-        for r_num, r_data in enumerate(result):
-            inflag = True
-            self.ui.pb_report_pdf.setEnabled(True)
-            self.ui.pb_report_excel.setEnabled(True)
-            self.ui.report_tableWidget.insertRow(r_num)
-            r_data = list(r_data)
-            row = []
-            for i in range(len(r_data)):
+            self.pdfTableData.append(self.titles)
+            self.ui.report_tableWidget.setRowCount(0)
+            self.ui.report_tableWidget.setColumnCount(len(self.titles))
+            self.ui.report_tableWidget.setHorizontalHeaderLabels(self.titles)
+            header = self.ui.report_tableWidget.horizontalHeader()
+            header.setSectionResizeMode(QtWidgets.QHeaderView.ResizeToContents)
+            header.setSectionResizeMode(1, QtWidgets.QHeaderView.Stretch)
+            for r_num, r_data in enumerate(result):
+                inflag = True
+                self.ui.pb_report_pdf.setEnabled(True)
+                self.ui.pb_report_excel.setEnabled(True)
+                self.ui.report_tableWidget.insertRow(r_num)
+                r_data = list(r_data)
+                row = []
+                for i in range(len(r_data)):
 
-                if nwen[i] == 1:
-                    row.append(r_data[i])
+                    if nwen[i] == 1:
+                        row.append(r_data[i])
 
-            self.pdfTableData.append(row)
-            for i in range(len(row)):
-                # self.ui.report_tableWidget.insertColumn(i)
-                self.ui.report_tableWidget.setItem(r_num, i, QtWidgets.QTableWidgetItem(str(row[i])))
-
-
-
-        if inflag == False:
-            self.showErrormsg("","Data not available")
+                self.pdfTableData.append(row)
+                for i in range(len(row)):
+                    # self.ui.report_tableWidget.insertColumn(i)
+                    self.ui.report_tableWidget.setItem(r_num, i, QtWidgets.QTableWidgetItem(str(row[i])))
 
 
-        self.c.close()
-        self.conn.close()
+
+            if inflag == False:
+                self.showErrormsg("","Data not available")
+
+
+            self.c.close()
+            self.conn.close()
+        except:
+            self.showErrormsg("","Can't fetch details")
+
     def showMonthlyFromCalendar(self):
         self.ui.calendarWidget_montly_from.show()
         self.ui.calendarWidget_monthly_to.hide()
@@ -4085,353 +4289,367 @@ class UI():
         self.todate = self.ui.calendarWidget_monthly_to.selectedDate().toPyDate().strftime("%d-%m-%y")
         self.ui.pb_report_tocalendar.setText(str(self.todate))
     def MonthlyReport(self):
-        self.ui.calendarWidget_montly_from.hide()
-        self.ui.calendarWidget_monthly_to.hide()
-        inflag = False
-        self.ui.report_tableWidget.clear()
-        conn = sqlite3.connect("WeighBridge.db")
-        c = conn.cursor()
-        # sd = self.ui.report_FromDate.date().toPyDate().strftime("%d-%m-%y")
-        # ed = self.ui.report_ToDate.date().toPyDate().strftime("%d-%m-%y")
-        sd = self.fromdate
-        ed = self.todate
-        sortusing = self.value
-        sortname = self.ui.combo_report_selection.currentText()
-        sd = list(map(int, sd.split('-')))
-        ed = list(map(int, ed.split('-')))
-        sd[2] = sd[2] + 2000
-        ed[2] = ed[2] + 2000
-        dates = []
+        try:
+            self.ui.calendarWidget_montly_from.hide()
+            self.ui.calendarWidget_monthly_to.hide()
+            inflag = False
+            self.ui.report_tableWidget.clear()
+            conn = sqlite3.connect("WeighBridge.db")
+            c = conn.cursor()
+            # sd = self.ui.report_FromDate.date().toPyDate().strftime("%d-%m-%y")
+            # ed = self.ui.report_ToDate.date().toPyDate().strftime("%d-%m-%y")
+            sd = self.fromdate
+            ed = self.todate
+            sortusing = self.value
+            sortname = self.ui.combo_report_selection.currentText()
+            sd = list(map(int, sd.split('-')))
+            ed = list(map(int, ed.split('-')))
+            sd[2] = sd[2] + 2000
+            ed[2] = ed[2] + 2000
+            dates = []
 
-        start_date = date(sd[2], sd[1], sd[0])
-        end_date = date(ed[2], ed[1], ed[0])
+            start_date = date(sd[2], sd[1], sd[0])
+            end_date = date(ed[2], ed[1], ed[0])
 
-        delta = end_date - start_date  # returns timedelta
-        nwen = [1, 1, 1] + self.enableField[0:] + [1, 1, 1, 1]
-        for i in range(delta.days + 1):
-            day = start_date + timedelta(days=i)
-            dates.append(day.strftime("%d-%m-%y"))
+            delta = end_date - start_date  # returns timedelta
+            nwen = [1, 1, 1] + self.enableField[0:] + [1, 1, 1, 1]
+            for i in range(delta.days + 1):
+                day = start_date + timedelta(days=i)
+                dates.append(day.strftime("%d-%m-%y"))
 
-        self.pdfTableData = []
+            self.pdfTableData = []
 
-        self.pdfTableData.append(self.titles)
+            self.pdfTableData.append(self.titles)
 
-        self.ui.report_tableWidget.setRowCount(0)
-        self.ui.report_tableWidget.setColumnCount(len(self.titles))
-        self.ui.report_tableWidget.setHorizontalHeaderLabels(self.titles)
+            self.ui.report_tableWidget.setRowCount(0)
+            self.ui.report_tableWidget.setColumnCount(len(self.titles))
+            self.ui.report_tableWidget.setHorizontalHeaderLabels(self.titles)
 
-        header = self.ui.report_tableWidget.horizontalHeader()
-        header.setSectionResizeMode(QtWidgets.QHeaderView.ResizeToContents)
-        header.setSectionResizeMode(1, QtWidgets.QHeaderView.Stretch)
+            header = self.ui.report_tableWidget.horizontalHeader()
+            header.setSectionResizeMode(QtWidgets.QHeaderView.ResizeToContents)
+            header.setSectionResizeMode(1, QtWidgets.QHeaderView.Stretch)
 
-        for d in dates:
-            if sortusing == '':
-                result = c.execute(
-                    """SELECT SerialNo,ReportDate,ReportTime,code1_no,code2_no,code3_no,code4_no,code5_no, header1,header2,header3,header4,header5,grossWt,tareWt,netWt,Amount FROM T_Entry WHERE ReportDate=?""",
-                    (d,))
+            for d in dates:
+                if sortusing == '':
+                    result = c.execute(
+                        """SELECT SerialNo,ReportDate,ReportTime,code1_no,code2_no,code3_no,code4_no,code5_no, header1,header2,header3,header4,header5,grossWt,tareWt,netWt,Amount FROM T_Entry WHERE ReportDate=?""",
+                        (d,))
 
-                for r_num, r_data in enumerate(result):
-                    inflag = True
-                    self.ui.pb_report_pdf.setEnabled(True)
-                    self.ui.pb_report_excel.setEnabled(True)
-                    self.ui.report_tableWidget.insertRow(r_num)
-                    r_data = list(r_data)
-                    row = []
-                    for i in range(len(r_data)):
+                    for r_num, r_data in enumerate(result):
+                        inflag = True
+                        self.ui.pb_report_pdf.setEnabled(True)
+                        self.ui.pb_report_excel.setEnabled(True)
+                        self.ui.report_tableWidget.insertRow(r_num)
+                        r_data = list(r_data)
+                        row = []
+                        for i in range(len(r_data)):
 
-                        if nwen[i] == 1:
-                            row.append(r_data[i])
+                            if nwen[i] == 1:
+                                row.append(r_data[i])
 
-                    self.pdfTableData.append(row)
-                    for i in range(len(row)):
+                        self.pdfTableData.append(row)
+                        for i in range(len(row)):
 
-                        self.ui.report_tableWidget.setItem(r_num, i, QtWidgets.QTableWidgetItem(str(row[i])))
-            elif sortusing == 'header1':
-                result = c.execute(
-                    """SELECT SerialNo,ReportDate,ReportTime,code1_no,code2_no,code3_no,code4_no,code5_no, header1,header2,header3,header4,header5,grossWt,tareWt,netWt,Amount FROM T_Entry WHERE ReportDate=? AND header1=?""",
-                    (d,sortname))
-                for r_num, r_data in enumerate(result):
-                    inflag = True
-                    self.ui.pb_report_pdf.setEnabled(True)
-                    self.ui.pb_report_excel.setEnabled(True)
-                    self.ui.report_tableWidget.insertRow(r_num)
-                    r_data = list(r_data)
-                    row = []
-                    for i in range(len(r_data)):
+                            self.ui.report_tableWidget.setItem(r_num, i, QtWidgets.QTableWidgetItem(str(row[i])))
+                elif sortusing == 'header1':
+                    result = c.execute(
+                        """SELECT SerialNo,ReportDate,ReportTime,code1_no,code2_no,code3_no,code4_no,code5_no, header1,header2,header3,header4,header5,grossWt,tareWt,netWt,Amount FROM T_Entry WHERE ReportDate=? AND header1=?""",
+                        (d,sortname))
+                    for r_num, r_data in enumerate(result):
+                        inflag = True
+                        self.ui.pb_report_pdf.setEnabled(True)
+                        self.ui.pb_report_excel.setEnabled(True)
+                        self.ui.report_tableWidget.insertRow(r_num)
+                        r_data = list(r_data)
+                        row = []
+                        for i in range(len(r_data)):
 
-                        if nwen[i] == 1:
-                            row.append(r_data[i])
+                            if nwen[i] == 1:
+                                row.append(r_data[i])
 
-                    self.pdfTableData.append(row)
-                    for i in range(len(row)):
+                        self.pdfTableData.append(row)
+                        for i in range(len(row)):
 
-                        self.ui.report_tableWidget.setItem(r_num, i, QtWidgets.QTableWidgetItem(str(row[i])))
-            elif sortusing == 'header2':
-                result = c.execute(
-                    """SELECT SerialNo,ReportDate,ReportTime,code1_no,code2_no,code3_no,code4_no,code5_no, header1,header2,header3,header4,header5,grossWt,tareWt,netWt,Amount FROM T_Entry WHERE ReportDate=? AND header2=?""",
-                    (d,sortname))
-                for r_num, r_data in enumerate(result):
-                    inflag = True
-                    self.ui.pb_report_pdf.setEnabled(True)
-                    self.ui.pb_report_excel.setEnabled(True)
-                    self.ui.report_tableWidget.insertRow(r_num)
-                    r_data = list(r_data)
-                    row = []
-                    for i in range(len(r_data)):
+                            self.ui.report_tableWidget.setItem(r_num, i, QtWidgets.QTableWidgetItem(str(row[i])))
+                elif sortusing == 'header2':
+                    result = c.execute(
+                        """SELECT SerialNo,ReportDate,ReportTime,code1_no,code2_no,code3_no,code4_no,code5_no, header1,header2,header3,header4,header5,grossWt,tareWt,netWt,Amount FROM T_Entry WHERE ReportDate=? AND header2=?""",
+                        (d,sortname))
+                    for r_num, r_data in enumerate(result):
+                        inflag = True
+                        self.ui.pb_report_pdf.setEnabled(True)
+                        self.ui.pb_report_excel.setEnabled(True)
+                        self.ui.report_tableWidget.insertRow(r_num)
+                        r_data = list(r_data)
+                        row = []
+                        for i in range(len(r_data)):
 
-                        if nwen[i] == 1:
-                            row.append(r_data[i])
+                            if nwen[i] == 1:
+                                row.append(r_data[i])
 
-                    self.pdfTableData.append(row)
-                    for i in range(len(row)):
+                        self.pdfTableData.append(row)
+                        for i in range(len(row)):
 
-                        self.ui.report_tableWidget.setItem(r_num, i, QtWidgets.QTableWidgetItem(str(row[i])))
-            elif sortusing == 'header3':
-                result = c.execute(
-                    """SELECT SerialNo,ReportDate,ReportTime,code1_no,code2_no,code3_no,code4_no,code5_no, header1,header2,header3,header4,header5,grossWt,tareWt,netWt,Amount FROM T_Entry WHERE ReportDate=? AND header3=?""",
-                    (d,sortname))
-                for r_num, r_data in enumerate(result):
-                    inflag = True
-                    self.ui.pb_report_pdf.setEnabled(True)
-                    self.ui.pb_report_excel.setEnabled(True)
-                    self.ui.report_tableWidget.insertRow(r_num)
-                    r_data = list(r_data)
-                    row = []
-                    for i in range(len(r_data)):
+                            self.ui.report_tableWidget.setItem(r_num, i, QtWidgets.QTableWidgetItem(str(row[i])))
+                elif sortusing == 'header3':
+                    result = c.execute(
+                        """SELECT SerialNo,ReportDate,ReportTime,code1_no,code2_no,code3_no,code4_no,code5_no, header1,header2,header3,header4,header5,grossWt,tareWt,netWt,Amount FROM T_Entry WHERE ReportDate=? AND header3=?""",
+                        (d,sortname))
+                    for r_num, r_data in enumerate(result):
+                        inflag = True
+                        self.ui.pb_report_pdf.setEnabled(True)
+                        self.ui.pb_report_excel.setEnabled(True)
+                        self.ui.report_tableWidget.insertRow(r_num)
+                        r_data = list(r_data)
+                        row = []
+                        for i in range(len(r_data)):
 
-                        if nwen[i] == 1:
-                            row.append(r_data[i])
+                            if nwen[i] == 1:
+                                row.append(r_data[i])
 
-                    self.pdfTableData.append(row)
-                    for i in range(len(row)):
+                        self.pdfTableData.append(row)
+                        for i in range(len(row)):
 
-                        self.ui.report_tableWidget.setItem(r_num, i, QtWidgets.QTableWidgetItem(str(row[i])))
-            elif sortusing == 'header4':
-                result = c.execute(
-                    """SELECT SerialNo,ReportDate,ReportTime,code1_no,code2_no,code3_no,code4_no,code5_no, header1,header2,header3,header4,header5,grossWt,tareWt,netWt,Amount FROM T_Entry WHERE ReportDate=? AND header4=?""",
-                    (d,sortname))
-                for r_num, r_data in enumerate(result):
-                    inflag = True
-                    self.ui.pb_report_pdf.setEnabled(True)
-                    self.ui.pb_report_excel.setEnabled(True)
-                    self.ui.report_tableWidget.insertRow(r_num)
-                    r_data = list(r_data)
-                    row = []
-                    for i in range(len(r_data)):
+                            self.ui.report_tableWidget.setItem(r_num, i, QtWidgets.QTableWidgetItem(str(row[i])))
+                elif sortusing == 'header4':
+                    result = c.execute(
+                        """SELECT SerialNo,ReportDate,ReportTime,code1_no,code2_no,code3_no,code4_no,code5_no, header1,header2,header3,header4,header5,grossWt,tareWt,netWt,Amount FROM T_Entry WHERE ReportDate=? AND header4=?""",
+                        (d,sortname))
+                    for r_num, r_data in enumerate(result):
+                        inflag = True
+                        self.ui.pb_report_pdf.setEnabled(True)
+                        self.ui.pb_report_excel.setEnabled(True)
+                        self.ui.report_tableWidget.insertRow(r_num)
+                        r_data = list(r_data)
+                        row = []
+                        for i in range(len(r_data)):
 
-                        if nwen[i] == 1:
-                            row.append(r_data[i])
+                            if nwen[i] == 1:
+                                row.append(r_data[i])
 
-                    self.pdfTableData.append(row)
-                    for i in range(len(row)):
+                        self.pdfTableData.append(row)
+                        for i in range(len(row)):
 
-                        self.ui.report_tableWidget.setItem(r_num, i, QtWidgets.QTableWidgetItem(str(row[i])))
-            elif sortusing == 'header5':
-                result = c.execute(
-                    """SELECT SerialNo,ReportDate,ReportTime,code1_no,code2_no,code3_no,code4_no,code5_no, header1,header2,header3,header4,header5,grossWt,tareWt,netWt,Amount FROM T_Entry WHERE ReportDate=? AND header5=?""",
-                    (d,sortname))
-                for r_num, r_data in enumerate(result):
-                    inflag = True
-                    self.ui.pb_report_pdf.setEnabled(True)
-                    self.ui.pb_report_excel.setEnabled(True)
-                    self.ui.report_tableWidget.insertRow(r_num)
-                    r_data = list(r_data)
-                    row = []
-                    for i in range(len(r_data)):
+                            self.ui.report_tableWidget.setItem(r_num, i, QtWidgets.QTableWidgetItem(str(row[i])))
+                elif sortusing == 'header5':
+                    result = c.execute(
+                        """SELECT SerialNo,ReportDate,ReportTime,code1_no,code2_no,code3_no,code4_no,code5_no, header1,header2,header3,header4,header5,grossWt,tareWt,netWt,Amount FROM T_Entry WHERE ReportDate=? AND header5=?""",
+                        (d,sortname))
+                    for r_num, r_data in enumerate(result):
+                        inflag = True
+                        self.ui.pb_report_pdf.setEnabled(True)
+                        self.ui.pb_report_excel.setEnabled(True)
+                        self.ui.report_tableWidget.insertRow(r_num)
+                        r_data = list(r_data)
+                        row = []
+                        for i in range(len(r_data)):
 
-                        if nwen[i] == 1:
-                            row.append(r_data[i])
+                            if nwen[i] == 1:
+                                row.append(r_data[i])
 
-                    self.pdfTableData.append(row)
-                    for i in range(len(row)):
+                        self.pdfTableData.append(row)
+                        for i in range(len(row)):
 
-                        self.ui.report_tableWidget.setItem(r_num, i, QtWidgets.QTableWidgetItem(str(row[i])))
-            elif sortusing == 'code1':
-                result = c.execute(
-                    """SELECT SerialNo,ReportDate,ReportTime,code1_no,code2_no,code3_no,code4_no,code5_no, header1,header2,header3,header4,header5,grossWt,tareWt,netWt,Amount FROM T_Entry WHERE ReportDate=? AND code1_no=?""",
-                    (d,sortname))
-                for r_num, r_data in enumerate(result):
-                    inflag = True
-                    self.ui.pb_report_pdf.setEnabled(True)
-                    self.ui.pb_report_excel.setEnabled(True)
-                    self.ui.report_tableWidget.insertRow(r_num)
-                    r_data = list(r_data)
-                    row = []
-                    for i in range(len(r_data)):
+                            self.ui.report_tableWidget.setItem(r_num, i, QtWidgets.QTableWidgetItem(str(row[i])))
+                elif sortusing == 'code1':
+                    result = c.execute(
+                        """SELECT SerialNo,ReportDate,ReportTime,code1_no,code2_no,code3_no,code4_no,code5_no, header1,header2,header3,header4,header5,grossWt,tareWt,netWt,Amount FROM T_Entry WHERE ReportDate=? AND code1_no=?""",
+                        (d,sortname))
+                    for r_num, r_data in enumerate(result):
+                        inflag = True
+                        self.ui.pb_report_pdf.setEnabled(True)
+                        self.ui.pb_report_excel.setEnabled(True)
+                        self.ui.report_tableWidget.insertRow(r_num)
+                        r_data = list(r_data)
+                        row = []
+                        for i in range(len(r_data)):
 
-                        if nwen[i] == 1:
-                            row.append(r_data[i])
+                            if nwen[i] == 1:
+                                row.append(r_data[i])
 
-                    self.pdfTableData.append(row)
-                    for i in range(len(row)):
+                        self.pdfTableData.append(row)
+                        for i in range(len(row)):
 
-                        self.ui.report_tableWidget.setItem(r_num, i, QtWidgets.QTableWidgetItem(str(row[i])))
-            elif sortusing == 'code2':
-                result = c.execute(
-                    """SELECT SerialNo,ReportDate,ReportTime,code1_no,code2_no,code3_no,code4_no,code5_no, header1,header2,header3,header4,header5,grossWt,tareWt,netWt,Amount FROM T_Entry WHERE ReportDate=? AND code2_no=?""",
-                    (d,sortname))
-                for r_num, r_data in enumerate(result):
-                    inflag = True
-                    self.ui.pb_report_pdf.setEnabled(True)
-                    self.ui.pb_report_excel.setEnabled(True)
-                    self.ui.report_tableWidget.insertRow(r_num)
-                    r_data = list(r_data)
-                    row = []
-                    for i in range(len(r_data)):
+                            self.ui.report_tableWidget.setItem(r_num, i, QtWidgets.QTableWidgetItem(str(row[i])))
+                elif sortusing == 'code2':
+                    result = c.execute(
+                        """SELECT SerialNo,ReportDate,ReportTime,code1_no,code2_no,code3_no,code4_no,code5_no, header1,header2,header3,header4,header5,grossWt,tareWt,netWt,Amount FROM T_Entry WHERE ReportDate=? AND code2_no=?""",
+                        (d,sortname))
+                    for r_num, r_data in enumerate(result):
+                        inflag = True
+                        self.ui.pb_report_pdf.setEnabled(True)
+                        self.ui.pb_report_excel.setEnabled(True)
+                        self.ui.report_tableWidget.insertRow(r_num)
+                        r_data = list(r_data)
+                        row = []
+                        for i in range(len(r_data)):
 
-                        if nwen[i] == 1:
-                            row.append(r_data[i])
+                            if nwen[i] == 1:
+                                row.append(r_data[i])
 
-                    self.pdfTableData.append(row)
-                    for i in range(len(row)):
+                        self.pdfTableData.append(row)
+                        for i in range(len(row)):
 
-                        self.ui.report_tableWidget.setItem(r_num, i, QtWidgets.QTableWidgetItem(str(row[i])))
-            elif sortusing == 'code3':
-                result = c.execute(
-                    """SELECT SerialNo,ReportDate,ReportTime,code1_no,code2_no,code3_no,code4_no,code5_no, header1,header2,header3,header4,header5,grossWt,tareWt,netWt,Amount FROM T_Entry WHERE ReportDate=? AND code3_no=?""",
-                    (d,sortname))
-                for r_num, r_data in enumerate(result):
-                    inflag = True
-                    self.ui.pb_report_pdf.setEnabled(True)
-                    self.ui.pb_report_excel.setEnabled(True)
-                    self.ui.report_tableWidget.insertRow(r_num)
-                    r_data = list(r_data)
-                    row = []
-                    for i in range(len(r_data)):
+                            self.ui.report_tableWidget.setItem(r_num, i, QtWidgets.QTableWidgetItem(str(row[i])))
+                elif sortusing == 'code3':
+                    result = c.execute(
+                        """SELECT SerialNo,ReportDate,ReportTime,code1_no,code2_no,code3_no,code4_no,code5_no, header1,header2,header3,header4,header5,grossWt,tareWt,netWt,Amount FROM T_Entry WHERE ReportDate=? AND code3_no=?""",
+                        (d,sortname))
+                    for r_num, r_data in enumerate(result):
+                        inflag = True
+                        self.ui.pb_report_pdf.setEnabled(True)
+                        self.ui.pb_report_excel.setEnabled(True)
+                        self.ui.report_tableWidget.insertRow(r_num)
+                        r_data = list(r_data)
+                        row = []
+                        for i in range(len(r_data)):
 
-                        if nwen[i] == 1:
-                            row.append(r_data[i])
+                            if nwen[i] == 1:
+                                row.append(r_data[i])
 
-                    self.pdfTableData.append(row)
-                    for i in range(len(row)):
+                        self.pdfTableData.append(row)
+                        for i in range(len(row)):
 
-                        self.ui.report_tableWidget.setItem(r_num, i, QtWidgets.QTableWidgetItem(str(row[i])))
-            elif sortusing == 'code4':
-                result = c.execute(
-                    """SELECT SerialNo,ReportDate,ReportTime,code1_no,code2_no,code3_no,code4_no,code5_no, header1,header2,header3,header4,header5,grossWt,tareWt,netWt,Amount FROM T_Entry WHERE ReportDate=? AND code4_no=?""",
-                    (d,sortname))
-                for r_num, r_data in enumerate(result):
-                    inflag = True
-                    self.ui.pb_report_pdf.setEnabled(True)
-                    self.ui.pb_report_excel.setEnabled(True)
-                    self.ui.report_tableWidget.insertRow(r_num)
-                    r_data = list(r_data)
-                    row = []
-                    for i in range(len(r_data)):
+                            self.ui.report_tableWidget.setItem(r_num, i, QtWidgets.QTableWidgetItem(str(row[i])))
+                elif sortusing == 'code4':
+                    result = c.execute(
+                        """SELECT SerialNo,ReportDate,ReportTime,code1_no,code2_no,code3_no,code4_no,code5_no, header1,header2,header3,header4,header5,grossWt,tareWt,netWt,Amount FROM T_Entry WHERE ReportDate=? AND code4_no=?""",
+                        (d,sortname))
+                    for r_num, r_data in enumerate(result):
+                        inflag = True
+                        self.ui.pb_report_pdf.setEnabled(True)
+                        self.ui.pb_report_excel.setEnabled(True)
+                        self.ui.report_tableWidget.insertRow(r_num)
+                        r_data = list(r_data)
+                        row = []
+                        for i in range(len(r_data)):
 
-                        if nwen[i] == 1:
-                            row.append(r_data[i])
+                            if nwen[i] == 1:
+                                row.append(r_data[i])
 
-                    self.pdfTableData.append(row)
-                    for i in range(len(row)):
+                        self.pdfTableData.append(row)
+                        for i in range(len(row)):
 
-                        self.ui.report_tableWidget.setItem(r_num, i, QtWidgets.QTableWidgetItem(str(row[i])))
-            elif sortusing == 'code5':
-                result = c.execute(
-                    """SELECT SerialNo,ReportDate,ReportTime,code1_no,code2_no,code3_no,code4_no,code5_no, header1,header2,header3,header4,header5,grossWt,tareWt,netWt,Amount FROM T_Entry WHERE ReportDate=? AND code5_no=?""",
-                    (d,sortname))
-                for r_num, r_data in enumerate(result):
-                    inflag = True
-                    self.ui.pb_report_pdf.setEnabled(True)
-                    self.ui.pb_report_excel.setEnabled(True)
-                    self.ui.report_tableWidget.insertRow(r_num)
-                    r_data = list(r_data)
-                    row = []
-                    for i in range(len(r_data)):
+                            self.ui.report_tableWidget.setItem(r_num, i, QtWidgets.QTableWidgetItem(str(row[i])))
+                elif sortusing == 'code5':
+                    result = c.execute(
+                        """SELECT SerialNo,ReportDate,ReportTime,code1_no,code2_no,code3_no,code4_no,code5_no, header1,header2,header3,header4,header5,grossWt,tareWt,netWt,Amount FROM T_Entry WHERE ReportDate=? AND code5_no=?""",
+                        (d,sortname))
+                    for r_num, r_data in enumerate(result):
+                        inflag = True
+                        self.ui.pb_report_pdf.setEnabled(True)
+                        self.ui.pb_report_excel.setEnabled(True)
+                        self.ui.report_tableWidget.insertRow(r_num)
+                        r_data = list(r_data)
+                        row = []
+                        for i in range(len(r_data)):
 
-                        if nwen[i] == 1:
-                            row.append(r_data[i])
+                            if nwen[i] == 1:
+                                row.append(r_data[i])
 
-                    self.pdfTableData.append(row)
-                    for i in range(len(row)):
+                        self.pdfTableData.append(row)
+                        for i in range(len(row)):
 
-                        self.ui.report_tableWidget.setItem(r_num, i, QtWidgets.QTableWidgetItem(str(row[i])))
+                            self.ui.report_tableWidget.setItem(r_num, i, QtWidgets.QTableWidgetItem(str(row[i])))
 
-        if inflag == False:
-            self.showErrormsg("", "Data not available")
+            if inflag == False:
+                self.showErrormsg("", "Data not available")
 
-        c.close()
-        conn.close()
+            c.close()
+            conn.close()
+        except:
+            self.showErrormsg("","Can't fetch details")
     def createPdf(self):
         from reportlab.pdfgen import canvas
-        self.uniquenum +=1
-        self.ui.pb_report_pdf.setEnabled(False)
-        inch = 55
-        pgsize = (20 * inch, 10 * inch)
-        dt = datetime.now()
-        date = dt.strftime("%d%m%y")
-        time = dt.strftime("%H%M%S")
-        doc_name= "WB_"+str(date)+str(time)+str(self.uniquenum)+".pdf"
-        doc = SimpleDocTemplate(doc_name, pagesize=pgsize)
+        try:
 
-        date = dt.strftime("%d-%m-%y")
-        time = dt.strftime("%H:%M")
-        elements = []
-        t = Table(self.pdfTableData)
-        t.setStyle(TableStyle(
-            [
-                ('BACKGROUND', (0, 0), (-1, 0), colors.brown),
-                ('TEXTCOLOR', (0, 0), (-1, 0), colors.yellow),
-                ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
-                ('FONTNAME', (0, 0), (-1, 0), 'Courier-Bold'),
+            self.ui.calendarWidget_montly_from.hide()
+            self.ui.calendarWidget_monthly_to.hide()
+            self.ui.calendarWidget_daily.hide()
+            self.uniquenum +=1
+            self.ui.pb_report_pdf.setEnabled(False)
+            inch = 55
+            pgsize = (20 * inch, 10 * inch)
+            dt = datetime.now()
+            date = dt.strftime("%d%m%y")
+            time = dt.strftime("%H%M%S")
+            doc_name= "WB_"+str(date)+str(time)+str(self.uniquenum)+".pdf"
+            doc = SimpleDocTemplate(doc_name, pagesize=pgsize)
 
-                ('FONTSIZE', (0, 0), (-1, -1), 8),
-                ('FONTSIZE', (0, 0), (-1, 0), 9),
-                ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
-                ('BOX', (0, 0), (-1, -1), 2, colors.black),
-                ('GRID', (0, 0), (-1, -1), 2, colors.black)
-            ]
-        ))
-        style = getSampleStyleSheet()
-        elements.append(Image('logo.jpeg', 1.5 * inch, 1.5 * inch, hAlign='LEFT'))
-        elements.append(Spacer(0, -90))
-        elements.append(Paragraph('LCS Control pvt Ltd', style=ParagraphStyle('abc',
-                                                                               fontName="Helvetica-Bold",
-                                                                               fontSize=40,
-                                                                               parent=style['Heading2'],
-                                                                               alignment=1,
-                                                                               spaceAfter=14,
-                                                                              )))
-        elements.append(Spacer(0, -30))
+            date = dt.strftime("%d-%m-%y")
+            time = dt.strftime("%H:%M")
+            elements = []
+            t = Table(self.pdfTableData)
+            t.setStyle(TableStyle(
+                [
+                    ('BACKGROUND', (0, 0), (-1, 0), colors.brown),
+                    ('TEXTCOLOR', (0, 0), (-1, 0), colors.yellow),
+                    ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+                    ('FONTNAME', (0, 0), (-1, 0), 'Courier-Bold'),
 
-        elements.append(Paragraph(f"Date: {date}", style=ParagraphStyle('abc',
-                                                                        fontName="Helvetica-Bold",
-                                                                        fontSize=15,
-                                                                        parent=style['Heading2'],
-                                                                        alignment=2,
-                                                                        spaceAfter=14)))
-        elements.append(Spacer(0, -26))
+                    ('FONTSIZE', (0, 0), (-1, -1), 8),
+                    ('FONTSIZE', (0, 0), (-1, 0), 9),
+                    ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+                    ('BOX', (0, 0), (-1, -1), 2, colors.black),
+                    ('GRID', (0, 0), (-1, -1), 2, colors.black)
+                ]
+            ))
+            style = getSampleStyleSheet()
+            elements.append(Image('logo.jpeg', 1.5 * inch, 1.5 * inch, hAlign='LEFT'))
+            elements.append(Spacer(0, -90))
+            elements.append(Paragraph('LCS Control pvt Ltd', style=ParagraphStyle('abc',
+                                                                                   fontName="Helvetica-Bold",
+                                                                                   fontSize=40,
+                                                                                   parent=style['Heading2'],
+                                                                                   alignment=1,
+                                                                                   spaceAfter=14,
+                                                                                  )))
+            elements.append(Spacer(0, -30))
 
-        elements.append(Paragraph(f"Time: {time}", style=ParagraphStyle('abc',
-                                                                        fontName="Helvetica-Bold",
-                                                                        fontSize=15,
-                                                                        parent=style['Heading2'],
-                                                                        alignment=2,
-                                                                        spaceAfter=14,
-                                                                        rightIndent=21)))
-        elements.append(Spacer(0, 60))
-        elements.append(t)
-        doc.build(elements)
-        os.startfile(doc_name)
+            elements.append(Paragraph(f"Date: {date}", style=ParagraphStyle('abc',
+                                                                            fontName="Helvetica-Bold",
+                                                                            fontSize=15,
+                                                                            parent=style['Heading2'],
+                                                                            alignment=2,
+                                                                            spaceAfter=14)))
+            elements.append(Spacer(0, -26))
+
+            elements.append(Paragraph(f"Time: {time}", style=ParagraphStyle('abc',
+                                                                            fontName="Helvetica-Bold",
+                                                                            fontSize=15,
+                                                                            parent=style['Heading2'],
+                                                                            alignment=2,
+                                                                            spaceAfter=14,
+                                                                            rightIndent=21)))
+            elements.append(Spacer(0, 60))
+            elements.append(t)
+            doc.build(elements)
+            self.showErrormsg("","pdf created")
+        except:
+            self.showErrormsg("","Can't create pdf")
     def createExcel(self):
-        self.uniquenum += 2
-        self.ui.pb_report_excel.setEnabled(False)
-        dt = datetime.now()
+        try:
 
-        d = dt.strftime("%d%m%y")
-        t = dt.strftime("%H%M%S")
-        workbook = xlsxwriter.Workbook('WB_'+ str(d) + str(t) + str(self.uniquenum) + '.xlsx')
+            self.ui.calendarWidget_montly_from.hide()
+            self.ui.calendarWidget_monthly_to.hide()
+            self.ui.calendarWidget_daily.hide()
+            self.uniquenum += 2
+            self.ui.pb_report_excel.setEnabled(False)
+            dt = datetime.now()
 
-
-        worksheet = workbook.add_worksheet("My sheet")
-
-
-        for r_num, r_data in enumerate(self.pdfTableData):
-            for c_num, c_data in enumerate(r_data):
-                worksheet.write(r_num, c_num, c_data)
+            d = dt.strftime("%d%m%y")
+            t = dt.strftime("%H%M%S")
+            workbook = xlsxwriter.Workbook('WB_'+ str(d) + str(t) + str(self.uniquenum) + '.xlsx')
 
 
-        workbook.close()
+            worksheet = workbook.add_worksheet("My sheet")
+            for r_num, r_data in enumerate(self.pdfTableData):
+                for c_num, c_data in enumerate(r_data):
+                    worksheet.write(r_num, c_num, c_data)
+            workbook.close()
+            self.showErrormsg("", "Excel created")
+        except:
+            self.showErrormsg("","Can't create excel")
 class Serial(QThread):
     def __init__(self):
         super(Serial, self).__init__()
