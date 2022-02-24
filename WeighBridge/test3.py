@@ -227,16 +227,18 @@ from datetime import datetime
 #
 # # os.startfile('excel')
 # workbook.close
-# conn = sqlite3.connect("WeighBridge.db")
-# c = conn.cursor()
-# name = ["Amount","DateTime","GunnyBag","Unit"]
-# values = [True,False,True,"kg"]
+conn = sqlite3.connect("WeighBridge.db")
+c = conn.cursor()
+name = ["Amount","DateTime","GunnyBag","Unit",]
+values = [True,False,True,"kg"]
 # for i in range(len(name)):
 #     c.execute("UPDATE T_OtherSettings SET Status=? WHERE Name=?",(values[i],name[i]))
-#     # pass
-# conn.commit()
-# c.close()
-# conn.close()
+    # pass
+# c.execute("UPDATE T_OtherSettings SET Status=? WHERE Name=?",("Code",name[i]))
+# c.execute("INSERT INTO T_OtherSettings (Name,Status) VALUES (?,?)",("Display","Code"))
+conn.commit()
+c.close()
+conn.close()
 # a="ada"
 # b="12"
 # if not (a or b):
@@ -259,25 +261,25 @@ from datetime import datetime
 #
 # for i in r:
 #     print(i)
-from PyQt5.QtWidgets import *
-import sys
-
-class Window(QWidget):
-    def __init__(self):
-        QWidget.__init__(self)
-        layout = QGridLayout()
-        self.setLayout(layout)
-
-        # auto complete options
-        names = ["Apple", "Alps", "Berry", "Cherry" ]
-        completer = QCompleter(names)
-
-        # create line edit and add auto complete
-        self.lineedit = QLineEdit()
-        self.lineedit.setCompleter(completer)
-        layout.addWidget(self.lineedit, 0, 0)
-
-app = QApplication(sys.argv)
-screen = Window()
-screen.show()
-sys.exit(app.exec_())
+# from PyQt5.QtWidgets import *
+# import sys
+#
+# class Window(QWidget):
+#     def __init__(self):
+#         QWidget.__init__(self)
+#         layout = QGridLayout()
+#         self.setLayout(layout)
+#
+#         # auto complete options
+#         names = ["Apple", "Alps", "Berry", "Cherry" ]
+#         completer = QCompleter(names)
+#
+#         # create line edit and add auto complete
+#         self.lineedit = QLineEdit()
+#         self.lineedit.setCompleter(completer)
+#         layout.addWidget(self.lineedit, 0, 0)
+#
+# app = QApplication(sys.argv)
+# screen = Window()
+# screen.show()
+# sys.exit(app.exec_())
