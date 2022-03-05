@@ -24,6 +24,7 @@ from tabulate import tabulate
 
 import LcsKeyBoard
 import LoginWindow
+import GunnyBag
 from LcsKeyBoard import *
 from LcsNumKeyPad import *
 from uitest import Ui_MainWindow
@@ -138,6 +139,56 @@ class LoginWindowcls(QObject):
         if reply == QMessageBox.Yes:
             self.main_window.close()
 
+class Gunny_Bag(QObject):
+    def __init__(self):
+        super().__init__()
+        self.my_widget = QtWidgets.QWidget()
+        self.gunny = GunnyBag.Ui_Form()
+
+        self.my_widget.setWindowFlag(Qt.FramelessWindowHint)
+        self.Nkb = LcsNumKeyPad()
+        self.bagWeight = False
+        self.bagQuantity = False
+        self.keyBoardFlag = False
+        self.gunny.setupUi(self.my_widget)
+        self.gunny.le_BagWeight.mousePressEvent = self.showBagWeightKeyBoard
+        self.gunny.le_NoOfBags.mousePressEvent = self.showBagQuantityKeyBoard
+        self.gunny.pb_close.clicked.connect(self.Close)
+    def show(self):
+        self.my_widget.show()
+    def Close(self):
+        self.my_widget.close()
+    def showBagWeightKeyBoard(self, event):
+        self.bagWeight = True
+        self.Nkb.setGeometry(0, 240, 1024, 350)
+        self.Nkb.text_inputNum.setText(self.gunny.le_BagWeight.text())
+
+        self.Nkb.flgNumKeyIsActivated = True
+        self.Nkb.set_receiver(self.Nkb.text_inputNum)
+        self.Nkb.KeyboardSignal.connect(self.getBagWeight)
+        if self.keyBoardFlag:
+            self.Nkb.show()
+
+    def getBagWeight(self):
+        if self.bagWeight == True:
+            self.gunny.le_BagWeight.setText(self.Nkb.text_inputNum.text())
+        self.bagWeight = False
+
+    def showBagQuantityKeyBoard(self, event):
+        self.bagQuantity = True
+        self.Nkb.setGeometry(0, 240, 1024, 350)
+        self.Nkb.text_inputNum.setText(self.gunny.le_NoOfBags.text())
+
+        self.Nkb.flgNumKeyIsActivated = True
+        self.Nkb.set_receiver(self.Nkb.text_inputNum)
+        self.Nkb.KeyboardSignal.connect(self.getBagQuantity)
+        if self.keyBoardFlag:
+            self.Nkb.show()
+
+    def getBagQuantity(self):
+        if self.bagQuantity == True:
+            self.gunny.le_NoOfBags.setText(self.Nkb.text_inputNum.text())
+        self.bagQuantity = False
 
 class UI():
 
@@ -163,6 +214,10 @@ class UI():
         self.EntryExitButtonEnable = True
         self.parameterEditFlag = True
         self.home = False
+        self.showGunnyBagCheckBox = False
+
+        self.gbagwt = ""
+        self.gbagquantity = ""
         self.ui.tw_Home_Entry.setEditTriggers(QtWidgets.QTableWidget.NoEditTriggers)
         self.ui.tw_settings_users.setEditTriggers(QtWidgets.QTableWidget.NoEditTriggers)
         # self.t1 = threading.Thread(target=self.ShowDate)
@@ -179,6 +234,7 @@ class UI():
         # self.key.start()
         self.kb = LcsKeyBoard()
         self.Nkb = LcsNumKeyPad()
+        self.gBag = Gunny_Bag()
 
         self.serial.WeightUpdate.connect(self.WeightDisplay)
         self.setTheField()
@@ -200,12 +256,18 @@ class UI():
         self.entryHeader4Flag = False
         self.entryHFlag = False
         self.entryAmountFlag = False
+        self.entryGrossWeightFlag = False
+        self.entryTareWeightFlag = False
+        self.entryGrossWeightFlagKey = False
+        self.entryTareWeightFlagKey = False
         self.ui.le_VehicleEntry_header1_vehicle_2.mousePressEvent = self.showEntryHeader1
         self.ui.le_VehicleEntry_header2_supervisorName_2.mousePressEvent = self.showEntryHeader2
         self.ui.le_VehicleEntry_header3_count_2.mousePressEvent = self.showEntryHeader3
         self.ui.le_VehicleEntry_header4_msezDeliverNo_2.mousePressEvent = self.showEntryHeader4
         self.ui.le_VehicleEntry_header5_supplierChalanNo_2.mousePressEvent = self.showEntryHeader5
         self.ui.le_VehicleEntry_amount.mousePressEvent = self.showEntryAmount
+        self.ui.le_VehicleEntry_grossWeight_2.mousePressEvent = self.showEntryGrossWeight
+        self.ui.le_VehicleEntry_tareWeight_2.mousePressEvent = self.showEntryTareWeight
         # Mouse Event Exit Page
         self.exitSerialFlag = False
         self.exitHeader1Flag = False
@@ -215,6 +277,10 @@ class UI():
         self.exitHeader5Flag = False
         self.exitHFlag = False
         self.exitAmountFlag = False
+        self.exitGrossWeightFlag = False
+        self.exitTareWeightFlag = False
+        self.exitGrossWeightFlagKey = False
+        self.exitTareWeightFlagKey = False
         self.ui.le_VehicleReEntry_serialNumber_3.mousePressEvent = self.showExitSerialNo
         self.ui.le_VehicleReEntry_header1_vehicle_3.mousePressEvent = self.showExitHeader1
         self.ui.le_VehicleReEntry_header2_supervisorName_3.mousePressEvent = self.showExitHeader2
@@ -222,6 +288,8 @@ class UI():
         self.ui.le_VehicleReEntry_header4_msezDeliverNo_3.mousePressEvent = self.showExitHeader4
         self.ui.le_VehicleReEntry_header5_supplierChalanNo_3.mousePressEvent = self.showExitHeader5
         self.ui.le_VehicleReEntry_amount_3.mousePressEvent = self.showExitAmount
+        self.ui.le_VehicleReEntry_grossWeight_3.mousePressEvent = self.showExitGrossWeight
+        self.ui.le_VehicleReEntry_tareWeight_3.mousePressEvent = self.showExitTareWeight
         self.ui.cb_virtualKeyBoard.setChecked(True)
         # Mouse Event Paramter page
         self.code1Flag = False
@@ -316,9 +384,14 @@ class UI():
         self.ui.pb_VehicleEntry_save.clicked.connect(self.VehicleEntrySave)
         self.ui.pb_VehicleEntry_G_weight.clicked.connect(self.Entry_getGrossWeight)
         self.ui.pb_VehicleEntry_T_Weight.clicked.connect(self.Entry_getTareWeight)
-        # self.ui.lb_VehicleEntry_netWeight.setHidden(True)
-        # self.ui.le_VehicleEntry_netWeight.setHidden(True)
-        # self.ui.lb_vehicleEntry_unit_net.setHidden(True)
+
+        self.ui.mic_entry.clicked.connect(self.S2TEntry)
+        self.ui.mic_reentry.clicked.connect(self.S2TReEntry)
+        self.ui.cb_VehicleEntry_GunnyBag.stateChanged.connect(self.Entry_ShowGunnyBag)
+        self.ui.cb_VehicleEntry_ManualEntry.stateChanged.connect(self.Entry_ManualEntryState)
+        self.ui.rb_VehicleEntry_GrossWeight.setEnabled(False)
+        self.ui.rb_VehicleEntry_TareWeight.setEnabled(False)
+
 
         ## Setting up Vehicle exit Page
         self.ui.pb_VehicleReEntry_close_3.clicked.connect(self.showHome)
@@ -329,8 +402,11 @@ class UI():
         self.ui.pb_VehicleReEntry_G_weight_3.clicked.connect(self.Exit_getGrossWeight)
         self.ui.pb_VehicleReEntry_T_Weight_3.clicked.connect(self.Exit_getTareWeight)
         self.ui.le_VehicleReEntry_netWeight_3.setReadOnly(True)
-        # self.ui.pb_VehicleReEntry_N_weight_3.clicked.connect(self.Exit_netWeight)
+        self.ui.pb_VehicleReEntry_N_weight_3.setHidden(True)
+
+        self.ui.pb_VehicleReEntry_N_weight_3.clicked.connect(self.Exit_netWeight)
         self.ui.pb_VehicleReEntry_save_2.clicked.connect(self.Exit_Save)
+
 
         ## Setting up Parameter Settings Page
         self.ui.cb_parameter_VehicleEntry_Code2.stateChanged.connect(self.EntrycheckboxCode2)
@@ -352,6 +428,7 @@ class UI():
         self.ui.cb_parameter_VehicleExit_header5.stateChanged.connect(self.Exitcheckboxheader5)
 
         self.ui.cb_parameter_Amount.stateChanged.connect(self.checkboxAmount)
+        self.ui.cb_parameter_ManualEntry.stateChanged.connect(self.checkboxManulaEntry)
         self.ui.cb_parameter_DateTime.stateChanged.connect(self.checkboxDateTime)
         self.ui.cb_parameter_GunnyBag.stateChanged.connect(self.checkboxGunnyBag)
 
@@ -578,10 +655,11 @@ class UI():
         tarebtnClicked = True
 
     def keyBoardCheck(self):
-        print(self.ui.cb_virtualKeyBoard.isChecked())
+        # print(self.ui.cb_virtualKeyBoard.isChecked())
         if self.ui.cb_virtualKeyBoard.isChecked():
             self.keyBoardFlag = True
             self.loginKeyBoard = True
+
         else:
             self.keyBoardFlag = False
             self.loginKeyBoard = False
@@ -729,6 +807,7 @@ class UI():
         reply = QMessageBox.question(None, "Close", "Are you sure?", QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
 
         if reply == QMessageBox.Yes:
+            self.ui.mic_entry.setEnabled(False)
             self.setParameters()
             self.ui.stackedWidgetMain.setCurrentWidget(self.ui.Home)
             self.setTheField()
@@ -740,7 +819,6 @@ class UI():
         DateTime = datetime.now()
         date = DateTime.strftime("%d-%m-%y")
         #     time_ = DateTime.strftime("%H:%M:%S")
-        self.ui.lb_DateDisplay.setText(str(date))
         #     self.ui.lb_TimeDisplay.setText(str(time_))
         current_time = QTime.currentTime()
 
@@ -748,7 +826,34 @@ class UI():
         label_time = current_time.toString('hh:mm:ss')
 
         # showing it to the label
+
+        self.ui.lb_DateDisplay.setText(str(date))
         self.ui.lb_TimeDisplay.setText(label_time)
+
+        self.ui.lb_DateDisplay_2.setText(str(date))
+        self.ui.lb_TimeDisplay_2.setText(label_time)
+
+        self.ui.lb_DateDisplay_3.setText(str(date))
+        self.ui.lb_TimeDisplay_3.setText(label_time)
+
+        self.ui.lb_DateDisplay_4.setText(str(date))
+        self.ui.lb_TimeDisplay_4.setText(label_time)
+
+        self.ui.lb_DateDisplay_5.setText(str(date))
+        self.ui.lb_TimeDisplay_5.setText(label_time)
+
+        self.ui.lb_DateDisplay_6.setText(str(date))
+        self.ui.lb_TimeDisplay_6.setText(label_time)
+
+        if self.manualEntryFlag == True:
+            self.ui.pb_VehicleReEntry_T_Weight_3.setHidden(True)
+            self.ui.pb_VehicleReEntry_G_weight_3.setHidden(True)
+            self.ui.pb_VehicleReEntry_N_weight_3.setHidden(False)
+        else:
+            self.ui.pb_VehicleReEntry_T_Weight_3.setHidden(False)
+            self.ui.pb_VehicleReEntry_G_weight_3.setHidden(False)
+            self.ui.pb_VehicleReEntry_N_weight_3.setHidden(True)
+
 
     def WeightDisplay(self, w):
         self.ui.lb_home_WeightDisplay.setText(w)
@@ -802,6 +907,51 @@ class UI():
         self.conn.close()
 
     # Functions used in Vehicle Entry page
+    def S2TEntry(self):
+
+        m=QMessageBox()
+        m.setWindowTitle("INFO")
+        m.setText("Please Talk")
+        self.ui.le_VehicleEntry_header1_vehicle_2.setText("Please Talk...")
+        m.exec_()
+        try:
+            import speech_recognition as sr
+            r = sr.Recognizer()
+            with sr.Microphone() as source:
+                # read the audio data from the default microphone
+                audio_data = r.listen(source)
+            # convert speech to text
+            text = r.recognize_google(audio_data)
+            text = "".join(text.split())
+            self.ui.le_VehicleEntry_header1_vehicle_2.setText(text.upper())
+        except Exception as e:
+            print(e)
+            m = QMessageBox()
+            m.setWindowTitle("INFO")
+            m.setText("Can't Recognize!!!")
+            m.exec_()
+
+    def S2TReEntry(self):
+        m=QMessageBox()
+        m.setWindowTitle("INFO")
+        m.setText("Please Talk")
+        self.ui.le_VehicleReEntry_header1_vehicle_3.setText("Please Talk...")
+        m.exec_()
+        import speech_recognition as sr
+        r = sr.Recognizer()
+        with sr.Microphone() as source:
+            # read the audio data from the default microphone
+            audio_data = r.listen(source)
+        try:
+            # convert speech to text
+            text = r.recognize_google(audio_data)
+            text = "".join(text.split())
+            self.ui.le_VehicleReEntry_header1_vehicle_3.setText(text.upper())
+        except:
+            m = QMessageBox()
+            m.setWindowTitle("INFO")
+            m.setText("Can't Recognize!!!")
+            m.exec_()
     def showVehicleEntry(self):
         self.home = False
         self.ui.stackedWidgetMain.setCurrentWidget(self.ui.VehicleEntry)
@@ -813,6 +963,9 @@ class UI():
         self.Entry_settingReadOnly()
         self.Entry_setInitialValues()
         self.setEntryInitialStyleSheets()  # changed
+        self.Entry_ClearGrossWeightFlag = False
+        self.Entry_ClearTareWeightFlag = False
+        self.ui.cb_VehicleEntry_GunnyBag.setHidden(True)
 
     def showEntryHeader1(self, event):
         self.entryHeader1Flag = True
@@ -941,6 +1094,40 @@ class UI():
             self.ui.le_VehicleEntry_amount.setText(self.Nkb.text_inputNum.text())
 
         self.entryAmountFlag = False
+    def showEntryGrossWeight(self, event):
+        if self.manualEntryFlag == True and self.entryGrossWeightFlagKey == True:
+            self.entryGrossWeightFlag = True
+            self.Nkb.setGeometry(0, 240, 1024, 350)
+            self.Nkb.text_inputNum.setText(self.ui.le_VehicleEntry_grossWeight_2.text())
+
+            self.Nkb.flgNumKeyIsActivated = True
+            self.Nkb.set_receiver(self.Nkb.text_inputNum)
+            self.Nkb.KeyboardSignal.connect(self.getEntryGrossWeight)
+            if self.keyBoardFlag:
+                self.Nkb.show()
+
+    def getEntryGrossWeight(self):
+        if self.entryGrossWeightFlag == True :
+            self.ui.le_VehicleEntry_grossWeight_2.setText(self.Nkb.text_inputNum.text())
+
+        self.entryGrossWeightFlag = False
+    def showEntryTareWeight(self, event):
+        if self.manualEntryFlag == True and self.entryTareWeightFlagKey == True:
+            self.entryTareWeightFlag = True
+            self.Nkb.setGeometry(0, 240, 1024, 350)
+            self.Nkb.text_inputNum.setText(self.ui.le_VehicleEntry_tareWeight_2.text())
+
+            self.Nkb.flgNumKeyIsActivated = True
+            self.Nkb.set_receiver(self.Nkb.text_inputNum)
+            self.Nkb.KeyboardSignal.connect(self.getEntryTareWeight)
+            if self.keyBoardFlag:
+                self.Nkb.show()
+
+    def getEntryTareWeight(self):
+        if self.entryTareWeightFlag == True:
+            self.ui.le_VehicleEntry_tareWeight_2.setText(self.Nkb.text_inputNum.text())
+
+        self.entryTareWeightFlag = False
 
     def Entry_setInitialValues(self):
         self.conn = sqlite3.connect('WeighBridge.db')
@@ -965,6 +1152,8 @@ class UI():
         self.ui.le_VehicleEntry_header3_count_2.clear()
         self.ui.le_VehicleEntry_header2_supervisorName_2.clear()
         self.ui.le_VehicleEntry_header1_vehicle_2.clear()
+        self.ui.le_VehicleEntry_amount.clear()
+
 
     def Entry_settingReadOnly(self):
         self.ui.le_VehicleEntry_grossDate.setReadOnly(True)
@@ -990,7 +1179,7 @@ class UI():
         # self.ui.le_VehicleEntry_code2.setEnabled(False)
         # self.ui.le_VehicleEntry_name_6.setEnabled(False)
         self.ui.le_VehicleEntry_amount.setEnabled(False)
-
+        self.ui.gb_VehicleEntry_ManualEntry.setEnabled(False)
         self.ui.pb_VehicleEntry_save.setEnabled(False)
         self.ui.pb_VehicleEntry_cancel.setEnabled(False)
         self.ui.pb_VehicleEntry_G_weight.setEnabled(False)
@@ -1016,12 +1205,15 @@ class UI():
         # self.ui.le_VehicleEntry_code2.setEnabled(True)
         # self.ui.le_VehicleEntry_name_6.setEnabled(True)
         self.ui.le_VehicleEntry_amount.setEnabled(True)
+        self.ui.gb_VehicleEntry_ManualEntry.setEnabled(True)
         self.ui.pb_VehicleEntry_G_weight.setEnabled(True)
         self.ui.pb_VehicleEntry_T_Weight.setEnabled(True)
+        self.ui.mic_entry.setEnabled(True)
 
     def VehicleEntryCancel(self):
         reply = QMessageBox.question(None, "Cancel", "Are you sure?", QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
         if reply == QMessageBox.Yes:
+            self.ui.mic_entry.setEnabled(False)
             self.ui.pb_VehicleEntry_entry.setEnabled(True)
             self.Entry_disableCancelSaveAllLe()
             self.Entry_setInitialValues()
@@ -1039,6 +1231,8 @@ class UI():
         self.entryfields = []  # changed
 
         self.exitfields = []  # changed
+        self.manualEntryFlag = False
+
         self.conn = sqlite3.connect('WeighBridge.db')
         self.c = self.conn.cursor()
         result = self.c.execute("SELECT EN_ED, EX_ED FROM T_CodeAndHeader")
@@ -1220,6 +1414,11 @@ class UI():
         else:
             self.ui.lb_VehicleEntry_amount.setHidden(False)
             self.ui.le_VehicleEntry_amount.setHidden(False)
+        if values[2] == "0":
+            self.showGunnyBagCheckBox = False
+        else:
+            self.showGunnyBagCheckBox = True
+
         if values[3] == "Tonne":
             self.ui.lb_vehicleEntry_unit.setText("Tonne")
             self.ui.lb_vehicleReEntry_unit.setText("Tonne")
@@ -1240,6 +1439,11 @@ class UI():
             self.ui.lb_vehicleReEntry_unit_tare.setText("Kg")
             self.ui.lb_vehicleReEntry_unit_net.setText("Kg")
             self.ui.lb_home_unit.setText("Kg")
+        if values[5] == "0":
+            self.ui.gb_VehicleEntry_ManualEntry.setHidden(True)
+        else:
+            self.ui.gb_VehicleEntry_ManualEntry.setHidden(False)
+            self.manualEntryFlag = True
 
         self.entryComboboxType = values[4]
         self.c.close()
@@ -1282,7 +1486,8 @@ class UI():
         taredate = self.ui.le_VehicleEntry_tareDate.text()
         taretime = self.ui.le_VehicleEntry_tareTime.text()
         amount = self.ui.le_VehicleEntry_amount.text()
-
+        gBagwt = self.gbagwt
+        gbagquantity = self.gbagquantity
         Fields = [code1, code2, code3, code4, code5, header1, header2, header3, header4, header5]  # changed
         for i in self.entryfields:  # changed
             saveFields.append(self.names.index(i))
@@ -1308,9 +1513,9 @@ class UI():
                     rdate = grossdate
                     rtime = grosstime
                     a = (currSerialNo, header1, header2, header3, header4, header5, code1, code2, code3, code4, code5,
-                         grosswt, grossunit, grosstime, grossdate, amount, rdate, rtime)
+                         grosswt, grossunit, grosstime, grossdate, amount, rdate, rtime, gBagwt, gbagquantity)
                     self.c.execute(
-                        "INSERT INTO T_Entry (SerialNo,header1,header2,header3,header4,header5,code1_no,code2_no,code3_no,code4_no,code5_no,grossWt,grossUnit,grossTime,grossDate,Amount,ReportDate,ReportTime) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                        "INSERT INTO T_Entry (SerialNo,header1,header2,header3,header4,header5,code1_no,code2_no,code3_no,code4_no,code5_no,grossWt,grossUnit,grossTime,grossDate,Amount,ReportDate,ReportTime,BagWeight,BagQuantity) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
                         a)
                     self.conn.commit()
                     self.setEntryInitialStyleSheets()  # changed
@@ -1325,9 +1530,9 @@ class UI():
                     rtime = taretime
                     a = (currSerialNo, header1, header2, header3, header4, header5, code1, code2, code3, code4, code5,
                          tarewt,
-                         tareunit, taretime, taredate, amount, rdate, rtime)
+                         tareunit, taretime, taredate, amount, rdate, rtime, gBagwt, gbagquantity)
                     self.c.execute(
-                        "INSERT INTO T_Entry (SerialNo,header1,header2,header3,header4,header5,code1_no,code2_no,code3_no,code4_no,code5_no,tareWt,tareUnit,tareTime,tareDate,Amount,ReportDate,ReportTime) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                        "INSERT INTO T_Entry (SerialNo,header1,header2,header3,header4,header5,code1_no,code2_no,code3_no,code4_no,code5_no,tareWt,tareUnit,tareTime,tareDate,Amount,ReportDate,ReportTime,BagWeight,BagQuantity) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
                         a)
                     self.conn.commit()
                     self.setEntryInitialStyleSheets()  # changed
@@ -1426,34 +1631,117 @@ class UI():
         # os.remove(status)
 
     def Entry_getGrossWeight(self):
-        self.ui.pb_VehicleEntry_G_weight.setEnabled(False)
-        self.ui.pb_VehicleEntry_T_Weight.setEnabled(False)
-        try:
-            self.ui.le_VehicleEntry_grossWeight_2.setText(self.weight)
-            DateTime = datetime.now()  # changed
-            date = DateTime.strftime("%d-%m-%y")  # changed
-            time_ = DateTime.strftime("%H:%M:%S")  # changed
 
-            self.ui.le_VehicleEntry_grossDate.setText(str(date))  # changed
 
-            self.ui.le_VehicleEntry_grossTime.setText(str(time_))  # changed
-        except:
-            self.showErrormsg("Error", "No weight values")
+        if self.Entry_ClearGrossWeightFlag == False:
+            # self.ui.pb_VehicleEntry_G_weight.setEnabled(False)
+            if self.showGunnyBagCheckBox == True:
+                self.ui.cb_VehicleEntry_GunnyBag.setHidden(False)
+            self.ui.pb_VehicleEntry_T_Weight.setEnabled(False)
+            try:
+                if self.ui.cb_VehicleEntry_ManualEntry.isChecked():
+
+                    if self.ui.rb_VehicleEntry_GrossWeight.isChecked():
+                        self.entryGrossWeightFlagKey = True
+                        self.entryTareWeightFlagKey = False
+                        self.ui.le_VehicleEntry_grossWeight_2.setReadOnly(False)
+                        self.ui.le_VehicleEntry_tareWeight_2.setReadOnly(True)
+                    # elif self.ui.rb_VehicleEntry_TareWeight.isChecked():
+                    #     self.entryGrossWeightFlagKey = False
+                    #     self.entryTareWeightFlagKey = True
+                    #
+                    #     self.ui.le_VehicleEntry_grossWeight_2.setReadOnly(True)
+                    #     self.ui.le_VehicleEntry_tareWeight_2.setReadOnly(False)
+                else:
+                    self.ui.le_VehicleEntry_grossWeight_2.setText(self.weight)
+                DateTime = datetime.now()  # changed
+                date = DateTime.strftime("%d-%m-%y")  # changed
+                time_ = DateTime.strftime("%H:%M:%S")  # changed
+
+                self.ui.le_VehicleEntry_grossDate.setText(str(date))  # changed
+
+                self.ui.le_VehicleEntry_grossTime.setText(str(time_))  # changed
+                self.Entry_ClearGrossWeightFlag = True
+                self.ui.pb_VehicleEntry_G_weight.setIcon(QIcon("WeighBridgeScreens/Button/delete.png"))
+            except:
+                self.showErrormsg("Error", "No weight values")
+                self.ui.le_VehicleEntry_grossWeight_2.setText("0")
+
+        else:
+            # pass
+            self.ui.le_VehicleEntry_grossWeight_2.clear()
+            self.ui.le_VehicleEntry_grossDate.clear()
+            self.ui.le_VehicleEntry_grossTime.clear()
+            self.ui.pb_VehicleEntry_G_weight.setIcon(QIcon("WeighBridgeScreens/Button/gross-weight.png"))
+            self.Entry_ClearGrossWeightFlag = False
+            self.ui.pb_VehicleEntry_T_Weight.setEnabled(True)
+            self.ui.cb_VehicleEntry_GunnyBag.setHidden(True)
+
 
     def Entry_getTareWeight(self):
-        self.ui.pb_VehicleEntry_G_weight.setEnabled(False)
-        self.ui.pb_VehicleEntry_T_Weight.setEnabled(False)
-        try:
-            self.ui.le_VehicleEntry_tareWeight_2.setText(self.weight)
-            DateTime = datetime.now()  # changed
-            date = DateTime.strftime("%d-%m-%y")  # changed
-            time_ = DateTime.strftime("%H:%M:%S")  # changed
 
-            self.ui.le_VehicleEntry_tareDate.setText(str(date))  # changed
+        if self.Entry_ClearTareWeightFlag == False:
+            self.ui.pb_VehicleEntry_G_weight.setEnabled(False)
+            try:
+                if self.ui.cb_VehicleEntry_ManualEntry.isChecked():
+                    # if self.ui.rb_VehicleEntry_GrossWeight.isChecked():
+                    #     self.entryGrossWeightFlagKey = True
+                    #     self.entryTareWeightFlagKey = False
+                    #     self.ui.le_VehicleEntry_grossWeight_2.setReadOnly(False)
+                    #     self.ui.le_VehicleEntry_tareWeight_2.setReadOnly(True)
+                    if self.ui.rb_VehicleEntry_TareWeight.isChecked():
+                        self.entryGrossWeightFlagKey = False
+                        self.entryTareWeightFlagKey = True
+                        self.ui.le_VehicleEntry_grossWeight_2.setReadOnly(True)
+                        self.ui.le_VehicleEntry_tareWeight_2.setReadOnly(False)
+                else:
+                    self.ui.le_VehicleEntry_tareWeight_2.setText(self.weight)
+                DateTime = datetime.now()  # changed
+                date = DateTime.strftime("%d-%m-%y")  # changed
+                time_ = DateTime.strftime("%H:%M:%S")  # changed
 
-            self.ui.le_VehicleEntry_tareTime.setText(str(time_))  # changed
-        except:
-            self.showErrormsg("Error", "No weight values")
+                self.ui.le_VehicleEntry_tareDate.setText(str(date))  # changed
+
+                self.ui.le_VehicleEntry_tareTime.setText(str(time_))  # changed
+                self.Entry_ClearTareWeightFlag = True
+                self.ui.pb_VehicleEntry_T_Weight.setIcon(QIcon("WeighBridgeScreens/Button/delete.png"))
+
+            except:
+                self.showErrormsg("Error", "No weight values")
+                self.ui.le_VehicleEntry_tareWeight_2.setText("0")
+
+
+        else:
+            self.ui.le_VehicleEntry_tareWeight_2.clear()
+            self.ui.le_VehicleEntry_tareDate.clear()
+            self.ui.le_VehicleEntry_tareTime.clear()
+            self.Entry_ClearTareWeightFlag = False
+            self.ui.pb_VehicleEntry_T_Weight.setIcon(QIcon("WeighBridgeScreens/Button/gross-weight.png"))
+            self.ui.pb_VehicleEntry_G_weight.setEnabled(True)
+    def Entry_ManualEntryState(self):
+        if self.ui.cb_VehicleEntry_ManualEntry.isChecked():
+            self.ui.rb_VehicleEntry_GrossWeight.setEnabled(True)
+            self.ui.rb_VehicleEntry_TareWeight.setEnabled(True)
+        else:
+            self.ui.rb_VehicleEntry_GrossWeight.setEnabled(False)
+            self.ui.rb_VehicleEntry_TareWeight.setEnabled(False)
+
+
+    def Entry_ShowGunnyBag(self):
+        if self.ui.cb_VehicleEntry_GunnyBag.isChecked():
+            self.gBag.keyBoardFlag = self.keyBoardFlag
+            self.gBag.show()
+            self.gBag.gunny.pb_ok.clicked.connect(self.getGunnyBagDetails)
+        else:
+            self.gBag.my_widget.close()
+
+    def getGunnyBagDetails(self):
+        self.gbagwt = self.gBag.gunny.le_BagWeight.text()
+        self.gbagquantity = self.gBag.gunny.le_NoOfBags.text()
+        if self.gbagwt and self.gbagquantity:
+            self.gBag.my_widget.close()
+        else:
+            self.showErrormsg("","Enter both the fields")
 
     def getLableNameFromDB(self):
         self.conn = sqlite3.connect('WeighBridge.db')
@@ -1541,6 +1829,7 @@ class UI():
             code5.append(c5[0])
             name5.append(c5[1])
         font = QFont("MS Shell Dlg 2",12)
+        # font.setBold(True)
         if self.entryComboboxType == "Code":
             self.ui.combo_VehicleEntry_code1_materia_2.addItems(code1)
             self.ui.combo_VehicleEntry_code1_materia_2.setFont(font)
@@ -1619,9 +1908,11 @@ class UI():
         self.Exit_settingReadOnly()
         self.Exit_setInitialValues()
         self.Exit_addCompleter()
+        self.Exit_ClearGrossWeightFlag = False
+
 
     def showExitHeader1(self, event):
-        self.exitHeader2Flag = True
+        self.exitHeader1Flag = True
         self.kb.setGeometry(0, 240, 1024, 350)
         self.kb.text_input.setText(self.ui.le_VehicleReEntry_header1_vehicle_3.text())
         self.kb.text_input1.setText(self.ui.le_VehicleReEntry_header1_vehicle_3.text())
@@ -1762,6 +2053,41 @@ class UI():
             self.ui.le_VehicleReEntry_serialNumber_3.setText(self.Nkb.text_inputNum.text())
         self.exitSerialFlag = False
 
+    def showExitGrossWeight(self, event):
+        if self.manualEntryFlag == True and self.exitGrossWeightFlagKey == True:
+            self.exitGrossWeightFlag = True
+            self.Nkb.setGeometry(0, 240, 1024, 350)
+            self.Nkb.text_inputNum.setText(self.ui.le_VehicleReEntry_grossWeight_3.text())
+
+            self.Nkb.flgNumKeyIsActivated = True
+            self.Nkb.set_receiver(self.Nkb.text_inputNum)
+            self.Nkb.KeyboardSignal.connect(self.getExitGrossWeight)
+            if self.keyBoardFlag:
+                self.Nkb.show()
+
+    def getExitGrossWeight(self):
+        if self.exitGrossWeightFlag == True:
+            self.ui.le_VehicleReEntry_grossWeight_3.setText(self.Nkb.text_inputNum.text())
+
+        self.exitGrossWeightFlag = False
+
+    def showExitTareWeight(self, event):
+        if self.manualEntryFlag == True and self.exitTareWeightFlagKey == True:
+            self.exitTareWeightFlag = True
+            self.Nkb.setGeometry(0, 240, 1024, 350)
+            self.Nkb.text_inputNum.setText(self.ui.le_VehicleReEntry_tareWeight_3.text())
+
+            self.Nkb.flgNumKeyIsActivated = True
+            self.Nkb.set_receiver(self.Nkb.text_inputNum)
+            self.Nkb.KeyboardSignal.connect(self.getExitTareWeight)
+            if self.keyBoardFlag:
+                self.Nkb.show()
+
+    def getExitTareWeight(self):
+        if self.exitTareWeightFlag == True:
+            self.ui.le_VehicleReEntry_tareWeight_3.setText(self.Nkb.text_inputNum.text())
+
+        self.exitGrossWeightFlag = False
     def Exit_addCompleter(self):
         self.conn = sqlite3.connect("WeighBridge.db")
         self.c = self.conn.cursor()
@@ -1798,7 +2124,7 @@ class UI():
         self.ui.pb_VehicleReEntry_cancel_2.setEnabled(False)
         self.ui.pb_VehicleReEntry_G_weight_3.setEnabled(False)
         self.ui.pb_VehicleReEntry_T_Weight_3.setEnabled(False)
-        # self.ui.pb_VehicleReEntry_N_weight_3.setEnabled(False)
+        self.ui.pb_VehicleReEntry_N_weight_3.setEnabled(False)
 
     def Exit_settingReadOnly(self):
         self.ui.le_VehicleReEntry_grossDate_2.setReadOnly(True)
@@ -1849,11 +2175,13 @@ class UI():
         self.ui.pb_VehicleReEntry_G_weight_3.setEnabled(True)
         self.ui.pb_VehicleReEntry_T_Weight_3.setEnabled(True)
 
-        # self.ui.pb_VehicleReEntry_N_weight_3.setEnabled(True)
+        self.ui.pb_VehicleReEntry_N_weight_3.setEnabled(True)
+        self.ui.mic_reentry.setEnabled(True)
 
     def Exit_Cancel(self):
         reply = QMessageBox.question(None, "Cancel", "Are you sure?", QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
         if reply == QMessageBox.Yes:
+            self.ui.mic_reentry.setEnabled(False)
             self.ui.pb_VehicleReEntry_entry_2.setEnabled(True)
             self.Exit_disableCancelSaveAllLe()
             self.Exit_setInitialValues()
@@ -1862,6 +2190,11 @@ class UI():
         snum = self.ui.le_VehicleReEntry_serialNumber_3.text()
         # self.Exit_setInitialValues()
         flag = 1
+        DateTime = datetime.now()  # changed
+        date = DateTime.strftime("%d-%m-%y")  # changed
+        time_ = DateTime.strftime("%H:%M:%S")  # changed
+
+          # changed
         self.conn = sqlite3.connect("WeighBridge.db")
         self.c = self.conn.cursor()
         try:
@@ -1889,14 +2222,28 @@ class UI():
                     self.ui.le_VehicleReEntry_grossWeight_3.setText(data[11])
                     self.ui.le_VehicleReEntry_grossTime_2.setText(data[13])
                     self.ui.le_VehicleReEntry_grossDate_2.setText(data[14])
+                    if self.manualEntryFlag == True:
+                        self.exitTareWeightFlagKey = True
+                        self.ui.le_VehicleReEntry_tareWeight_3.setReadOnly(False)
+                        self.ui.pb_VehicleReEntry_T_Weight_3.setHidden(True)
+                        self.ui.pb_VehicleReEntry_G_weight_3.setHidden(True)
+                        self.ui.le_VehicleReEntry_tareTime_2.setText(str(time_))  # changed
+                        self.ui.le_VehicleReEntry_tareDate_2.setText(str(date))
+
                 elif data[15]:
                     self.ui.pb_VehicleReEntry_T_Weight_3.setEnabled(False)
-                    self.ui.pb_VehicleReEntry_G_weight_3.setEnabled(True
-                                                                    )
+                    self.ui.pb_VehicleReEntry_G_weight_3.setEnabled(True)
 
                     self.ui.le_VehicleReEntry_tareWeight_3.setText(data[15])
                     self.ui.le_VehicleReEntry_tareTime_2.setText(data[17])
                     self.ui.le_VehicleReEntry_tareDate_2.setText(data[18])
+                    if self.manualEntryFlag == True:
+                        self.exitGrossWeightFlagKey = True
+                        self.ui.le_VehicleReEntry_grossWeight_3.setReadOnly(False)
+                        self.ui.pb_VehicleReEntry_T_Weight_3.setHidden(True)
+                        self.ui.pb_VehicleReEntry_G_weight_3.setHidden(True)
+                        self.ui.le_VehicleReEntry_grossDate_2.setText(str(date))  # changed
+                        self.ui.le_VehicleReEntry_grossTime_2.setText(str(time_))
             if flag == 1:
                 raise Exception()
 
@@ -1911,6 +2258,9 @@ class UI():
         hd = self.ui.le_VehicleReEntry_header1_vehicle_3.text()
         # self.Exit_setInitialValues()
         flag = 1
+        DateTime = datetime.now()  # changed
+        date = DateTime.strftime("%d-%m-%y")  # changed
+        time_ = DateTime.strftime("%H:%M:%S")  # changed
         self.conn = sqlite3.connect("WeighBridge.db")
         self.c = self.conn.cursor()
         try:
@@ -1938,14 +2288,25 @@ class UI():
                     self.ui.le_VehicleReEntry_grossWeight_3.setText(data[11])
                     self.ui.le_VehicleReEntry_grossTime_2.setText(data[13])
                     self.ui.le_VehicleReEntry_grossDate_2.setText(data[14])
+                    if self.manualEntryFlag == True:
+                        self.ui.le_VehicleReEntry_tareWeight_3.setReadOnly(False)
+                        self.ui.pb_VehicleReEntry_T_Weight_3.setHidden(True)
+                        self.ui.pb_VehicleReEntry_G_weight_3.setHidden(True)
+                        self.ui.le_VehicleReEntry_tareTime_2.setText(str(time_))  # changed
+                        self.ui.le_VehicleReEntry_tareDate_2.setText(str(date))
                 elif data[15]:
                     self.ui.pb_VehicleReEntry_T_Weight_3.setEnabled(False)
-                    self.ui.pb_VehicleReEntry_G_weight_3.setEnabled(True
-                                                                    )
+                    self.ui.pb_VehicleReEntry_G_weight_3.setEnabled(True)
 
                     self.ui.le_VehicleReEntry_tareWeight_3.setText(data[15])
                     self.ui.le_VehicleReEntry_tareTime_2.setText(data[17])
                     self.ui.le_VehicleReEntry_tareDate_2.setText(data[18])
+                    if self.manualEntryFlag == True:
+                        self.ui.le_VehicleReEntry_grossWeight_3.setReadOnly(False)
+                        self.ui.pb_VehicleReEntry_T_Weight_3.setHidden(True)
+                        self.ui.pb_VehicleReEntry_G_weight_3.setHidden(True)
+                        self.ui.le_VehicleReEntry_grossDate_2.setText(str(date))  # changed
+                        self.ui.le_VehicleReEntry_grossTime_2.setText(str(time_))
             if flag == 1:
                 raise Exception()
 
@@ -2106,38 +2467,72 @@ class UI():
             self.Printout(filename)
 
     def Exit_getGrossWeight(self):
-        self.ui.pb_VehicleReEntry_G_weight_3.setEnabled(False)
-        self.ui.pb_VehicleReEntry_T_Weight_3.setEnabled(False)
-        try:
-            self.ui.le_VehicleReEntry_grossWeight_3.setText(self.weight)  # changed
-            DateTime = datetime.now()  # changed
-            date = DateTime.strftime("%d-%m-%y")  # changed
-            time_ = DateTime.strftime("%H:%M:%S")  # changed
-            self.reportdate = date  # changed
-            self.reportTime = time_  # changed
-            self.ui.le_VehicleReEntry_grossDate_2.setText(str(date))  # changed
+        if self.Exit_ClearGrossWeightFlag == False:
+            self.ui.pb_VehicleReEntry_T_Weight_3.setEnabled(False)
+            if self.manualEntryFlag == False:
+                try:
+                    self.ui.le_VehicleReEntry_grossWeight_3.setText(self.weight)  # changed
+                    DateTime = datetime.now()  # changed
+                    date = DateTime.strftime("%d-%m-%y")  # changed
+                    time_ = DateTime.strftime("%H:%M:%S")  # changed
+                    self.reportdate = date  # changed
+                    self.reportTime = time_  # changed
+                    self.ui.le_VehicleReEntry_grossDate_2.setText(str(date))  # changed
 
-            self.ui.le_VehicleReEntry_grossTime_2.setText(str(time_))  # changed
-            self.Exit_netWeight()
-        except:
-            self.showErrormsg("Error", "No weight values")
+                    self.ui.le_VehicleReEntry_grossTime_2.setText(str(time_))  # changed
+                    self.Exit_ClearGrossWeightFlag = True
+                    self.ui.pb_VehicleReEntry_G_weight_3.setIcon(QIcon("WeighBridgeScreens/Button/delete.png"))
+                except:
+                    self.showErrormsg("Error", "No weight values")
+                    self.ui.le_VehicleReEntry_grossWeight_3.setText("0")
+            else:
+                self.ui.pb_VehicleReEntry_T_Weight_3.setHidden(True)
+                self.ui.pb_VehicleReEntry_G_weight_3.setHidden(True)
+        else:
+            self.ui.le_VehicleReEntry_grossWeight_3.clear()
+            self.ui.le_VehicleReEntry_grossDate_2.clear()
+            self.ui.le_VehicleReEntry_grossTime_2.clear()
+            self.Exit_ClearGrossWeightFlag = False
+            self.ui.pb_VehicleReEntry_G_weight_3.setIcon(QIcon("WeighBridgeScreens/Button/gross-weight.png"))
 
     def Exit_getTareWeight(self):
-        self.ui.pb_VehicleReEntry_G_weight_3.setEnabled(False)
-        self.ui.pb_VehicleReEntry_T_Weight_3.setEnabled(False)
-        try:
-            self.ui.le_VehicleReEntry_tareWeight_3.setText(self.weight)
-            DateTime = datetime.now()  # changed
-            date = DateTime.strftime("%d-%m-%y")  # changed
-            time_ = DateTime.strftime("%H:%M:%S")  # changed
-            self.reportdate = date  # changed
-            self.reportTime = time_  # changed
-            self.ui.le_VehicleReEntry_tareDate_2.setText(str(date))  # changed
+        if self.Exit_ClearGrossWeightFlag == False:
+            self.ui.pb_VehicleReEntry_G_weight_3.setEnabled(False)
+            if self.manualEntryFlag == False:
+                try:
+                    self.ui.le_VehicleReEntry_tareWeight_3.setText(self.weight)
+                    DateTime = datetime.now()  # changed
+                    date = DateTime.strftime("%d-%m-%y")  # changed
+                    time_ = DateTime.strftime("%H:%M:%S")  # changed
+                    self.reportdate = date  # changed
+                    self.reportTime = time_  # changed
+                    self.ui.le_VehicleReEntry_tareDate_2.setText(str(date))  # changed
 
-            self.ui.le_VehicleReEntry_tareTime_2.setText(str(time_))  # changed
-            self.Exit_netWeight()
-        except:
-            self.showErrormsg("Error", "No weight values")
+                    self.ui.le_VehicleReEntry_tareTime_2.setText(str(time_))  # changed
+                    self.Exit_ClearGrossWeightFlag = True
+                    self.ui.pb_VehicleReEntry_T_Weight_3.setIcon(QIcon("WeighBridgeScreens/Button/delete.png"))
+                    self.Exit_netWeight()
+                except:
+                    self.showErrormsg("Error", "No weight values")
+                    self.ui.le_VehicleReEntry_tareWeight_3.setText("0")
+            else:
+                DateTime = datetime.now()  # changed
+                date = DateTime.strftime("%d-%m-%y")  # changed
+                time_ = DateTime.strftime("%H:%M:%S")  # changed
+                self.reportdate = date  # changed
+                self.reportTime = time_  # changed
+                self.ui.le_VehicleReEntry_tareDate_2.setText(str(date))  # changed
+
+                self.ui.le_VehicleReEntry_tareTime_2.setText(str(time_))  # changed
+                self.ui.pb_VehicleReEntry_T_Weight_3.setHidden(True)
+                self.ui.pb_VehicleReEntry_G_weight_3.setHidden(True)
+        else:
+            self.ui.le_VehicleReEntry_tareWeight_3.clear()
+            self.ui.le_VehicleReEntry_tareDate_2.clear()
+            self.ui.le_VehicleReEntry_tareTime_2.clear()
+            self.Exit_ClearGrossWeightFlag = False
+            self.ui.pb_VehicleReEntry_T_Weight_3.setIcon(QIcon("WeighBridgeScreens/Button/tare-weight.png"))
+            self.ui.pb_VehicleReEntry_T_Weight_3.setEnabled(True)
 
     def Exit_netWeight(self):
         gw = self.ui.le_VehicleReEntry_grossWeight_3.text()
@@ -2798,6 +3193,11 @@ class UI():
         else:
             self.ui.cb_parameter_GunnyBag.setText("Disable")
 
+    def checkboxManulaEntry(self):
+        if self.ui.cb_parameter_ManualEntry.isChecked():
+            self.ui.cb_parameter_ManualEntry.setText("Enable")
+        else:
+            self.ui.cb_parameter_ManualEntry.setText("Disable")
         ### Code 1
 
     def showCode1Details(self):
@@ -2889,6 +3289,7 @@ class UI():
         self.ui.cb_parameter_VehicleExit_header5.setText("Disable")
 
         self.ui.cb_parameter_Amount.setText("Disable")
+        self.ui.cb_parameter_ManualEntry.setText("Disable")
         self.ui.cb_parameter_DateTime.setText("Disable")
         self.ui.cb_parameter_GunnyBag.setText("Disable")
 
@@ -2926,6 +3327,7 @@ class UI():
         self.ui.cb_parameter_VehicleExit_header5.setCheckable(False)
 
         self.ui.cb_parameter_Amount.setCheckable(False)
+        self.ui.cb_parameter_ManualEntry.setCheckable(False)
         self.ui.cb_parameter_GunnyBag.setCheckable(False)
         self.ui.cb_parameter_DateTime.setCheckable(False)
         self.ui.rb_parameter_kg.setCheckable(False)
@@ -2967,6 +3369,7 @@ class UI():
         self.ui.cb_parameter_VehicleExit_header5.setCheckable(True)
 
         self.ui.cb_parameter_Amount.setCheckable(True)
+        self.ui.cb_parameter_ManualEntry.setCheckable(True)
         self.ui.cb_parameter_GunnyBag.setCheckable(True)
         self.ui.cb_parameter_DateTime.setCheckable(True)
         self.ui.rb_parameter_kg.setCheckable(True)
@@ -3152,16 +3555,22 @@ class UI():
         # print(values)
         if values[0] == "1":
             self.ui.cb_parameter_Amount.setChecked(True)
+            self.ui.cb_parameter_Amount.setText("Enable")
         else:
             self.ui.cb_parameter_Amount.setChecked(False)
+            self.ui.cb_parameter_Amount.setText("Disable")
         if values[1] == "1":
             self.ui.cb_parameter_DateTime.setChecked(True)
+            self.ui.cb_parameter_DateTime.setText("Enable")
         else:
             self.ui.cb_parameter_DateTime.setChecked(False)
+            self.ui.cb_parameter_DateTime.setText("Disable")
         if values[2] == "1":
             self.ui.cb_parameter_GunnyBag.setChecked(True)
+            self.ui.cb_parameter_GunnyBag.setText("Enable")
         else:
             self.ui.cb_parameter_GunnyBag.setChecked(False)
+            self.ui.cb_parameter_GunnyBag.setText("Disable")
         if values[3] == "Tonne":
             self.ui.rb_parameter_Tonne.setChecked(True)
         else:
@@ -3170,6 +3579,12 @@ class UI():
             self.ui.rb_parameter_code.setChecked(True)
         else:
             self.ui.rb_parameter_name.setChecked(True)
+        if values[5] == "1":
+            self.ui.cb_parameter_ManualEntry.setChecked(True)
+            self.ui.cb_parameter_ManualEntry.setText("Enable")
+        else:
+            self.ui.cb_parameter_ManualEntry.setChecked(False)
+            self.ui.cb_parameter_ManualEntry.setText("Disable")
 
         self.c.close()
         self.conn.close()
@@ -3241,9 +3656,10 @@ class UI():
         gunnybag = self.ui.cb_parameter_GunnyBag.isChecked()
         display = "Name" if self.ui.rb_parameter_name.isChecked() else "Code" if self.ui.rb_parameter_code.isChecked() else "None"
         unit = "Kg" if self.ui.rb_parameter_kg.isChecked() else "Tonne" if self.ui.rb_parameter_Tonne.isChecked() else "None"
+        manualEntry = self.ui.cb_parameter_ManualEntry.isChecked()
 
-        name = ["Amount", "DateTime", "GunnyBag", "Unit","Display"]
-        values = [amount, dt, gunnybag, unit,display]
+        name = ["Amount", "DateTime", "GunnyBag", "Unit","Display","Manual Entry"]
+        values = [amount, dt, gunnybag, unit, display, manualEntry]
         self.conn = sqlite3.connect('WeighBridge.db')
         self.c = self.conn.cursor()
         for i in range(len(name)):
@@ -5138,8 +5554,7 @@ class Serial(QThread):
                 else:
                     self.WeightUpdate.emit(str(weight))
 
-        except:
-
+        except Exception as e:
             self.WeightUpdate.emit("COM err")  # give pop up window or set weight lable to connect comm
             time.sleep(1)
             self.run()
@@ -5176,7 +5591,7 @@ if __name__ == '__main__':
         border-wiidth: 2px;
         border-radius: 8px;
         border-color: red;
-        font: bold 12pt "MS Shell Dlg 2";
+        font: bold 11.5pt "MS Shell Dlg 2";
         }
         QGroupBox
         {

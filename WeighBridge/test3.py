@@ -235,7 +235,7 @@ values = [True,False,True,"kg"]
 #     c.execute("UPDATE T_OtherSettings SET Status=? WHERE Name=?",(values[i],name[i]))
     # pass
 # c.execute("UPDATE T_OtherSettings SET Status=? WHERE Name=?",("Code",name[i]))
-# c.execute("INSERT INTO T_OtherSettings (Name,Status) VALUES (?,?)",("Display","Code"))
+# c.execute("INSERT INTO T_OtherSettings (Name,Status) VALUES (?,?)",("Manual Entry",False))
 conn.commit()
 c.close()
 conn.close()
