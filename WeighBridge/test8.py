@@ -1,13 +1,15 @@
-import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QHBoxLayout, QVBoxLayout
+
 from PyQt5.QtCore import Qt, QPoint, QRect
-from PyQt5.QtGui import QPixmap, QPainter, QImage
+from PyQt5.QtGui import QPixmap, QPainter, QImage, QFont
 from PrinterSettings import *
 from PyQt5 import uic
 import sys
 from PyQt5.QtWidgets import *
 import cv2
 import sqlite3
+
+from reportlab.pdfgen import canvas
+import os
 class PrinterFormat(QWidget):
     def __init__(self):
         super().__init__()
@@ -25,6 +27,8 @@ class PrinterFormat(QWidget):
         self.printerUi.pb_saveGeometry.clicked.connect(self.SaveGeometry)
         self.printerUi.pb_Go.clicked.connect(self.GetNoOfParamters)
         self.printerUi.pb_close.clicked.connect(self.ParameterPage)
+        self.printerUi.pb_pdf.clicked.connect(self.createPdfReciept)
+        self.printerUi.pb_pdf_outside.clicked.connect(self.createPdfReciept)
         # self.image = QImage("PrinterFormat/img1.png")
         self.pixmap = QPixmap("PrinterFormat/img1.png")
         self.begin, self.destination = QPoint(), QPoint()
@@ -37,6 +41,7 @@ class PrinterFormat(QWidget):
         self.printerUi.lb_WorkingPrinterImage.mouseMoveEvent = self.mouse_MoveEvent
         self.printerUi.lb_WorkingPrinterImage.mouseReleaseEvent = self.mouse_ReleaseEvent
         self.createTable()
+        # self.createPdfReciept()
 
     def showErrormsg(self, title, msg):
         QMessageBox.information(None, title, msg)
@@ -49,7 +54,9 @@ class PrinterFormat(QWidget):
         self.c.execute("""CREATE TABLE IF NOT EXISTS "T_Printer" (
                                 "Name"	TEXT,
                                 "X"	TEXT,
-                                "Y"	TEXT
+                                "Y"	TEXT,
+                                "Width"	TEXT,
+	                            "Height" TEXT
                             );""")
         self.c.close()
         self.conn.close()
@@ -67,12 +74,15 @@ class PrinterFormat(QWidget):
         self.printerUi.stackedWidget.setCurrentWidget(self.printerUi.ParametersPage)
 
     def SaveGeometry(self):
-        width = self.printerUi.le_width.text()
-        height = self.printerUi.le_height.text()
+
+
+        self.width = self.printerUi.le_width.text()
+        self.height = self.printerUi.le_height.text()
         startpt = self.printerUi.le_startPoint.text()
         endpt = self.printerUi.le_endPoint.text()
-        self.w = round(int(width)*37.8)
-        self.h = round(int(height)*37.8)
+        self.w = round(int(self.width)*37.8)
+        self.h = round(int(self.height)*37.8)
+
         print(self.h)
         # self.st = round(int(startpt)*37.8)
         # self.ed = round(int(endpt)*37.8)
@@ -82,6 +92,7 @@ class PrinterFormat(QWidget):
             if self.openDrawingFlag == True:
                 self.printerUi.pb_save.setEnabled(True)
                 self.printerUi.stackedWidget.setCurrentWidget(self.printerUi.DrawingPage)
+
         except:
             self.showErrormsg("","Enter the Fields")
 
@@ -122,6 +133,7 @@ class PrinterFormat(QWidget):
         img = cv2.resize(img,(950,481),cv2.INTER_AREA)
         cv2.imwrite(imgPath,img)
         self.pixmap = QPixmap(imgPath)
+        self.pixmap.scaled(100,100,Qt.KeepAspectRatio,Qt.SmoothTransformation)
         self.printerUi.lb_WorkingPrinterImage.setPixmap(QPixmap(self.pixmap))
         # self.printerUi.lb_WorkingPrinterImage.setScaledContents(True)
         cv.label.setGeometry(0,0,self.w,self.h)
@@ -179,9 +191,9 @@ class PrinterFormat(QWidget):
             cmdType = i[0]
             # print(type(cmdType))
         if cmdType == 0:
-            self.c.execute("INSERT INTO T_Printer (Name,X,Y) VALUES(?,?,?)",(self.txt, x, y))
+            self.c.execute("INSERT INTO T_Printer (Name,X,Y,Width,Height) VALUES(?,?,?,?,?)",(self.txt, x, y, self.w, self.h))
         elif cmdType == 1:
-            self.c.execute("UPDATE T_Printer SET X=?,Y=? WHERE Name=?",(x,y,self.txt))
+            self.c.execute("UPDATE T_Printer SET X=?,Y=?,Width=?,Height=? WHERE Name=?",(x, y, self.w, self.h, self.txt))
 
 
         self.conn.commit()
@@ -200,6 +212,42 @@ class PrinterFormat(QWidget):
         self.saveCoordinates(x,y)
         # self.my_widget.hide()
 
+    def createPdfReciept(self):
+        import win32api
+        import win32print
+        from reportlab.lib.units import cm, inch
+
+        defaultPrinter = win32print.GetDefaultPrinter()
+        print(defaultPrinter)
+        self.conn = sqlite3.connect("WeighBridge.db")
+        self.c = self.conn.cursor()
+        result = self.c.execute("SELECT * FROM T_Printer")
+        name,x,y = [],[],[]
+        for data in result:
+            name.append(data[0])
+            a = round(int(data[1]))
+            b = round(int(data[2]))
+            w = int(data[3])
+            h = int(data[4])
+            x.append(a)
+            y.append(b)
+
+        dimensions = (w, h)
+        c = canvas.Canvas("reciept.pdf",pagesize=dimensions)
+        c.setFont("Helvetica", 16)
+        for i in range(len(x)):
+            c.drawString(x[i],h - y[i],name[i])
+
+        c.save()
+        os.startfile('reciept.pdf')
+        try:
+            os.startfile("reciept.pdf","print")
+        except Exception as e:
+            self.showErrormsg("",str(e))
+
+        self.c.close()
+        self.conn.close()
+
 class Canvas(QWidget):
     def __init__(self):
         super(Canvas, self).__init__()
@@ -209,6 +257,7 @@ class Canvas(QWidget):
 
     def createLabel(self,txt):
         lb = QLabel(txt,self)
+        lb.setFont(QFont("Helvetica",16))
         lb.setAlignment(Qt.AlignTop)
         lb.setGeometry(self.x,self.y,self.w,self.h)
         # print(self.x," ",self.y)
@@ -217,8 +266,6 @@ class Canvas(QWidget):
         self.show()
 
 if __name__ == '__main__':
-    # don't auto scale when drag app to a different monitor.
-    # QApplication.setAttribute(Qt.HighDpiScaleFactorRoundingPolicy.PassThrough)
 
     app = QApplication(sys.argv)
 
