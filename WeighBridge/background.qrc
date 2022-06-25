@@ -1,0 +1,11 @@
+<RCC>
+  <qresource prefix="newPrefix">
+    <file>WeighBridgeScreens/weigh bridge screen/Screenshot (24).png</file>
+    <file>WeighBridgeScreens/weigh bridge screen/mainscreen.png</file>
+    <file>WeighBridgeScreens/weigh bridge screen/log-in.png</file>
+    <file>Screenshot (23).png</file>
+    <file>WeighBridgeScreens/splash/SplashScreen.png</file>
+    <file>WeighBridgeScreens/Button/login.png</file>
+    <file>WeighBridgeScreens/Button/close.png</file>
+  </qresource>
+</RCC>
